@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-trip-create',
-  imports: [],
-  templateUrl: './trip-create.component.html',
-  styleUrl: './trip-create.component.css',
+  standalone: true,
+  template: `
+    <h2>Crear viaje</h2>
+    <p>Formulario pendiente (stub).</p>
+    <button>Guardar</button>
+  `
 })
-export class TripCreateComponent {
-
-}
+export class TripCreateComponent {}
