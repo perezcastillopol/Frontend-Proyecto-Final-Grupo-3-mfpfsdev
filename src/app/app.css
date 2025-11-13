@@ -1,0 +1,9 @@
+.content {
+    margin-left: 250px; /* offset for sidebar */
+  }
+  
+  @media (max-width: 768px) {
+    .content {
+      margin-left: 0; /* reset margin on mobile */
+    }
+  }
