@@ -1,22 +1,22 @@
 <nav class="d-none d-md-flex flex-column text-white p-3 vh-100 position-fixed bgc" style="width: 250px;">
     <h3 class="mb-4">TripBud</h3>
-    <ul class="nav flex-column fs-5">
-            <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Inicio</a></li>
-            <li><a routerLink="/explorar" routerLinkActive="active">Explorar</a></li>
-            <li><a routerLink="/mis-viajes" routerLinkActive="active">Mis viajes</a></li>
-            <li><a routerLink="/crear" routerLinkActive="active">Mi perfil</a></li>
+    <ul class="nav flex-column fs-5 gap-3">
+            <li><i  class="bi bi-house me-2"></i><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Inicio</a></li>
+            <li><i class="bi bi-compass me-2"></i><a routerLink="/explorar" routerLinkActive="active">Explorar</a></li>
+            <li><i class="bi bi-map me-2"></i><a routerLink="/mis-viajes" routerLinkActive="active">Mis viajes</a></li>
+            <li><i class="bi bi-person me-2"></i><a routerLink="/crear" routerLinkActive="active">Mi perfil</a></li>
     </ul>
   </nav>
 
   <nav class="d-md-none text-white p-3 bgc">
     <div class="d-flex justify-content-between align-items-center">
-      <h3>TripBud</h3>
+        <h3>TripBud</h3>
       <div class="dropdown">
         <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
           Menú
         </button>
         <ul class="dropdown-menu dropdown-menu-end">
-            <li> <a routerLink="/"            routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Inicio</a></li>
+            <li><a routerLink="/"            routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Inicio</a></li>
             <li> <a routerLink="/explorar"    routerLinkActive="active">Explorar</a></li>
             <li> <a routerLink="/mis-viajes"  routerLinkActive="active">Mis viajes</a> </li>
             <li> <a routerLink="/crear"       routerLinkActive="active">Crear viaje</a> </li>
@@ -24,3 +24,4 @@
       </div>
     </div>
   </nav>
+  
