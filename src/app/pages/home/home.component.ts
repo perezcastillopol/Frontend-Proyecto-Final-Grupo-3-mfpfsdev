@@ -4,15 +4,9 @@ import { SearchBannerComponent } from '../../shared/search-banner/search-banner.
 
 @Component({
   selector: 'app-home',
-  standalone: true,
   imports: [RouterLink, SearchBannerComponent],
-  template: `
-    <section class="container">
-      <h1>Encuentra tu próximo viaje</h1>
-      <app-search-banner (search)="goExplore()"></app-search-banner>
-      <a routerLink="/explorar">Explorar viajes</a>
-    </section>
-  `
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.css',
 })
 export class HomeComponent {
   goExplore() {}
