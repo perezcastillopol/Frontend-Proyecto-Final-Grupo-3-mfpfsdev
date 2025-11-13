@@ -1,7 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap');
-
-:root {
+/* You can add global styles to this file, and also import other style files */:root {
   --primary-color: #21D1C2;
   --secondary-color: #0B6E6D;
   --light-color: #DDF2D9;
@@ -21,4 +18,50 @@ body {
 
 h1, h2 {
     font-family: var(--font-primary);
+}
+
+/* Tarjetas reutilizables del perfil */
+.profile-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.07);
+}
+
+/* Título dentro de cada tarjeta */
+.profile-title {
+  font-size: 1.4rem;
+  color: var(--dark-color);
+  margin-bottom: 16px;
+}
+
+/* Botón principal del perfil */
+.btn.profile-btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn.profile-btn-primary:hover {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+/* Inputs dentro de tarjetas de perfil */
+.profile-card .form-control {
+  background-color: #F7F8FA;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  color: #333;
+  padding: 10px 14px;
+}
+
+.profile-card .form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: none;
+}
+
+/* Iconos */
+.profile-icon {
+  color: var(--secondary-color);
+  font-size: 1.2rem;
 }
