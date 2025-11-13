@@ -10,8 +10,7 @@ h3 {
     color: var(--dark-color);
 }
 
-a{
+a, i{
     color: var(--secondary-color);
     text-decoration: none;
-    size: 2em;
 }
