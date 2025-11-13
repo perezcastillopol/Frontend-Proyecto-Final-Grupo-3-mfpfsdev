@@ -11,10 +11,8 @@
   <h3>Intereses:</h3>
 
   <div class="tag-container">
-    <span
-      class="tag"
-      *ngFor="let interest of interests">
-      {{ interest }}
-    </span>
+    @for (interest of interests; track interest) {
+      <span class="tag">{{ interest }}</span>
+    }
   </div>
 </div>

@@ -1,19 +1,15 @@
 <div class="card-container">
   <div class="avatar-wrapper">
-    <div class="avatar-circle">
-      <!-- Aquí podrías meter un icono o imagen -->
-    </div>
+    <div class="avatar-circle"></div>
   </div>
 
   <div class="text-center mt-3">
-    <!-- Nombre -->
     <input
       type="text"
       class="name-input"
       [readonly]="!isEditing"
       [formControl]="fullNameControl">
 
-    <!-- Username -->
     <div class="username">
       @
       <input
@@ -23,9 +19,9 @@
         [formControl]="usernameControl">
     </div>
 
-    <!-- Rating -->
     <div class="rating">
       {{ rating }} ★
     </div>
   </div>
 </div>
+

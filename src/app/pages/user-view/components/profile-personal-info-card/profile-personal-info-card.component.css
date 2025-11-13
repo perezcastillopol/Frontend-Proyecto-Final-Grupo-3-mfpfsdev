@@ -16,7 +16,6 @@ h2 {
   margin-bottom: 16px;
 }
 
-/* Grid 2 columnas en desktop, 1 en móvil */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -30,7 +29,6 @@ h2 {
   color: #555;
 }
 
-/* Input + icono */
 .input-wrapper {
   display: flex;
   align-items: center;
