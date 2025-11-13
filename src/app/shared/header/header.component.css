@@ -1,0 +1,17 @@
+a, h1, h2, button, h3 {
+    font-family: Oswald, sans-serif;
+}
+
+.bgc {
+    background-color: var(--light-color);
+}
+
+h3 {
+    color: var(--dark-color);
+}
+
+a{
+    color: var(--secondary-color);
+    text-decoration: none;
+    size: 2em;
+}
