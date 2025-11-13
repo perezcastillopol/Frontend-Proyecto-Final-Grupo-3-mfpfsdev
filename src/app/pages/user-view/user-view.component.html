@@ -1,1 +1,50 @@
-<p>user-view works!</p>
+<div class="container my-4" *ngIf="!isLoading">
+  <!-- Cabecera con título + botón -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h3 mb-0">
+      Mi <span class="fw-bold">perfil</span>
+    </h1>
+
+    <div>
+      <button
+        *ngIf="!isEditing"
+        class="btn btn-primary"
+        (click)="onEdit()">
+        Editar
+      </button>
+
+      <ng-container *ngIf="isEditing">
+        <button class="btn btn-success me-2" (click)="onSave()">
+          Guardar
+        </button>
+        <button class="btn btn-outline-secondary" (click)="onCancel()">
+          Cancelar
+        </button>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Tres bloques del diseño -->
+  <div class="row g-4">
+    <div class="col-md-4">
+      <app-profile-main-card
+        [form]="profileForm"
+        [isEditing]="isEditing">
+      </app-profile-main-card>
+    </div>
+
+    <div class="col-md-8">
+      <app-profile-about-card
+        [form]="profileForm"
+        [isEditing]="isEditing">
+      </app-profile-about-card>
+    </div>
+
+    <div class="col-12">
+      <app-profile-personal-info-card
+        [form]="profileForm"
+        [isEditing]="isEditing">
+      </app-profile-personal-info-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+<div class="card-container">
+  <h2>Información Personal</h2>
+
+  <div class="grid">
+    <!-- Teléfono -->
+    <div class="field">
+      <label>Teléfono:</label>
+      <div class="input-wrapper">
+        <span class="icon">📞</span>
+        <input
+          type="text"
+          [readonly]="!isEditing"
+          [formControl]="phoneControl">
+      </div>
+    </div>
+
+    <!-- Fecha de nacimiento -->
+    <div class="field">
+      <label>Fecha de nacimiento:</label>
+      <div class="input-wrapper">
+        <span class="icon">📅</span>
+        <input
+          type="date"
+          [readonly]="!isEditing"
+          [formControl]="birthDateControl">
+      </div>
+    </div>
+
+    <!-- Ubicación -->
+    <div class="field">
+      <label>Ubicación:</label>
+      <div class="input-wrapper">
+        <span class="icon">📍</span>
+        <input
+          type="text"
+          [readonly]="!isEditing"
+          [formControl]="locationControl">
+      </div>
+    </div>
+
+    <!-- Estilo de viaje -->
+    <div class="field">
+      <label>Estilo de viaje:</label>
+      <div class="input-wrapper">
+        <span class="icon">🧳</span>
+        <input
+          type="text"
+          [readonly]="!isEditing"
+          [formControl]="travelStyleControl">
+      </div>
+    </div>
+  </div>
+</div>
