@@ -1,20 +1,42 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-search-banner',
   standalone: true,
-  template: `
-    <section class="banner">
-      <input placeholder="Origen">
-      <input placeholder="Destino">
-      <input type="date">
-      <button (click)="search.emit()">Buscar</button>
-    </section>
-  `,
-  styles: [`
-    .banner{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;padding:12px;background:#f7f7f7;border-radius:12px;margin:12px 0}
-  `]
+  imports: [ReactiveFormsModule, NgFor],
+  templateUrl: './search-banner.component.html',
+  styleUrl: './search-banner.component.css',
 })
 export class SearchBannerComponent {
-  @Output() search = new EventEmitter<void>();
+  @Output() search = new EventEmitter<any>();
+
+  categories = [
+    'Todas las categorías',
+    'Aventura',
+    'Naturaleza',
+    'Ciudad',
+    'Playa',
+  ];
+
+  statusOptions = ['Abierto', 'Cerrado', 'Próximamente'];
+
+  searchForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.searchForm = this.fb.group({
+      query: [''],
+      category: [this.categories[0]],
+      status: [this.statusOptions[0]],
+      startDate: [''],
+      endDate: [''],
+    });
+  }
+
+  onSubmit(): void {
+    if (this.searchForm.valid) {
+      this.search.emit(this.searchForm.value);
+    }
+  }
 }

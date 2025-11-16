@@ -1,0 +1,96 @@
+/* Tipografías coherentes con el root */
+.search-banner-card h1,
+.search-banner-card h2,
+.search-banner-card h3,
+.search-banner-card label,
+.search-banner-card button {
+  font-family: var(--font-primary);
+}
+
+.search-banner-card input,
+.search-banner-card select {
+  font-family: var(--font-secondary);
+}
+
+/* Contenedor general */
+.search-banner-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 1.5rem 1rem;
+}
+
+/* Tarjeta del banner (muy similar a .profile-card) */
+.search-banner-card {
+  width: 100%;
+  max-width: 1400px;
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.07);
+}
+
+/* Formulario interno */
+.search-banner-form {
+  width: 100%;
+}
+
+/* Inputs y selects estilo tarjeta perfil */
+.input-pill,
+.search-banner-card .form-control,
+.search-banner-card .form-select {
+  background-color: #F7F8FA;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  color: #333;
+  padding: 10px 14px;
+}
+
+.search-banner-card .form-control:focus,
+.search-banner-card .form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: none;
+}
+
+/* Placeholder */
+.search-banner-card input::placeholder {
+  color: #999;
+}
+
+/* Labels */
+.search-banner-card label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.95rem;
+  color: var(--dark-color);
+}
+
+/* Botón de búsqueda: mismo estilo que .profile-btn-primary */
+.search-btn {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #fff;
+  font-family: var(--font-primary);
+  font-size: 1.4rem;
+  padding: 0.9rem;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.search-btn:hover {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+/* Responsive pequeño ajuste para móviles */
+@media (max-width: 767.98px) {
+  .search-banner-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .search-btn {
+    font-size: 1.2rem;
+  }
+}
