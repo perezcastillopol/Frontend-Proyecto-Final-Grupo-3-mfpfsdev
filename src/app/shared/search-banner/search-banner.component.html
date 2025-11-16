@@ -1,11 +1,12 @@
 <section class="search-banner-wrapper">
   <div class="search-banner-card">
-
-    <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="search-banner-form">
-
+    <form
+      [formGroup]="searchForm"
+      (ngSubmit)="onSubmit()"
+      class="search-banner-form"
+    >
       <!-- Fila superior -->
       <div class="row g-3 mb-3 align-items-stretch">
-        
         <div class="col-12 col-lg-6">
           <input
             type="text"
@@ -26,12 +27,10 @@
             <option *ngFor="let s of statusOptions">{{ s }}</option>
           </select>
         </div>
-
       </div>
 
       <!-- Fila inferior -->
-      <div class="row g-3 align-items-stretch">
-
+      <div class="row g-3 align-items-end">
         <div class="col-12 col-lg-3">
           <label>Fecha de inicio</label>
           <input
@@ -50,13 +49,10 @@
           />
         </div>
 
-        <div class="col-12 col-lg-6 d-grid">
-          <button class="btn search-btn">Buscar</button>
+        <div class="col-12 col-lg-6 d-flex align-items-end">
+          <button class="btn search-btn w-100">BUSCAR</button>
         </div>
-
       </div>
-
     </form>
-
   </div>
 </section>
