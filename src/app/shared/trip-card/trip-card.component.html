@@ -1,1 +1,44 @@
-<p>trip-card works!</p>
+<div class="trip-card">
+
+  <img
+    [src]="trip?.imageUrl || imageUrl"
+    [alt]="trip?.title || title"
+    class="trip-image"
+  />
+
+  <div class="trip-content">
+
+    <h3 class="trip-title">
+      {{ trip?.title || title }}
+    </h3>
+
+    <div class="trip-info">
+
+      <div class="info-row">
+        <i class="bi bi-geo-alt"></i>
+        <span>{{ trip?.country || country }}</span>
+      </div>
+
+      <div class="info-row">
+        <i class="bi bi-people"></i>
+        <span>
+          {{ (trip?.currentPeople ?? currentPeople) }}/{{ (trip?.maxPeople ?? maxPeople) }}
+        </span>
+      </div>
+
+      <div class="info-row">
+        <i class="bi bi-calendar"></i>
+        <span>
+          {{ trip?.startDate || startDate }} - {{ trip?.endDate || endDate }}
+        </span>
+      </div>
+
+    </div>
+
+    <div class="trip-price">
+      {{ trip?.price ?? price }}€
+    </div>
+
+  </div>
+
+</div>

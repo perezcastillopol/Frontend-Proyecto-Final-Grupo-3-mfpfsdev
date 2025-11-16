@@ -44,6 +44,7 @@
   border-radius: 12px;
   color: #333;
   padding: 10px 14px;
+  height: 46px !important;
 }
 
 .search-banner-card .form-control:focus,
@@ -73,7 +74,7 @@
   font-family: var(--font-primary);
   font-size: 1.4rem;
   padding: 0;            
-  height: 48px;          
+  height: 46px !important;          
   border-radius: 12px;
   text-transform: uppercase;
   letter-spacing: 0.03em;
