@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-search-banner',
   standalone: true,
-  imports: [ReactiveFormsModule, NgFor],
+  imports: [ReactiveFormsModule],
   templateUrl: './search-banner.component.html',
   styleUrl: './search-banner.component.css',
 })
