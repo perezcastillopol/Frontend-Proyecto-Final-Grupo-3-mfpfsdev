@@ -1,5 +1,5 @@
 .content {
-    margin-left: 250px; /* offset for sidebar */
+    margin-left: 200px; /* offset for sidebar */
   }
   
   @media (max-width: 768px) {

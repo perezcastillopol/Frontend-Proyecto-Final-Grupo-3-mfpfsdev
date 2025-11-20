@@ -1,27 +1,33 @@
-<nav class="d-none d-md-flex flex-column text-white p-3 vh-100 position-fixed bgc" style="width: 250px;">
-    <h3 class="mb-4">TripBud</h3>
-    <ul class="nav flex-column fs-5 gap-2">
-            <li><i  class="bi bi-house me-2"></i><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Inicio</a></li>
-            <li><i class="bi bi-compass me-2"></i><a routerLink="/explorar" routerLinkActive="active">Explorar</a></li>
-            <li><i class="bi bi-map me-2"></i><a routerLink="/mis-viajes" routerLinkActive="active">Mis viajes</a></li>
-            <li><i class="bi bi-person me-2"></i><a routerLink="/perfil/:username" routerLinkActive="active">Mi perfil</a></li>
-    </ul>
-  </nav>
+<nav class="d-none d-md-flex flex-column text-white p-3 vh-100 position-fixed bgc" style="width: 200px;">
+  <div class="d-flex align-items-start gap-1 mb-4">
+    <img src="images/logo.png" alt="TripBud Logo" class="" style="width: 25px; height: auto;">
+    <h3>TripBud</h3>
+  </div>
+  <ul class="nav flex-column fs-5 gap-3">
+    <li><i class="bi bi-house me-2"></i><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Inicio</a></li>
+    <li><i class="bi bi-compass me-2"></i><a routerLink="/explorar" routerLinkActive="active">Explorar</a></li>
+    <li><i class="bi bi-map me-2"></i><a routerLink="/mis-viajes" routerLinkActive="active">Mis viajes</a></li>
+    <li><i class="bi bi-person me-2"></i><a routerLink="/perfil/:username" routerLinkActive="active">Mi perfil</a></li>
+  </ul>
+</nav>
 
-  <nav class="d-md-none text-white p-3 bgc">
-    <div class="d-flex justify-content-between align-items-center">
-        <h3>TripBud</h3>
-      <div>
-        <button class="menu-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-list menu-icon"></i>
-        </button>
-        <ul class="dropdown-menu p-2 w-64 bgc">
-            <li><a class="dropdown-item flex items-center gap-3 text-lg mb-2" routerLink="/"            routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"> <i class="bi bi bi-house text-xl me-2"></i>Inicio</a></li>
-            <li> <a class="dropdown-item flex items-center gap-3 text-lg mb-2" routerLink="/explorar"    routerLinkActive="active"><i class="bi bi-compass me-2"></i>Explorar</a></li>
-            <li> <a class="dropdown-item flex items-center gap-3 text-lg mb-2" routerLink="/mis-viajes"  routerLinkActive="active"><i class="bi bi-map me-2"></i>Mis viajes</a> </li>
-            <li> <a class="dropdown-item flex items-center gap-3 text-lg mb-2" routerLink="/perfil/:username"       routerLinkActive="active"><i class="bi bi-person me-2"></i>Mi perfil</a> </li>
-        </ul>
-      </div>
+<nav class="d-md-none text-white p-3 bgc">
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-start gap-1">
+      <img src="images/logo.png" alt="TripBud Logo" class="" style="width: 20px; height: auto;">
+      <h3>TripBud</h3>
     </div>
-  </nav>
+    <div>
+      <button class="menu-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-list menu-icon"></i>
+      </button>
+      <ul class="dropdown-menu p-2 w-64 bgc">
+        <li><a class="dropdown-item flex items-center gap-3 text-lg mb-2" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><i class="bi bi-house text-xl me-2"></i>Inicio</a></li>
+        <li><a class="dropdown-item flex items-center gap-3 text-lg mb-2" routerLink="/explorar" routerLinkActive="active"><i class="bi bi-compass me-2"></i>Explorar</a></li>
+        <li><a class="dropdown-item flex items-center gap-3 text-lg mb-2" routerLink="/mis-viajes" routerLinkActive="active"><i class="bi bi-map me-2"></i>Mis viajes</a></li>
+        <li><a class="dropdown-item flex items-center gap-3 text-lg mb-2" routerLink="/perfil/:username" routerLinkActive="active"><i class="bi bi-person me-2"></i>Mi perfil</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
   
