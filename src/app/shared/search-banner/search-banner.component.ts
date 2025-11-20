@@ -13,7 +13,7 @@ export class SearchBannerComponent {
   @Output() search = new EventEmitter<any>();
 
   categories = [
-    'Todas las categorías',
+    'Categorías',
     'Aventura',
     'Naturaleza',
     'Ciudad',

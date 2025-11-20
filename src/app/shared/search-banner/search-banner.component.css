@@ -2,14 +2,13 @@
 .search-banner-card h1,
 .search-banner-card h2,
 .search-banner-card h3,
-.search-banner-card label,
 .search-banner-card button {
-  font-family: var(--font-primary);
+  font-family: Oswald, sans-serif;
 }
 
 .search-banner-card input,
 .search-banner-card select {
-  font-family: var(--font-secondary);
+  font-family: Source Serif 4, serif;
 }
 
 /* Contenedor general */
@@ -76,7 +75,6 @@
   padding: 0;            
   height: 46px !important;          
   border-radius: 12px;
-  text-transform: uppercase;
   letter-spacing: 0.03em;
   display: flex;
   justify-content: center;
