@@ -28,5 +28,7 @@ export const routes: Routes = [
     title: 'Detalle del viaje'
   },
 
+  //Crear ruta para crear registro de usuario
+
   { path: '**', redirectTo: '' }
 ];
