@@ -1,4 +1,9 @@
-<div class="trip-card">
+<div
+  class="trip-card"
+  [class.is-clickable]="!!detailLink"
+  (click)="goDetail()"
+  [attr.tabindex]="detailLink ? 0 : null"
+>
 
   <img
     [src]="trip?.imageUrl || imageUrl"

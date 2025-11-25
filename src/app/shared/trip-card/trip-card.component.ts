@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Trip } from '../../interfaces/trip.interface';
 
 type TripCardTrip = Partial<Trip> & {
@@ -17,6 +18,8 @@ type TripCardTrip = Partial<Trip> & {
   styleUrl: './trip-card.component.css'
 })
 export class TripCardComponent {
+  private router = inject(Router);
+
   @Input() trip: TripCardTrip | null = null;
 
   @Input() imageUrl: string = '';
@@ -27,4 +30,16 @@ export class TripCardComponent {
   @Input() startDate: string = '';
   @Input() endDate: string = '';
   @Input() price: number = 0;
+
+  get detailLink(): string[] | null {
+    const id = this.trip?.tripId ?? (this.trip as any)?.id;
+    return id ? ['/viaje', id] : null;
+  }
+
+  goDetail() {
+    const link = this.detailLink;
+    if (link) {
+      this.router.navigate(link);
+    }
+  }
 }
