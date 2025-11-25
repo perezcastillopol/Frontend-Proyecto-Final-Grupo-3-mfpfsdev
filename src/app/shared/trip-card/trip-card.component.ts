@@ -1,4 +1,15 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { Trip } from '../../interfaces/trip.interface';
+
+type TripCardTrip = Partial<Trip> & {
+  imageUrl?: string;
+  country?: string;
+  location?: string;
+  currentPeople?: number;
+  maxPeople?: number;
+  price?: number;
+};
 
 @Component({
   selector: 'app-trip-card',
@@ -7,10 +18,10 @@ import { Component, Input } from '@angular/core';
   styleUrl: './trip-card.component.css'
 })
 export class TripCardComponent {
- 
-  @Input() trip: any | null = null;
+  private router = inject(Router);
 
-  
+  @Input() trip: TripCardTrip | null = null;
+
   @Input() imageUrl: string = '';
   @Input() title: string = '';
   @Input() country: string = '';
@@ -19,4 +30,16 @@ export class TripCardComponent {
   @Input() startDate: string = '';
   @Input() endDate: string = '';
   @Input() price: number = 0;
+
+  get detailLink(): string[] | null {
+    const id = this.trip?.tripId ?? (this.trip as any)?.id;
+    return id ? ['/viaje', id] : null;
+  }
+
+  goDetail() {
+    const link = this.detailLink;
+    if (link) {
+      this.router.navigate(link);
+    }
+  }
 }

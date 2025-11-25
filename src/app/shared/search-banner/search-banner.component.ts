@@ -1,6 +1,14 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
+export interface SearchFilters {
+  query: string;
+  category: string;
+  status: string;
+  startDate: string;
+  endDate: string;
+}
+
 @Component({
   selector: 'app-search-banner',
   standalone: true,
@@ -9,7 +17,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
   styleUrl: './search-banner.component.css',
 })
 export class SearchBannerComponent {
-  @Output() search = new EventEmitter<any>();
+  @Output() search = new EventEmitter<SearchFilters>();
 
   categories = [
     'Categorías',
@@ -19,7 +27,7 @@ export class SearchBannerComponent {
     'Playa',
   ];
 
-  statusOptions = ['Abierto', 'Cerrado', 'Próximamente'];
+  statusOptions = ['Estado', 'Abierto', 'Cerrado', 'Próximamente'];
 
   searchForm: FormGroup;
 
@@ -35,7 +43,14 @@ export class SearchBannerComponent {
 
   onSubmit(): void {
     if (this.searchForm.valid) {
-      this.search.emit(this.searchForm.value);
+      const { query, category, status, startDate, endDate } = this.searchForm.value;
+      this.search.emit({
+        query: (query || '').trim(),
+        category: category === this.categories[0] ? '' : category,
+        status: status === this.statusOptions[0] ? '' : status,
+        startDate: startDate || '',
+        endDate: endDate || '',
+      });
     }
   }
 }

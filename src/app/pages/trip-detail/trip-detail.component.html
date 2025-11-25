@@ -1,7 +1,109 @@
 @if (trip$ | async; as trip) {
-  <h2>{{ trip.title }}</h2>
-  <p>{{ trip.location }} · {{ trip.startDate | date }}</p>
-  <p>Precio aprox: {{ trip.price | currency:'EUR' }}</p>
+  <section class="trip-detail">
+    <div class="page-container">
+      <div
+        class="hero"
+        [style.backgroundImage]="backgroundImage(trip)"
+      >
+        <div class="hero-content">
+          <div class="chips">
+            <span class="chip chip-category">
+              {{ modalityMap[trip.modalityId] || 'Categoría' }}
+            </span>
+            <span class="chip chip-status" [class.is-open]="(trip.status || '').toLowerCase() === 'abierto'">
+              {{ (trip.status || 'Estado') | titlecase }}
+            </span>
+          </div>
+          <h1 class="hero-title">{{ trip.title }}</h1>
+          <p class="hero-subtitle">
+            <i class="bi bi-geo-alt"></i>
+            {{ trip.destination || 'Destino pendiente' }}
+          </p>
+        </div>
+      </div>
+
+      <div class="layout">
+        <div class="col-main">
+          <div class="summary-cards">
+            <div class="summary-card">
+              <div class="icon"><i class="bi bi-calendar3"></i></div>
+              <div>
+                <p class="label">Fechas</p>
+                <p class="value">
+                  {{ trip.startDate | date:'dd MMM' }} - {{ trip.endDate | date:'dd MMM' }}
+                </p>
+              </div>
+            </div>
+            <div class="summary-card">
+              <div class="icon"><i class="bi bi-people"></i></div>
+              <div>
+                <p class="label">Participantes</p>
+                <p class="value">{{ trip.currentPeople || 0 }}/{{ trip.maxPeople || trip.minParticipants || 0 }}</p>
+              </div>
+            </div>
+            <div class="summary-card">
+              <div class="icon"><i class="bi bi-cash-coin"></i></div>
+              <div>
+                <p class="label">Coste</p>
+                <p class="value">{{ trip.costPerPerson | currency:'EUR' }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Descripción</h3>
+            <p class="text-body">{{ trip.description || 'El organizador aún no ha añadido descripción.' }}</p>
+          </div>
+
+          <div class="card">
+            <h3>Detalles del viaje</h3>
+            <ul class="details-list">
+              <li>
+                <span class="detail-icon"><i class="bi bi-airplane"></i></span>
+                <div>
+                  <p class="label">Transporte</p>
+                  <p class="value">{{ trip.transport || 'Pendiente' }}</p>
+                </div>
+              </li>
+              <li>
+                <span class="detail-icon"><i class="bi bi-house-door"></i></span>
+                <div>
+                  <p class="label">Alojamiento</p>
+                  <p class="value">{{ trip.accommodation || 'Pendiente' }}</p>
+                </div>
+              </li>
+              <li>
+                <span class="detail-icon"><i class="bi bi-map"></i></span>
+                <div>
+                  <p class="label">Itinerario</p>
+                  <p class="value">{{ trip.itinerary || 'Pendiente' }}</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-side">
+          <div class="card join-card">
+            <h3>Solicitar unirme</h3>
+            <p class="text-body">
+              Tu solicitud será revisada por el organizador para validar que encaja con el grupo.
+            </p>
+            <textarea class="form-control" rows="4" placeholder="Cuéntale al organizador por qué te gustaría unirte..."></textarea>
+            <button class="btn join-btn" type="button">Enviar solicitud</button>
+          </div>
+
+          <div class="card participants-card">
+            <div class="participants-header">
+              <h4>Participantes ({{ trip.currentPeople || 0 }})</h4>
+              <i class="bi bi-people"></i>
+            </div>
+            <p class="text-body">Próximamente listado de participantes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 } @else {
   <p>Viaje no encontrado.</p>
 }
