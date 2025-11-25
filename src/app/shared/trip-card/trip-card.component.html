@@ -16,7 +16,7 @@
 
       <div class="info-row">
         <i class="bi bi-geo-alt"></i>
-        <span>{{ trip?.country || country }}</span>
+        <span>{{ trip?.destination || trip?.country || trip?.location || country }}</span>
       </div>
 
       <div class="info-row">
@@ -36,7 +36,7 @@
     </div>
 
     <div class="trip-price">
-      {{ trip?.price ?? price }}€
+      {{ trip?.costPerPerson ?? trip?.price ?? price }}€
     </div>
 
   </div>

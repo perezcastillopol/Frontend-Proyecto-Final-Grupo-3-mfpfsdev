@@ -1,7 +1,8 @@
 @if (trip$ | async; as trip) {
   <h2>{{ trip.title }}</h2>
-  <p>{{ trip.location }} · {{ trip.startDate | date }}</p>
-  <p>Precio aprox: {{ trip.price | currency:'EUR' }}</p>
+  <p>{{ trip.destination }} · {{ trip.startDate | date }} - {{ trip.endDate | date }}</p>
+  <p>Precio por persona: {{ trip.costPerPerson | currency:'EUR' }}</p>
+  <p>{{ trip.description }}</p>
 } @else {
   <p>Viaje no encontrado.</p>
 }

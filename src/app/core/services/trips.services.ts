@@ -1,29 +1,40 @@
 import { Injectable, signal } from '@angular/core';
 import { of } from 'rxjs';
+import { Trip as TripModel } from '../../interfaces/trip.interface';
 
-export interface Trip {
-  id: string;
-  title: string;
-  location: string;
-  startDate: string;
-  creatorId: string;
-  price: number;
-}
+export type Trip = TripModel;
 
 @Injectable({ providedIn: 'root' })
 export class TripsService {
-  private userId = 'u123';                 // stub de usuario actual
-  me = signal(this.userId);
+  private userId = 1; // stub de usuario actual
+  me = signal<number>(this.userId);
 
   private trips: Trip[] = [
-    { id: '1', title: 'Pirineos en 4 días', location: 'Huesca', startDate: '2025-12-10', creatorId: 'u123', price: 250 },
-    { id: '2', title: 'Escapada a Lisboa', location: 'Lisboa', startDate: '2025-11-25', creatorId: 'u777', price: 180 },
-    { id: '3', title: 'Costa Brava', location: 'Girona', startDate: '2026-03-15', creatorId: 'u123', price: 120 },
+    {
+      tripId: 1,
+      creatorId: 1,
+      title: 'Escapada de senderismo a los Picos de Europa',
+      description: 'Ruta de 3 días por los Picos de Europa con alojamiento en casas rurales y excursiones guiadas.',
+      destination: 'Picos de Europa',
+      startDate: '2025-06-14',
+      endDate: '2025-06-17',
+      costPerPerson: 180.0,
+      minParticipants: 4,
+      accommodation: 'Casa rural',
+      transport: 'Coche compartido',
+      itinerary: 'Día 1: Cangas de Onís · Día 2: Lagos de Covadonga · Día 3: Ruta del Cares',
+      status: 'abierto',
+      createdAt: '2025-04-25 18:23:00',
+      modalityId: 2
+    }
   ];
 
   list() { return of(this.trips); }
 
   myTrips() { return of(this.trips.filter(t => t.creatorId === this.userId)); }
 
-  getById(id: string) { return of(this.trips.find(t => t.id === id) || null); }
+  getById(id: number | string) {
+    const numericId = typeof id === 'string' ? Number(id) : id;
+    return of(this.trips.find(t => t.tripId === numericId) || null);
+  }
 }

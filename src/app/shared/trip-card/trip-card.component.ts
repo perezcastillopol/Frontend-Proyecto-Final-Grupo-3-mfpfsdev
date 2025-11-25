@@ -1,4 +1,14 @@
 import { Component, Input } from '@angular/core';
+import { Trip } from '../../interfaces/trip.interface';
+
+type TripCardTrip = Partial<Trip> & {
+  imageUrl?: string;
+  country?: string;
+  location?: string;
+  currentPeople?: number;
+  maxPeople?: number;
+  price?: number;
+};
 
 @Component({
   selector: 'app-trip-card',
@@ -7,10 +17,8 @@ import { Component, Input } from '@angular/core';
   styleUrl: './trip-card.component.css'
 })
 export class TripCardComponent {
- 
-  @Input() trip: any | null = null;
+  @Input() trip: TripCardTrip | null = null;
 
-  
   @Input() imageUrl: string = '';
   @Input() title: string = '';
   @Input() country: string = '';
