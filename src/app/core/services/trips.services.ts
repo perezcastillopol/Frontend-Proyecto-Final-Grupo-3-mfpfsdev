@@ -2,7 +2,11 @@ import { Injectable, signal } from '@angular/core';
 import { of } from 'rxjs';
 import { Trip as TripModel } from '../../interfaces/trip.interface';
 
-export type Trip = TripModel;
+export type Trip = TripModel & {
+  imageUrl?: string;
+  currentPeople?: number;
+  maxPeople?: number;
+};
 
 @Injectable({ providedIn: 'root' })
 export class TripsService {
@@ -25,7 +29,50 @@ export class TripsService {
       itinerary: 'Día 1: Cangas de Onís · Día 2: Lagos de Covadonga · Día 3: Ruta del Cares',
       status: 'abierto',
       createdAt: '2025-04-25 18:23:00',
-      modalityId: 2
+      modalityId: 2,
+      imageUrl: 'https://picsum.photos/seed/picos/600/400',
+      currentPeople: 6,
+      maxPeople: 10
+    },
+    {
+      tripId: 2,
+      creatorId: 2,
+      title: 'City break en Lisboa',
+      description: 'Fin de semana largo explorando los miradouros, pastelerías y el barrio de Alfama.',
+      destination: 'Lisboa',
+      startDate: '2025-11-25',
+      endDate: '2025-11-28',
+      costPerPerson: 220.0,
+      minParticipants: 2,
+      accommodation: 'Hotel céntrico',
+      transport: 'Avión + metro',
+      itinerary: 'Día 1: Baixa y Chiado · Día 2: Belém · Día 3: Sintra',
+      status: 'abierto',
+      createdAt: '2025-04-28 10:00:00',
+      modalityId: 3,
+      imageUrl: 'https://picsum.photos/seed/lisboa/600/400',
+      currentPeople: 4,
+      maxPeople: 8
+    },
+    {
+      tripId: 3,
+      creatorId: 3,
+      title: 'Surf y volcán en Lanzarote',
+      description: 'Clases de surf en Famara y excursión al Parque Nacional de Timanfaya.',
+      destination: 'Lanzarote',
+      startDate: '2025-07-10',
+      endDate: '2025-07-14',
+      costPerPerson: 320.0,
+      minParticipants: 3,
+      accommodation: 'Apartamentos cerca de la playa',
+      transport: 'Vuelo + coche de alquiler',
+      itinerary: 'Día 1: Llegada y puesta de sol · Día 2-3: Surf en Famara · Día 4: Timanfaya',
+      status: 'cerrado',
+      createdAt: '2025-05-02 09:30:00',
+      modalityId: 4,
+      imageUrl: 'https://picsum.photos/seed/lanzarote/600/400',
+      currentPeople: 5,
+      maxPeople: 12
     }
   ];
 

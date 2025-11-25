@@ -1,8 +1,8 @@
 <h2>Explorar viajes</h2>
-<app-search-banner (search)="reload()"></app-search-banner>
+<app-search-banner (search)="onSearch($event)"></app-search-banner>
 
 <div class="grid">
-  @for (t of trips; track t.id) {
+  @for (t of filteredTrips; track t.tripId) {
     <app-trip-card [trip]="t" />
   }
 </div>
