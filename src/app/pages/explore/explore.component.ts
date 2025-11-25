@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { TripCardComponent } from '../../shared/trip-card/trip-card.component';
 import { SearchBannerComponent } from '../../shared/search-banner/search-banner.component';
 
@@ -9,7 +10,8 @@ import { SearchBannerComponent } from '../../shared/search-banner/search-banner.
   templateUrl: './explore.component.html',
   styleUrl: './explore.component.css'
 })
-export class ExploreComponent {
+export class ExploreComponent implements OnInit {
+  searchParams: any = {};
 
   trips = [
     {
@@ -44,8 +46,30 @@ export class ExploreComponent {
       endDate: '2026-03-18',
       price: 120,
       imageUrl: 'https://picsum.photos/seed/trip3/600/400'
+    },
+    {
+    id: 4,
+      title: 'Costa Brava',
+      country: 'España',
+      currentPeople: 3,
+      maxPeople: 6,
+      startDate: '2026-03-15',
+      endDate: '2026-03-18',
+      price: 120,
+      imageUrl: 'https://picsum.photos/seed/trip3/600/400'
     }
   ];
+
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.searchParams = params;
+      console.log('Search parameters from home:', this.searchParams);
+      // Here you would filter trips based on searchParams
+      // For now, just logging the parameters
+    });
+  }
 
   reload() {
     // En esta versión mock, simplemente no hacemos nada

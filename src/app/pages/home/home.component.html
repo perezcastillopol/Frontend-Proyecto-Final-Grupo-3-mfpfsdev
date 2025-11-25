@@ -1,5 +1,73 @@
-<section class="container">
-    <h1>Encuentra tu próximo viaje</h1>
-    <app-search-banner (search)="goExplore()"></app-search-banner>
-    <a routerLink="/explorar">Explorar viajes</a>
-  </section>
+<app-hero-banner (search)="onSearch($event)"></app-hero-banner>
+
+<section class="how-it-works">
+  <div class="container">
+    <h2 class="section-title">¿Cómo funciona?</h2>
+    <p class="section-subtitle">
+      Tres pasos simples para encontrar<br />
+      la aventura correcta para ti:
+    </p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <h3 class="feature-title">Encuentra<br />compañeros</h3>
+        <p class="feature-description">
+          Conecta con personas<br />
+          que comparten tus<br />
+          intereses de viaje
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+        </div>
+        <h3 class="feature-title">Explora<br />destinos</h3>
+        <p class="feature-description">
+          Descubre viajes<br />
+          increíbles a lugares de<br />
+          todo el mundo
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </div>
+        <h3 class="feature-title">Comparte<br />gastos</h3>
+        <p class="feature-description">
+          Ahorra dinero<br />
+          compartiendo los<br />
+          costes del viaje
+        </p>
+      </div>
+    </div>
+  </div>
+  <section>
+    <h2 class="section-title">Viajes destacados</h2><p class="section-subtitle">
+      Tres pasos simples para encontrar<br />
+      la aventura correcta para ti:
+    </p>
+
+    <div class="grid">
+    @for (t of trips; track t.id) {
+    <app-trip-card [trip]="t" />
+      }
+</div>
+</section>
+
+</section>

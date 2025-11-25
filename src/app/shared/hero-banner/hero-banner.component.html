@@ -1,0 +1,67 @@
+<section class="hero-banner">
+  <div class="hero-content">
+    <div class="hero-card">
+      <div class="hero-text">
+        <h1 class="hero-title">
+          Escoge tu aventura<br />
+          y con quien vivirla.
+        </h1>
+        <p class="hero-subtitle">
+          Únete a la comunidad de viajeros que<br />
+          comparten experiencias inolvidables.
+        </p>
+      </div>
+
+      <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="hero-form">
+        <div class="form-field">
+          <input
+            type="text"
+            formControlName="destination"
+            class="form-input"
+            placeholder="Destino"
+          />
+        </div>
+
+        <div class="form-field">
+          <input
+            type="text"
+            formControlName="experience"
+            class="form-input"
+            placeholder="Experiencia"
+          />
+        </div>
+
+        <div class="form-row">
+          <div class="form-field form-field-half">
+            <input
+              type="text"
+              formControlName="startDate"
+              class="form-input"
+              placeholder="Fecha inicio"
+              onfocus="(this.type='date')"
+              onblur="if(!this.value)this.type='text'"
+            />
+          </div>
+
+          <div class="form-field form-field-half">
+            <input
+              type="text"
+              formControlName="endDate"
+              class="form-input"
+              placeholder="Fecha fin"
+              onfocus="(this.type='date')"
+              onblur="if(!this.value)this.type='text'"
+            />
+          </div>
+        </div>
+
+        <div class="form-buttons">
+          <button type="submit" class="btn btn-search">Buscar</button>
+          <button type="button" class="btn btn-create" (click)="onCreateTrip()">
+            Crear viaje
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
