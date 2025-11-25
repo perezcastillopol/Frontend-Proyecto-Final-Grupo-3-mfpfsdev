@@ -21,7 +21,7 @@
 }
 
 .trip-title {
-  font-family: var(--font-primary);
+  font-family: Oswald, sans-serif;
   color: var(--dark-color);
   font-size: 1.3rem;
   margin-bottom: 14px;
@@ -50,6 +50,5 @@
   text-align: right;
   font-family: var(--font-primary);
   font-size: 1.1rem;
-  font-weight: 600;
   color: var(--dark-color);
 }
