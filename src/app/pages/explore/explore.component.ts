@@ -6,24 +6,8 @@ import { SearchBannerComponent } from '../../shared/search-banner/search-banner.
   selector: 'app-explore',
   standalone: true,
   imports: [SearchBannerComponent, TripCardComponent],
-  template: `
-    <h2>Explorar viajes</h2>
-    <app-search-banner (search)="reload()"></app-search-banner>
-
-    <div class="grid">
-      @for (t of trips; track t.id) {
-        <app-trip-card [trip]="t" />
-      }
-    </div>
-  `,
-  styles: [`
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 16px;
-      margin-top: 20px;
-    }
-  `]
+  templateUrl: './explore.component.html',
+  styleUrl: './explore.component.css'
 })
 export class ExploreComponent {
 

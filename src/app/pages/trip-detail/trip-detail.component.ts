@@ -8,15 +8,7 @@ import { map } from 'rxjs/operators';
   selector: 'app-trip-detail',
   standalone: true,
   imports: [AsyncPipe, DatePipe, CurrencyPipe],
-  template: `
-    @if (trip$ | async; as trip) {
-      <h2>{{ trip.title }}</h2>
-      <p>{{ trip.location }} · {{ trip.startDate | date }}</p>
-      <p>Precio aprox: {{ trip.price | currency:'EUR' }}</p>
-    } @else {
-      <p>Viaje no encontrado.</p>
-    }
-  `
+  templateUrl: './trip-detail.component.html'
 })
 export class TripDetailComponent {
   private route = inject(ActivatedRoute);

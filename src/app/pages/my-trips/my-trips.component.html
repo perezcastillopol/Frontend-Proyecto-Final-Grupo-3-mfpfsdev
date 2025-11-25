@@ -1,1 +1,6 @@
-<p>my-trips works!</p>
+<h2>Mis viajes</h2>
+<div class="grid">
+  @for (t of trips; track t.id) {
+    <app-trip-card [trip]="t" />
+  }
+</div>

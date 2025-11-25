@@ -1,1 +1,8 @@
-<p>explore works!</p>
+<h2>Explorar viajes</h2>
+<app-search-banner (search)="reload()"></app-search-banner>
+
+<div class="grid">
+  @for (t of trips; track t.id) {
+    <app-trip-card [trip]="t" />
+  }
+</div>

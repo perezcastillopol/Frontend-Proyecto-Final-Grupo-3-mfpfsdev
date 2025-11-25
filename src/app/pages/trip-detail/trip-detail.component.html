@@ -1,1 +1,7 @@
-<p>trip-detail works!</p>
+@if (trip$ | async; as trip) {
+  <h2>{{ trip.title }}</h2>
+  <p>{{ trip.location }} · {{ trip.startDate | date }}</p>
+  <p>Precio aprox: {{ trip.price | currency:'EUR' }}</p>
+} @else {
+  <p>Viaje no encontrado.</p>
+}

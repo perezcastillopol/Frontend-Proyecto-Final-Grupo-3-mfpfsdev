@@ -6,15 +6,8 @@ import { TripCardComponent } from '../../shared/trip-card/trip-card.component';
   selector: 'app-my-trips',
   standalone: true,
   imports: [TripCardComponent],
-  template: `
-    <h2>Mis viajes</h2>
-    <div class="grid">
-      @for (t of trips; track t.id) {
-        <app-trip-card [trip]="t" />
-      }
-    </div>
-  `,
-  styles: [`.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}`]
+  templateUrl: './my-trips.component.html',
+  styleUrl: './my-trips.component.css'
 })
 export class MyTripsComponent {
   private tripsSrv = inject(TripsService);
