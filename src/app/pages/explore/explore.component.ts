@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TripCardComponent } from '../../shared/trip-card/trip-card.component';
 import { SearchBannerComponent, SearchFilters } from '../../shared/search-banner/search-banner.component';
 import { Trip, TripsService } from '../../core/services/trips.services';
@@ -10,7 +10,8 @@ import { Trip, TripsService } from '../../core/services/trips.services';
   templateUrl: './explore.component.html',
   styleUrl: './explore.component.css'
 })
-export class ExploreComponent {
+export class ExploreComponent implements OnInit {
+  searchParams: any = {};
 
   private tripsService = inject(TripsService);
 
