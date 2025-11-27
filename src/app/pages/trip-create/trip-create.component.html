@@ -1,3 +1,153 @@
-<h2>Crear viaje</h2>
-<p>Formulario pendiente (stub).</p>
-<button>Guardar</button>
+<div class="create-trip-container">
+  <div class="form-card">
+    <h2 class="form-title">Crear nuevo viaje</h2>
+    <p class="form-subtitle">Completa los detalles de tu próxima aventura</p>
+
+    <form [formGroup]="tripForm" (ngSubmit)="onSubmit()" class="trip-form">
+      <!-- Title -->
+      <div class="form-group">
+        <label for="title">Título del viaje *</label>
+        <input
+          type="text"
+          id="title"
+          formControlName="title"
+          class="form-input"
+          placeholder="Ej: Escapada a los Pirineos"
+        />
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label for="description">Descripción *</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          class="form-input form-textarea"
+          rows="4"
+          placeholder="Describe tu viaje..."
+        ></textarea>
+      </div>
+
+      <!-- Destination and Modality -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="destination">Destino *</label>
+          <input
+            type="text"
+            id="destination"
+            formControlName="destination"
+            class="form-input"
+            placeholder="Ej: Huesca, España"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="modalityId">Modalidad *</label>
+          <select id="modalityId" formControlName="modalityId" class="form-input">
+            <option value="">Selecciona una modalidad</option>
+            @for (modality of modalities; track modality.id) {
+              <option [value]="modality.id">{{ modality.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <!-- Dates -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="startDate">Fecha de inicio *</label>
+          <input
+            type="date"
+            id="startDate"
+            formControlName="startDate"
+            class="form-input"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="endDate">Fecha de fin *</label>
+          <input
+            type="date"
+            id="endDate"
+            formControlName="endDate"
+            class="form-input"
+          />
+        </div>
+      </div>
+
+      <!-- Cost and Participants -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="costPerPerson">Precio por persona (€) *</label>
+          <input
+            type="number"
+            id="costPerPerson"
+            formControlName="costPerPerson"
+            class="form-input"
+            placeholder="0"
+            min="0"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="minParticipants">Participantes mínimos *</label>
+          <input
+            type="number"
+            id="minParticipants"
+            formControlName="minParticipants"
+            class="form-input"
+            placeholder="1"
+            min="1"
+          />
+        </div>
+      </div>
+
+      <!-- Accommodation and Transport -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="accommodation">Alojamiento *</label>
+          <input
+            type="text"
+            id="accommodation"
+            formControlName="accommodation"
+            class="form-input"
+            placeholder="Ej: Hotel, Camping, Casa rural"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="transport">Transporte *</label>
+          <input
+            type="text"
+            id="transport"
+            formControlName="transport"
+            class="form-input"
+            placeholder="Ej: Coche compartido, Tren"
+          />
+        </div>
+      </div>
+
+      <!-- Itinerary -->
+      <div class="form-group">
+        <label for="itinerary">Itinerario (opcional)</label>
+        <textarea
+          id="itinerary"
+          formControlName="itinerary"
+          class="form-input form-textarea"
+          rows="3"
+          placeholder="Día 1: ... · Día 2: ..."
+        ></textarea>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button type="button" class="btn btn-cancel" (click)="onCancel()">
+          Cancelar
+        </button>
+        <button type="submit" class="btn btn-submit" [disabled]="!tripForm.valid">
+          Crear viaje
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
