@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class TripCreateComponent {
   tripForm: FormGroup;
 
+  //Estas son las categorias. Es un placeholder hasta que se conecte con el backend
   modalities = [
     { id: 1, name: 'Aventura' },
     { id: 2, name: 'Naturaleza' },
@@ -19,6 +20,7 @@ export class TripCreateComponent {
     { id: 4, name: 'Playa' },
     { id: 5, name: 'Deportes de invierno' }
   ];
+//Hay que revisar las validaciones
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.tripForm = this.fb.group({
@@ -35,7 +37,7 @@ export class TripCreateComponent {
       modalityId: ['', Validators.required]
     });
   }
-
+//Hay que hacer que esto funcione con el backend
   onSubmit(): void {
     if (this.tripForm.valid) {
       const tripData = {
