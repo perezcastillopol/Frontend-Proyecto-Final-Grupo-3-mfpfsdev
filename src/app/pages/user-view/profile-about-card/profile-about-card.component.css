@@ -1,0 +1,11 @@
+.interest-chip {
+  background: var(--light-color);
+  color: var(--secondary-color);
+  padding: 6px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--secondary-color);
+}
+
+hr {
+  border-top: 1px solid #ddd;
+}

@@ -1,0 +1,24 @@
+.profile-banner {
+  background: var(--light-color);
+  padding: 20px 28px;
+  border-radius: 16px;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.05);
+  position: relative;
+  z-index: 5;
+}
+
+.profile-banner-title {
+  font-family: var(--font-primary);
+  color: var(--dark-color);
+  font-size: 2rem;
+}
+
+.banner-buttons {
+  position: relative;
+  z-index: 10;
+}
+
+.banner-edit-btn {
+  position: relative !important;
+  z-index: 20 !important;
+}
