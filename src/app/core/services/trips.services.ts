@@ -10,7 +10,7 @@ export type Trip = TripModel & {
 
 @Injectable({ providedIn: 'root' })
 export class TripsService {
-  private userId = 1; // stub de usuario actual
+  private userId = 1; // stub de usuario actual. Cambiar cuando hagamos conexión con el front.
   me = signal<number>(this.userId);
 
   private trips: Trip[] = [
@@ -81,7 +81,7 @@ export class TripsService {
     },
     {
       tripId: 4,
-      creatorId: 4,
+      creatorId: 1,
       title: 'Aventura en los Pirineos Catalanes',
       description:
         'Escapada de 4 días con senderismo, barranquismo y spa de montaña.',
