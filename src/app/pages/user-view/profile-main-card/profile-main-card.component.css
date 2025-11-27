@@ -1,0 +1,48 @@
+.main-card {
+  padding-top: 40px;
+  padding-bottom: 32px;
+}
+
+.profile-img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #e9ecef;
+}
+
+.profile-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.edit-photo-btn {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary-color);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.name-text {
+  font-family: var(--font-primary);
+  color: var(--dark-color);
+  font-size: 1.6rem;
+}
+
+.username-text {
+  color: var(--secondary-color);
+}
+
+.rating-text {
+  font-family: var(--font-primary);
+}
+
+.star-icon {
+  color: var(--primary-color);
+}

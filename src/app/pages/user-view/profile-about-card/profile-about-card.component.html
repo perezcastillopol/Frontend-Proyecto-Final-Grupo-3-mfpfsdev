@@ -1,0 +1,26 @@
+<div class="profile-card">
+
+  <h4 class="profile-title">Sobre mí</h4>
+
+  <textarea
+    class="form-control"
+    rows="3"
+    [(ngModel)]="user.descripcion"
+    [disabled]="!isEditing">
+  </textarea>
+
+  <hr>
+
+  <h4 class="profile-title mt-3">Intereses</h4>
+
+  <div class="d-flex flex-wrap gap-2 mb-3">
+    @for (item of user.intereses; track item) {
+      <span class="interest-chip">{{ item }}</span>
+    }
+  </div>
+
+  <div class="input-group" [hidden]="!isEditing">
+    <input class="form-control" #nuevo placeholder="Añadir interés">
+    <button class="btn btn-success" (click)="agregar(nuevo.value, nuevo)">+</button>
+  </div>
+</div>

@@ -11,7 +11,7 @@ export const routes: Routes = [
     title: 'Mis viajes'
   },
 
-  { path: 'perfil/:username',
+  { path: 'perfil/:id',
     loadComponent: () => import('./pages/user-view/user-view.component').then(c => c.UserViewComponent),
     title: 'Perfil'
   },

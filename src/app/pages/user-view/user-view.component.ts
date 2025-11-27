@@ -1,87 +1,65 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { UserProfile } from '../../interfaces/user.interface';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ProfileMainCardComponent } from './components/profile-main-card/profile-main-card.component';
-import { ProfileAboutCardComponent } from './components/profile-about-card/profile-about-card.component';
-import { ProfilePersonalInfoCardComponent } from './components/profile-personal-info-card/profile-personal-info-card.component';
-import { UserProfile } from '../../interfaces/user.component';
+
+// Importamos tus 3 tarjetas
+
 import { UserService } from '../../core/services/user.services';
+import { ProfileAboutCardComponent } from './profile-about-card/profile-about-card.component';
+import { ProfileInfoCardComponent } from './profile-info-card/profile-info-card.component';
+import { ProfileMainCardComponent } from './profile-main-card/profile-main-card.component';
 
 @Component({
   selector: 'app-user-view',
   standalone: true,
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ProfileMainCardComponent,
-    ProfileAboutCardComponent,
-    ProfilePersonalInfoCardComponent
-  ],
+    CommonModule, ProfileAboutCardComponent, ProfileInfoCardComponent, ProfileMainCardComponent],
   templateUrl: './user-view.component.html',
   styleUrls: ['./user-view.component.css']
 })
-export class UserViewComponent implements OnInit {
+export class UserViewComponent {
 
-  profileForm!: FormGroup;
-  profileData!: UserProfile;
+  user!: UserProfile;
+  isLoaded = false;
   isEditing = false;
-  isLoading = true;
 
   constructor(
-    private userService: UserService,
-    private fb: FormBuilder
+    private route: ActivatedRoute,
+    private userService: UserService
   ) {}
 
-  ngOnInit(): void {
-    this.userService.getMyProfile().subscribe({
-      next: (profile) => {
-        this.profileData = profile;
-        this.buildForm(profile);
-        this.isLoading = false;
+  ngOnInit() {
+    const userId = this.route.snapshot.paramMap.get('id');
+
+    this.userService.getUserById(userId!).subscribe({
+      next: (data) => {
+        this.user = {
+          ...data,
+          intereses: ["Senderismo", "Fotografía"],
+          fecha_nacimiento: "1995-04-20",
+          ubicacion: "Madrid",
+          estilo_viaje: "Aventura"
+        };
+        this.isLoaded = true;
       },
-      error: () => {
-        this.isLoading = false;
-      }
+      error: () => this.isLoaded = true
     });
   }
 
-  private buildForm(profile: UserProfile): void {
-    this.profileForm = this.fb.group({
-      fullName: [profile.fullName],
-      username: [profile.username],
-      rating: [profile.rating],
-      bio: [profile.bio],
-      interests: [profile.interests],
-      phone: [profile.phone],
-      birthDate: [profile.birthDate],
-      location: [profile.location],
-      travelStyle: [profile.travelStyle]
-    });
-  }
-
-  onEdit(): void {
+  editarPerfil() {
     this.isEditing = true;
   }
 
-  onCancel(): void {
-    this.isEditing = false;
-    this.buildForm(this.profileData); // deshacer cambios
-  }
+  guardarCambios() {
+    console.log("GUARDANDO...", this.user);
 
-  onSave(): void {
-    if (!this.profileForm.valid) return;
-
-    const updatedProfile: UserProfile = {
-      ...this.profileData,
-      ...this.profileForm.value
-    };
-
-    this.userService.updateMyProfile(updatedProfile).subscribe({
-      next: (savedProfile) => {
-        this.profileData = savedProfile;
+    this.userService.updateUser(this.user).subscribe({
+      next: () => {
+        console.log("Usuario actualizado");
         this.isEditing = false;
-        this.buildForm(savedProfile);
-      }
+      },
+      error: (err) => console.error("ERROR:", err)
     });
   }
 }

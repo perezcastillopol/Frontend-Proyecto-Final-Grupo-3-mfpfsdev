@@ -1,53 +1,66 @@
-@if (!isLoading) {
-  <div class="container my-4">
-    <!-- Cabecera -->
-    <div class="d-flex justify-content-between align-items-center mb-4 header">
-      <h1 class="h3 mb-0">
-        Mi <span class="fw-bold">perfil</span>
-      </h1>
+<div class="container py-4">
 
-      @if (!isEditing) {
-        <button class="btn edit-btn" (click)="onEdit()">
-          Editar
+  <!-- Loader -->
+  <div class="text-center py-5" [hidden]="isLoaded">
+    <div class="spinner-border text-primary"></div>
+  </div>
+
+  <!-- Contenido -->
+  <div [hidden]="!isLoaded">
+
+    <!-- BANNER PRINCIPAL -->
+    <div class="profile-banner d-flex justify-content-between align-items-center flex-wrap mb-4">
+
+      <h1 class="profile-banner-title">Mi perfil</h1>
+
+      <div class="d-flex gap-2 banner-buttons">
+
+        <!-- EDITAR -->
+        <button 
+          class="btn profile-btn-primary banner-edit-btn"
+          (click)="editarPerfil()"
+          [class.d-none]="isEditing">
+          Editar perfil
         </button>
-      } @else {
-        <div class="d-flex gap-2">
-          <button class="btn btn-success" (click)="onSave()">
-            Guardar
-          </button>
-          <button class="btn btn-outline-secondary" (click)="onCancel()">
-            Cancelar
-          </button>
-        </div>
-      }
+
+        <!-- GUARDAR -->
+        <button 
+          class="btn btn-success banner-edit-btn"
+          (click)="guardarCambios()"
+          [class.d-none]="!isEditing">
+          Guardar cambios
+        </button>
+
+      </div>
+
     </div>
 
-    <!-- Tres bloques del diseño -->
+    <!-- TARJETAS -->
     <div class="row g-4">
-      <div class="col-md-4">
-        <app-profile-main-card
-          [form]="profileForm"
+      
+      <div class="col-12 col-lg-4">
+        <app-profile-main-card 
+          [user]="user"
           [isEditing]="isEditing">
         </app-profile-main-card>
       </div>
 
-      <div class="col-md-8">
-        <app-profile-about-card
-          [form]="profileForm"
+      <div class="col-12 col-lg-8">
+        <app-profile-about-card 
+          [user]="user"
           [isEditing]="isEditing">
         </app-profile-about-card>
       </div>
 
       <div class="col-12">
-        <app-profile-personal-info-card
-          [form]="profileForm"
+        <app-profile-info-card 
+          [user]="user"
           [isEditing]="isEditing">
-        </app-profile-personal-info-card>
+        </app-profile-info-card>
       </div>
+
     </div>
+
   </div>
-} @else {
-  <div class="loading-wrapper">
-    Cargando perfil...
-  </div>
-}
+
+</div>
