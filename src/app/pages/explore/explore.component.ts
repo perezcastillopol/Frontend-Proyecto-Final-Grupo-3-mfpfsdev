@@ -12,7 +12,6 @@ import { Trip, TripsService } from '../../core/services/trips.services';
 })
 export class ExploreComponent implements OnInit {
   searchParams: any = {};
-
   private tripsService = inject(TripsService);
 
   allTrips: Trip[] = [];
@@ -33,8 +32,13 @@ export class ExploreComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.tripsService.list().subscribe(trips => {
-      this.allTrips = trips;
+    this.tripsService.getTrips().then(trips => {
+      this.allTrips = trips.map(trip => ({
+        ...trip,
+        imageUrl: `https://picsum.photos/seed/trip${trip.tripId}/600/400`,
+        currentPeople: 0,
+        maxPeople: trip.max_participants ?? 10
+      }));
       this.applyFilters(this.currentFilters);
     });
   }

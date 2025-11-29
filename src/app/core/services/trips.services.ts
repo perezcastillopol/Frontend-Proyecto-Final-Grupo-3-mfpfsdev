@@ -21,6 +21,11 @@ export class TripsService {
     const url = `${this.baseUrl}/trips`;
     return lastValueFrom(this.httpClient.get<TripModel[]>(url));
   }
+
+  getTripById(id: number): Promise<TripModel> {
+    const url = `${this.baseUrl}/trips/${id}`;
+    return lastValueFrom(this.httpClient.get<TripModel>(url));
+  }
   private trips: Trip[] = [
     {
       tripId: 1,
