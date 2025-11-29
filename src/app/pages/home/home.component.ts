@@ -22,7 +22,7 @@ export class HomeComponent {
 
   async loadTrips() {
     const apiTrips = await this.tripService.getTrips();
-    this.trips = apiTrips.slice(0, 3).map(trip => ({
+    this.trips = apiTrips.slice(0, 4).map(trip => ({
       ...trip,
       imageUrl: `https://picsum.photos/seed/trip${trip.tripId}/600/400`,
       currentPeople: 0,
