@@ -1,17 +1,18 @@
-export interface Trip {
+export interface ITrip {
   tripId: number;
   creatorId: number;
   title: string;
   description: string;
-  destination: string;
-  startDate: string;
-  endDate: string;
-  costPerPerson: number;
-  minParticipants: number;
-  accommodation: string;
+  start_date: string;
+  end_date: string;
+  cost_per_person: number;
+  min_participants: number;
+  max_participants: number;
+  location: string;
   transport: string;
   itinerary: string;
   status: string;
-  createdAt: string;
-  modalityId: number;
+  created_at: string;
+  updated_at: string;
+  modality_trip_id: number;
 }

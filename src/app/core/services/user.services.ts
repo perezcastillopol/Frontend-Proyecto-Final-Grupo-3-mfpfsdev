@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UserProfile } from '../../interfaces/user.component';
+import { IUserProfile } from '../../interfaces/user.component';
 
 
 @Injectable({
@@ -14,11 +14,11 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getMyProfile(): Observable<UserProfile> {
-    return this.http.get<UserProfile>(`${this.baseUrl}/users/me`);
+  getMyProfile(): Observable<IUserProfile> {
+    return this.http.get<IUserProfile>(`${this.baseUrl}/users/me`);
   }
 
-  updateMyProfile(profile: UserProfile): Observable<UserProfile> {
-    return this.http.put<UserProfile>(`${this.baseUrl}/users/me`, profile);
+  updateMyProfile(profile: IUserProfile): Observable<IUserProfile> {
+    return this.http.put<IUserProfile>(`${this.baseUrl}/users/me`, profile);
   }
 }

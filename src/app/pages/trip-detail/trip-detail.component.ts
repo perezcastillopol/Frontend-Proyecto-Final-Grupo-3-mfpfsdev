@@ -1,20 +1,30 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AsyncPipe, DatePipe, CurrencyPipe, TitleCasePipe } from '@angular/common';
+import { DatePipe, CurrencyPipe, TitleCasePipe } from '@angular/common';
 import { TripsService, Trip } from '../../core/services/trips.services';
 
 @Component({
   selector: 'app-trip-detail',
   standalone: true,
-  imports: [AsyncPipe, DatePipe, CurrencyPipe, TitleCasePipe],
+  imports: [DatePipe, CurrencyPipe, TitleCasePipe],
   templateUrl: './trip-detail.component.html',
   styleUrl: './trip-detail.component.css'
 })
-export class TripDetailComponent {
+export class TripDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
-  private trips = inject(TripsService);
+  private tripsService = inject(TripsService);
   private tripId = Number(this.route.snapshot.paramMap.get('id'));
-  trip$ = this.trips.getById(this.tripId);
+  trip: Trip | null = null;
+
+  async ngOnInit() {
+    const apiTrip = await this.tripsService.getTripById(this.tripId);
+    this.trip = {
+      ...apiTrip,
+      imageUrl: `https://picsum.photos/seed/trip${apiTrip.tripId}/1200/600`,
+      currentPeople: 0,
+      maxPeople: apiTrip.max_participants ?? 10
+    };
+  }
 
   modalityMap: Record<number, string> = {
     1: 'Aventura',
