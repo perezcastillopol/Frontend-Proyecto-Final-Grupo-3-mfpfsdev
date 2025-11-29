@@ -53,13 +53,13 @@ export class ExploreComponent implements OnInit {
 
     this.filteredTrips = this.allTrips.filter(trip => {
       const title = trip.title?.toLowerCase() || '';
-      const destination = trip.destination?.toLowerCase() || '';
+      const location = (trip.location || (trip as any).destination)?.toLowerCase() || '';
 
-      if (query && !title.includes(query) && !destination.includes(query)) {
+      if (query && !title.includes(query) && !location.includes(query)) {
         return false;
       }
 
-      if (modalityId && trip.modalityId !== modalityId) {
+      if (modalityId && trip.modality_trip_id !== modalityId) {
         return false;
       }
 
@@ -68,14 +68,14 @@ export class ExploreComponent implements OnInit {
       }
 
       if (startDate) {
-        const tripStart = new Date(trip.startDate);
+        const tripStart = new Date(trip.start_date);
         if (isNaN(tripStart.getTime()) || tripStart < startDate) {
           return false;
         }
       }
 
       if (endDate) {
-        const tripEnd = trip.endDate ? new Date(trip.endDate) : new Date(trip.startDate);
+        const tripEnd = trip.end_date ? new Date(trip.end_date) : new Date(trip.start_date);
         if (isNaN(tripEnd.getTime()) || tripEnd > endDate) {
           return false;
         }

@@ -21,27 +21,27 @@
 
       <div class="info-row">
         <i class="bi bi-geo-alt"></i>
-        <span>{{ trip?.destination || trip?.country || trip?.location || country }}</span>
+        <span>{{ trip?.destination || trip?.country || trip?.location || location }}</span>
       </div>
 
       <div class="info-row">
         <i class="bi bi-people"></i>
         <span>
-          {{ (trip?.currentPeople ?? currentPeople) }}/{{ (trip?.maxPeople ?? maxPeople) }}
+          {{ (trip?.currentPeople ?? currentPeople) }}/{{ (trip?.max_participants ?? max_participants) }}
         </span>
       </div>
 
       <div class="info-row">
         <i class="bi bi-calendar"></i>
         <span>
-          {{ trip?.startDate || startDate }} - {{ trip?.endDate || endDate }}
+          {{ trip?.startDate || start_date }} - {{ trip?.endDate || end_date }}
         </span>
       </div>
 
     </div>
 
     <div class="trip-price">
-      {{ trip?.costPerPerson ?? trip?.price ?? price }}€
+      {{ trip?.cost_per_person ?? trip?.cost_per_person ?? cost_per_person }}€
     </div>
 
   </div>

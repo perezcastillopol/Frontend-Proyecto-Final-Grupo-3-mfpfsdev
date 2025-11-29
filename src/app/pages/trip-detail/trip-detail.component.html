@@ -8,7 +8,7 @@
         <div class="hero-content">
           <div class="chips">
             <span class="chip chip-category">
-              {{ modalityMap[trip.modalityId] || 'Categoría' }}
+              {{ modalityMap[trip.modality_trip_id] || 'Categoría' }}
             </span>
             <span class="chip chip-status" [class.is-open]="(trip.status || '').toLowerCase() === 'abierto'">
               {{ (trip.status || 'Estado') | titlecase }}
@@ -17,7 +17,7 @@
           <h1 class="hero-title">{{ trip.title }}</h1>
           <p class="hero-subtitle">
             <i class="bi bi-geo-alt"></i>
-            {{ trip.destination || 'Destino pendiente' }}
+            {{ trip.location || 'Destino pendiente' }}
           </p>
         </div>
       </div>
@@ -30,7 +30,7 @@
               <div>
                 <p class="label">Fechas</p>
                 <p class="value">
-                  {{ trip.startDate | date:'dd MMM' }} - {{ trip.endDate | date:'dd MMM' }}
+                  {{ trip.start_date | date:'dd MMM' }} - {{ trip.end_date | date:'dd MMM' }}
                 </p>
               </div>
             </div>
@@ -38,14 +38,14 @@
               <div class="icon"><i class="bi bi-people"></i></div>
               <div>
                 <p class="label">Participantes</p>
-                <p class="value">{{ trip.currentPeople || 0 }}/{{ trip.maxPeople || trip.minParticipants || 0 }}</p>
+                <p class="value">{{ trip.currentPeople || 0 }}/{{ trip.maxPeople || trip.max_participants || 0 }}</p>
               </div>
             </div>
             <div class="summary-card">
               <div class="icon"><i class="bi bi-cash-coin"></i></div>
               <div>
                 <p class="label">Coste</p>
-                <p class="value">{{ trip.costPerPerson | currency:'EUR' }}</p>
+                <p class="value">{{ trip.cost_per_person | currency:'EUR' }}</p>
               </div>
             </div>
           </div>
@@ -63,13 +63,6 @@
                 <div>
                   <p class="label">Transporte</p>
                   <p class="value">{{ trip.transport || 'Pendiente' }}</p>
-                </div>
-              </li>
-              <li>
-                <span class="detail-icon"><i class="bi bi-house-door"></i></span>
-                <div>
-                  <p class="label">Alojamiento</p>
-                  <p class="value">{{ trip.accommodation || 'Pendiente' }}</p>
                 </div>
               </li>
               <li>

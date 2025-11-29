@@ -5,7 +5,7 @@
       <p class="form-subtitle">Completa los detalles de tu próxima aventura</p>
 
       <form [formGroup]="tripForm" (ngSubmit)="onSubmit()">
-        <!-- Title -->
+        <!-- Tiulo -->
         <div class="mb-3">
           <label for="title" class="form-label">Título del viaje *</label>
           <input
@@ -17,7 +17,7 @@
           />
         </div>
 
-        <!-- Description -->
+        <!-- Descripción -->
         <div class="mb-3">
           <label for="description" class="form-label">Descripción *</label>
           <textarea
@@ -29,7 +29,7 @@
           ></textarea>
         </div>
 
-        <!-- Destination and Modality -->
+        <!-- Destino -->
         <div class="row g-3 mb-3">
           <div class="col-md-6">
             <label for="destination" class="form-label">Destino *</label>
@@ -53,7 +53,7 @@
           </div>
         </div>
 
-        <!-- Dates -->
+        <!-- Fechas -->
         <div class="row g-3 mb-3">
           <div class="col-md-6">
             <label for="startDate" class="form-label">Fecha de inicio *</label>
@@ -76,7 +76,7 @@
           </div>
         </div>
 
-        <!-- Cost and Participants -->
+        <!-- Costo -->
         <div class="row g-3 mb-3">
           <div class="col-md-6">
             <label for="costPerPerson" class="form-label">Precio por persona (€) *</label>
@@ -103,18 +103,6 @@
           </div>
         </div>
 
-        <!-- Accommodation and Transport -->
-        <div class="row g-3 mb-3">
-          <div class="col-md-6">
-            <label for="accommodation" class="form-label">Alojamiento *</label>
-            <input
-              type="text"
-              id="accommodation"
-              formControlName="accommodation"
-              class="form-control form-input"
-              placeholder="Ej: Hotel, Camping, Casa rural"
-            />
-          </div>
 
           <div class="col-md-6">
             <label for="transport" class="form-label">Transporte *</label>
@@ -126,8 +114,7 @@
               placeholder="Ej: Coche compartido, Tren"
             />
           </div>
-        </div>
-
+          
         <!-- Itinerary -->
         <div class="mb-3">
           <label for="itinerary" class="form-label">Itinerario (opcional)</label>
