@@ -12,7 +12,6 @@ import { Trip, TripsService } from '../../core/services/trips.services';
 })
 export class ExploreComponent implements OnInit {
   searchParams: any = {};
-
   private tripsService = inject(TripsService);
 
   allTrips: Trip[] = [];
@@ -33,8 +32,14 @@ export class ExploreComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.tripsService.list().subscribe(trips => {
-      this.allTrips = trips;
+    this.tripsService.getTrips().then(trips => {
+      //Esto es codigo placeholder hasta que el backend soporte las nuevas propiedades.
+      this.allTrips = trips.map(trip => ({
+        ...trip,
+        imageUrl: `https://picsum.photos/seed/trip${trip.tripId}/600/400`,
+        currentPeople: 0,
+        maxPeople: trip.max_participants ?? 10
+      }));
       this.applyFilters(this.currentFilters);
     });
   }
@@ -53,13 +58,13 @@ export class ExploreComponent implements OnInit {
 
     this.filteredTrips = this.allTrips.filter(trip => {
       const title = trip.title?.toLowerCase() || '';
-      const destination = trip.destination?.toLowerCase() || '';
+      const location = (trip.location || (trip as any).destination)?.toLowerCase() || '';
 
-      if (query && !title.includes(query) && !destination.includes(query)) {
+      if (query && !title.includes(query) && !location.includes(query)) {
         return false;
       }
 
-      if (modalityId && trip.modalityId !== modalityId) {
+      if (modalityId && trip.modality_trip_id !== modalityId) {
         return false;
       }
 
@@ -68,14 +73,14 @@ export class ExploreComponent implements OnInit {
       }
 
       if (startDate) {
-        const tripStart = new Date(trip.startDate);
+        const tripStart = new Date(trip.start_date);
         if (isNaN(tripStart.getTime()) || tripStart < startDate) {
           return false;
         }
       }
 
       if (endDate) {
-        const tripEnd = trip.endDate ? new Date(trip.endDate) : new Date(trip.startDate);
+        const tripEnd = trip.end_date ? new Date(trip.end_date) : new Date(trip.start_date);
         if (isNaN(tripEnd.getTime()) || tripEnd > endDate) {
           return false;
         }

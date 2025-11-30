@@ -1,14 +1,17 @@
 import { Component, Input, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Trip } from '../../interfaces/trip.interface';
+import { ITrip } from '../../interfaces/trip.interface';
 
-type TripCardTrip = Partial<Trip> & {
+type TripCardTrip = Partial<ITrip> & {
   imageUrl?: string;
   country?: string;
-  location?: string;
+  destination?: string;
   currentPeople?: number;
   maxPeople?: number;
   price?: number;
+  startDate?: string;
+  endDate?: string;
+  costPerPerson?: number;
 };
 
 @Component({
@@ -24,12 +27,14 @@ export class TripCardComponent {
 
   @Input() imageUrl: string = '';
   @Input() title: string = '';
+  @Input() location: string = '';
   @Input() country: string = '';
   @Input() currentPeople: number = 0;
-  @Input() maxPeople: number = 0;
+  @Input() max_participants: number = 0;
+  @Input() start_date: string = '';
   @Input() startDate: string = '';
-  @Input() endDate: string = '';
-  @Input() price: number = 0;
+  @Input() end_date: string = '';
+  @Input() cost_per_person: number = 0;
 
   get detailLink(): string[] | null {
     const id = this.trip?.tripId ?? (this.trip as any)?.id;

@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ProfileMainCardComponent } from './components/profile-main-card/profile-main-card.component';
 import { ProfileAboutCardComponent } from './components/profile-about-card/profile-about-card.component';
 import { ProfilePersonalInfoCardComponent } from './components/profile-personal-info-card/profile-personal-info-card.component';
-import { UserProfile } from '../../interfaces/user.component';
+import { IUserProfile } from '../../interfaces/user.component';
 import { UserService } from '../../core/services/user.services';
 
 @Component({
@@ -23,7 +23,7 @@ import { UserService } from '../../core/services/user.services';
 export class UserViewComponent implements OnInit {
 
   profileForm!: FormGroup;
-  profileData!: UserProfile;
+  profileData!: IUserProfile;
   isEditing = false;
   isLoading = true;
 
@@ -45,7 +45,7 @@ export class UserViewComponent implements OnInit {
     });
   }
 
-  private buildForm(profile: UserProfile): void {
+  private buildForm(profile: IUserProfile): void {
     this.profileForm = this.fb.group({
       fullName: [profile.fullName],
       username: [profile.username],
@@ -71,7 +71,7 @@ export class UserViewComponent implements OnInit {
   onSave(): void {
     if (!this.profileForm.valid) return;
 
-    const updatedProfile: UserProfile = {
+    const updatedProfile: IUserProfile = {
       ...this.profileData,
       ...this.profileForm.value
     };
