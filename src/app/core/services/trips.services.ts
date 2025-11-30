@@ -11,6 +11,7 @@ export type Trip = TripModel & {
 };
 
 @Injectable({ providedIn: 'root' })
+
 export class TripsService {
   private userId = 1; // stub de usuario actual. Cambiar cuando hagamos conexión con el front.
   me = signal<number>(this.userId);
@@ -26,6 +27,12 @@ export class TripsService {
     const url = `${this.baseUrl}/trips/${id}`;
     return lastValueFrom(this.httpClient.get<TripModel>(url));
   }
+
+  createTrip(tripData: Partial<TripModel>): Promise<TripModel> | undefined{
+    const url = `${this.baseUrl}/trips`;
+    return lastValueFrom(this.httpClient.post<TripModel>(url, tripData));
+  }
+
   private trips: Trip[] = [
     {
       tripId: 1,
