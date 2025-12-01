@@ -1,3 +1,181 @@
-<h2>Crear viaje</h2>
-<p>Formulario pendiente (stub).</p>
-<button>Guardar</button>
+<div class="create-trip-container">
+  <div class="container">
+    <div class="form-card">
+      <h2 class="form-title">Crear nuevo viaje</h2>
+      <p class="form-subtitle">Completa los detalles de tu próxima aventura</p>
+
+      <form [formGroup]="tripForm" (ngSubmit)="onSubmit()">
+        <!-- Tiulo -->
+        <div class="mb-3">
+          <label for="title" class="form-label">Título del viaje *</label>
+          <input
+            type="text"
+            id="title"
+            formControlName="title"
+            class="form-control form-input"
+            placeholder="Ej: Escapada a los Pirineos"
+          />
+          @if (checkControl('title', 'required')) {
+            <div class="text-danger mt-1">El título es obligatorio</div>
+          }
+          @if (checkControl('title', 'minlength')) {
+            <div class="text-danger mt-1">El título debe tener al menos 3 caracteres</div>
+          }
+        </div>
+
+        <!-- Descripción -->
+        <div class="mb-3">
+          <label for="description" class="form-label">Descripción *</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            class="form-control form-input"
+            rows="4"
+            placeholder="Describe tu viaje..."
+          ></textarea>
+          @if (checkControl('description', 'required')) {
+            <div class="text-danger mt-1">La descripción es obligatoria</div>
+          }
+          @if (checkControl('description', 'minlength')) {
+            <div class="text-danger mt-1">La descripción debe tener al menos 10 caracteres</div>
+          }
+        </div>
+
+        <!-- Destino -->
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label for="destination" class="form-label">Destino *</label>
+            <input
+              type="text"
+              id="destination"
+              formControlName="destination"
+              class="form-control form-input"
+              placeholder="Ej: Huesca, España"
+            />
+            @if (checkControl('destination', 'required')) {
+              <div class="text-danger mt-1">El destino es obligatorio</div>
+            }
+          </div>
+
+          <div class="col-md-6">
+            <label for="modalityId" class="form-label">Modalidad *</label>
+            <select id="modalityId" formControlName="modalityId" class="form-select form-input">
+              <option value="">Selecciona una modalidad</option>
+              @for (modality of modalities; track modality.id) {
+                <option [value]="modality.id">{{ modality.name }}</option>
+              }
+            </select>
+            @if (checkControl('modalityId', 'required')) {
+              <div class="text-danger mt-1">La modalidad es obligatoria</div>
+            }
+          </div>
+        </div>
+
+        <!-- Fechas -->
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label for="startDate" class="form-label">Fecha de inicio *</label>
+            <input
+              type="date"
+              id="startDate"
+              formControlName="startDate"
+              class="form-control form-input"
+            />
+            @if (checkControl('startDate', 'required')) {
+              <div class="text-danger mt-1">La fecha de inicio es obligatoria</div>
+            }
+          </div>
+
+          <div class="col-md-6">
+            <label for="endDate" class="form-label">Fecha de fin *</label>
+            <input
+              type="date"
+              id="endDate"
+              formControlName="endDate"
+              class="form-control form-input"
+            />
+            @if (checkControl('endDate', 'required')) {
+              <div class="text-danger mt-1">La fecha de fin es obligatoria</div>
+            }
+          </div>
+        </div>
+
+        <!-- Costo -->
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label for="costPerPerson" class="form-label">Precio por persona (€) *</label>
+            <input
+              type="number"
+              id="costPerPerson"
+              formControlName="costPerPerson"
+              class="form-control form-input"
+              placeholder="0"
+              min="0"
+            />
+            @if (checkControl('costPerPerson', 'required')) {
+              <div class="text-danger mt-1">El precio es obligatorio</div>
+            }
+            @if (checkControl('costPerPerson', 'min')) {
+              <div class="text-danger mt-1">El precio debe ser mayor o igual a 0</div>
+            }
+          </div>
+
+          <div class="col-md-6">
+            <label for="minParticipants" class="form-label">Participantes mínimos *</label>
+            <input
+              type="number"
+              id="minParticipants"
+              formControlName="minParticipants"
+              class="form-control form-input"
+              placeholder="1"
+              min="1"
+            />
+            @if (checkControl('minParticipants', 'required')) {
+              <div class="text-danger mt-1">Los participantes mínimos son obligatorios</div>
+            }
+            @if (checkControl('minParticipants', 'min')) {
+              <div class="text-danger mt-1">Debe haber al menos 1 participante</div>
+            }
+          </div>
+        </div>
+
+        <!-- Transporte -->
+        <div class="mb-3">
+          <label for="transport" class="form-label">Transporte *</label>
+          <input
+            type="text"
+            id="transport"
+            formControlName="transport"
+            class="form-control form-input"
+            placeholder="Ej: Coche compartido, Tren"
+          />
+          @if (checkControl('transport', 'required')) {
+            <div class="text-danger mt-1">El transporte es obligatorio</div>
+          }
+        </div>
+
+        <!-- Itinerary -->
+        <div class="mb-3">
+          <label for="itinerary" class="form-label">Itinerario (opcional)</label>
+          <textarea
+            id="itinerary"
+            formControlName="itinerary"
+            class="form-control form-input"
+            rows="3"
+            placeholder="Día 1: ... · Día 2: ..."
+          ></textarea>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="d-flex flex-column-reverse flex-md-row gap-3 mt-4 justify-content-md-end">
+          <button type="button" class="btn btn-cancel" (click)="onCancel()">
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-submit" [disabled]="!tripForm.valid">
+            Crear viaje
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
