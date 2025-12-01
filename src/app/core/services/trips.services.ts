@@ -1,8 +1,7 @@
-import { Injectable, signal, inject } from '@angular/core';
-import { of } from 'rxjs';
-import { ITrip as TripModel } from '../../interfaces/trip.interface';
-import { HttpClient } from '@angular/common/http';
-import { lastValueFrom } from 'rxjs';
+import {Injectable, signal} from '@angular/core';
+import {lastValueFrom, of} from 'rxjs';
+import {ITrip as TripModel} from '../../interfaces/trip.interface';
+import {HttpServices} from './http.services';
 
 export type Trip = TripModel & {
   imageUrl?: string;
@@ -12,25 +11,21 @@ export type Trip = TripModel & {
 
 @Injectable({ providedIn: 'root' })
 
-export class TripsService {
+export class TripsService extends HttpServices {
   private userId = 1; // stub de usuario actual. Cambiar cuando hagamos conexión con el front.
   me = signal<number>(this.userId);
-  private baseUrl = 'http://localhost:3000/api';
-  private httpClient = inject(HttpClient);
+  private url = '/trips';
 
   getTrips(): Promise<TripModel[]> {
-    const url = `${this.baseUrl}/trips`;
-    return lastValueFrom(this.httpClient.get<TripModel[]>(url));
+    return lastValueFrom(this.get(this.url));
   }
 
   getTripById(id: number): Promise<TripModel> {
-    const url = `${this.baseUrl}/trips/${id}`;
-    return lastValueFrom(this.httpClient.get<TripModel>(url));
+    return lastValueFrom(this.get(`${this.url}/${id}`));
   }
 
   createTrip(tripData: Partial<TripModel>): Promise<TripModel> | undefined{
-    const url = `${this.baseUrl}/trips`;
-    return lastValueFrom(this.httpClient.post<TripModel>(url, tripData));
+    return lastValueFrom(this.post(this.url, tripData));
   }
 
   private trips: Trip[] = [
