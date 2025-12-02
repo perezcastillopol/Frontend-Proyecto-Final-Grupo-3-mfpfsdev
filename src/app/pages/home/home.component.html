@@ -1,73 +1,89 @@
 <app-hero-banner (search)="onSearch($event)"></app-hero-banner>
 
-<section class="how-it-works">
+<section class="py-5 bg-white">
   <div class="container">
-    <h2 class="section-title">¿Cómo funciona?</h2>
-    <p class="section-subtitle">
+    <h2 class="section-title text-center mb-3">¿Cómo funciona?</h2>
+    <p class="section-subtitle text-center text-muted mb-5">
       Tres pasos simples para encontrar<br />
       la aventura correcta para ti:
     </p>
 
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-            <circle cx="9" cy="7" r="4"></circle>
-            <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-          </svg>
+    <div class="row g-4 justify-content-center mb-5">
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card shadow-sm h-100 text-center p-4 rounded-5">
+          <div class="card-body">
+            <div class="feature-icon text-primary mb-3 mx-auto">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <h3 class="feature-title h4 fw-semibold mb-3">Encuentra<br />compañeros</h3>
+            <p class="feature-description text-muted mb-0">
+              Conecta con personas<br />
+              que comparten tus<br />
+              intereses de viaje
+            </p>
+          </div>
         </div>
-        <h3 class="feature-title">Encuentra<br />compañeros</h3>
-        <p class="feature-description">
-          Conecta con personas<br />
-          que comparten tus<br />
-          intereses de viaje
-        </p>
       </div>
 
-      <div class="feature-card">
-        <div class="feature-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-            <circle cx="12" cy="10" r="3"></circle>
-          </svg>
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card shadow-sm h-100 text-center p-4 rounded-5">
+          <div class="card-body">
+            <div class="feature-icon text-primary mb-3 mx-auto">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </div>
+            <h3 class="feature-title h4 fw-semibold mb-3">Explora<br />destinos</h3>
+            <p class="feature-description text-muted mb-0">
+              Descubre viajes<br />
+              increíbles a lugares de<br />
+              todo el mundo
+            </p>
+          </div>
         </div>
-        <h3 class="feature-title">Explora<br />destinos</h3>
-        <p class="feature-description">
-          Descubre viajes<br />
-          increíbles a lugares de<br />
-          todo el mundo
-        </p>
       </div>
 
-      <div class="feature-card">
-        <div class="feature-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <polyline points="12 6 12 12 16 14"></polyline>
-          </svg>
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card shadow-sm h-100 text-center p-4 rounded-5">
+          <div class="card-body">
+            <div class="feature-icon text-primary mb-3 mx-auto">
+              <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <h3 class="feature-title h4 fw-semibold mb-3">Comparte<br />gastos</h3>
+            <p class="feature-description text-muted mb-0">
+              Ahorra dinero<br />
+              compartiendo los<br />
+              costes del viaje
+            </p>
+          </div>
         </div>
-        <h3 class="feature-title">Comparte<br />gastos</h3>
-        <p class="feature-description">
-          Ahorra dinero<br />
-          compartiendo los<br />
-          costes del viaje
-        </p>
       </div>
     </div>
   </div>
-  <section>
-    <h2 class="section-title">Viajes destacados</h2><p class="section-subtitle">
+
+  <div class="container">
+    <h2 class="section-title text-center mb-3">Viajes destacados</h2>
+    <p class="section-subtitle text-center text-muted mb-4">
       Tres pasos simples para encontrar<br />
       la aventura correcta para ti:
     </p>
 
-    <div class="grid">
-    @for (t of trips; track t.tripId) {
-    <app-trip-card [trip]="t" />
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3 mt-3">
+      @for (t of trips; track t.tripId) {
+        <div class="col">
+          <app-trip-card [trip]="t" />
+        </div>
       }
-</div>
-</section>
+    </div>
+  </div>
 
 </section>
