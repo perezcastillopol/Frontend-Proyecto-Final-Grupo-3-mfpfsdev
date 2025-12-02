@@ -1,102 +1,145 @@
 @if (trip) {
-  <section class="trip-detail">
-    <div class="page-container">
+  <section class="trip-detail py-4 px-3 px-md-4 bg-light min-vh-100">
+    <div class="container-xl">
+      <!-- Hero Section -->
       <div
-        class="hero"
+        class="hero rounded-4 shadow-lg position-relative overflow-hidden"
         [style.backgroundImage]="backgroundImage(trip)"
       >
-        <div class="hero-content">
-          <div class="chips">
-            <span class="chip chip-category">
+        <div class="hero-content position-absolute text-white">
+          <div class="d-flex gap-2 mb-2">
+            <span class="badge chip chip-category rounded-pill">
               {{ modalityMap[trip.modality_trip_id] || 'Categoría' }}
             </span>
-            <span class="chip chip-status" [class.is-open]="(trip.status || '').toLowerCase() === 'abierto'">
+            <span class="badge chip chip-status rounded-pill" [class.is-open]="(trip.status || '').toLowerCase() === 'abierto'">
               {{ (trip.status || 'Estado') | titlecase }}
             </span>
           </div>
-          <h1 class="hero-title">{{ trip.title }}</h1>
-          <p class="hero-subtitle">
+          <h1 class="hero-title mb-2">{{ trip.title }}</h1>
+          <p class="hero-subtitle d-flex align-items-center gap-2 mb-0">
             <i class="bi bi-geo-alt"></i>
             {{ trip.location || 'Destino pendiente' }}
           </p>
         </div>
       </div>
 
-      <div class="layout">
-        <div class="col-main">
-          <div class="summary-cards">
-            <div class="summary-card">
-              <div class="icon"><i class="bi bi-calendar3"></i></div>
-              <div>
-                <p class="label">Fechas</p>
-                <p class="value">
-                  {{ trip.start_date | date:'dd MMM' }} - {{ trip.end_date | date:'dd MMM' }}
-                </p>
+      <!-- Main Layout -->
+      <div class="row g-3 g-lg-4 mt-3">
+        <!-- Main Column -->
+        <div class="col-12 col-lg-8">
+          <!-- Summary Cards -->
+          <div class="row row-cols-1 row-cols-sm-3 g-3 mb-3">
+            <div class="col">
+              <div class="card summary-card border-0 shadow-sm h-100">
+                <div class="card-body d-flex align-items-center gap-3 p-3">
+                  <div class="icon rounded-3 bg-light d-flex align-items-center justify-content-center">
+                    <i class="bi bi-calendar3"></i>
+                  </div>
+                  <div>
+                    <p class="label text-muted mb-1 small">Fechas</p>
+                    <p class="value fw-semibold mb-0">
+                      {{ trip.start_date | date:'dd MMM' }} - {{ trip.end_date | date:'dd MMM' }}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="summary-card">
-              <div class="icon"><i class="bi bi-people"></i></div>
-              <div>
-                <p class="label">Participantes</p>
-                <p class="value">{{ trip.currentPeople || 0 }}/{{ trip.maxPeople || trip.max_participants || 0 }}</p>
+            <div class="col">
+              <div class="card summary-card border-0 shadow-sm h-100">
+                <div class="card-body d-flex align-items-center gap-3 p-3">
+                  <div class="icon rounded-3 bg-light d-flex align-items-center justify-content-center">
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div>
+                    <p class="label text-muted mb-1 small">Participantes</p>
+                    <p class="value fw-semibold mb-0">{{ trip.currentPeople || 0 }}/{{ trip.maxPeople || trip.max_participants || 0 }}</p>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="summary-card">
-              <div class="icon"><i class="bi bi-cash-coin"></i></div>
-              <div>
-                <p class="label">Coste</p>
-                <p class="value">{{ trip.cost_per_person | currency:'EUR' }}</p>
+            <div class="col">
+              <div class="card summary-card border-0 shadow-sm h-100">
+                <div class="card-body d-flex align-items-center gap-3 p-3">
+                  <div class="icon rounded-3 bg-light d-flex align-items-center justify-content-center">
+                    <i class="bi bi-cash-coin"></i>
+                  </div>
+                  <div>
+                    <p class="label text-muted mb-1 small">Coste</p>
+                    <p class="value fw-semibold mb-0">{{ trip.cost_per_person | currency:'EUR' }}</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="card">
-            <h3>Descripción</h3>
-            <p class="text-body">{{ trip.description || 'El organizador aún no ha añadido descripción.' }}</p>
+          <!-- Description Card -->
+          <div class="card border-0 shadow-sm mb-3">
+            <div class="card-body p-4">
+              <h3 class="card-title h5 mb-3">Descripción</h3>
+              <p class="card-text text-body mb-0 lh-base">{{ trip.description || 'El organizador aún no ha añadido descripción.' }}</p>
+            </div>
           </div>
 
-          <div class="card">
-            <h3>Detalles del viaje</h3>
-            <ul class="details-list">
-              <li>
-                <span class="detail-icon"><i class="bi bi-airplane"></i></span>
-                <div>
-                  <p class="label">Transporte</p>
-                  <p class="value">{{ trip.transport || 'Pendiente' }}</p>
-                </div>
-              </li>
-              <li>
-                <span class="detail-icon"><i class="bi bi-map"></i></span>
-                <div>
-                  <p class="label">Itinerario</p>
-                  <p class="value">{{ trip.itinerary || 'Pendiente' }}</p>
-                </div>
-              </li>
-            </ul>
+          <!-- Details Card -->
+          <div class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+              <h3 class="card-title h5 mb-3">Detalles del viaje</h3>
+              <ul class="list-unstyled mb-0">
+                <li class="d-flex gap-3 mb-3">
+                  <span class="detail-icon rounded-3 bg-light d-flex align-items-center justify-content-center flex-shrink-0">
+                    <i class="bi bi-airplane"></i>
+                  </span>
+                  <div>
+                    <p class="label text-muted mb-1 small">Transporte</p>
+                    <p class="value fw-semibold mb-0">{{ trip.transport || 'Pendiente' }}</p>
+                  </div>
+                </li>
+                <li class="d-flex gap-3">
+                  <span class="detail-icon rounded-3 bg-light d-flex align-items-center justify-content-center flex-shrink-0">
+                    <i class="bi bi-map"></i>
+                  </span>
+                  <div>
+                    <p class="label text-muted mb-1 small">Itinerario</p>
+                    <p class="value fw-semibold mb-0">{{ trip.itinerary || 'Pendiente' }}</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        <div class="col-side">
-          <div class="card join-card">
-            <h3>Solicitar unirme</h3>
-            <p class="text-body">
-              Tu solicitud será revisada por el organizador para validar que encaja con el grupo.
-            </p>
-            <textarea class="form-control" rows="4" placeholder="Cuéntale al organizador por qué te gustaría unirte..."></textarea>
-            <button class="btn join-btn" type="button">Enviar solicitud</button>
+        <!-- Sidebar Column -->
+        <div class="col-12 col-lg-4">
+          <!-- Join Card -->
+          <div class="card join-card border-0 shadow-sm mb-3">
+            <div class="card-body p-4">
+              <h3 class="card-title h5 mb-3">Solicitar unirme</h3>
+              <p class="card-text text-body mb-3 lh-base">
+                Tu solicitud será revisada por el organizador para validar que encaja con el grupo.
+              </p>
+              <textarea class="form-control mb-3 bg-light border-0 rounded-3" rows="4" placeholder="Cuéntale al organizador por qué te gustaría unirte..."></textarea>
+              <button class="btn join-btn w-100 text-white rounded-3" type="button">Enviar solicitud</button>
+            </div>
           </div>
 
-          <div class="card participants-card">
-            <div class="participants-header">
-              <h4>Participantes ({{ trip.currentPeople || 0 }})</h4>
-              <i class="bi bi-people"></i>
+          <!-- Participants Card -->
+          <div class="card participants-card border-0 shadow-sm">
+            <div class="card-body p-4">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <h4 class="mb-0 h6">Participantes ({{ trip.currentPeople || 0 }})</h4>
+                <i class="bi bi-people"></i>
+              </div>
+              <p class="card-text text-body mb-0 lh-base">Próximamente listado de participantes.</p>
             </div>
-            <p class="text-body">Próximamente listado de participantes.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 } @else {
-  <p>Viaje no encontrado.</p>
+  <div class="container py-5">
+    <div class="alert alert-warning" role="alert">
+      Viaje no encontrado.
+    </div>
+  </div>
 }
