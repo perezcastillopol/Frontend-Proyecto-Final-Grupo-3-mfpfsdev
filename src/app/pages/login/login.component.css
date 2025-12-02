@@ -1,0 +1,169 @@
+/* ------- Layout general ------- */
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: #f3f7f5;
+}
+
+/* ------- Tarjeta ------- */
+.login-card {
+  width: 480px;
+  max-width: 90%;
+  background: #ffffff;
+  padding: 50px 45px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  font-family: "Inter", sans-serif;
+}
+
+/* ------- Encabezado ------- */
+.login-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.login-header h2 {
+  font-family: "Oswald", sans-serif;
+  font-size: 40px;
+  font-weight: 600;
+  color: #0f4e47;
+  margin-bottom: 8px;
+}
+
+.login-header h2 span {
+  color: #04796a;
+}
+
+.login-logo {
+  width: 46px;
+  margin: 8px auto 0;
+}
+
+/* ------- Campos ------- */
+.form-field {
+  margin-bottom: 22px;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 6px;
+  padding-left: 12px;
+  font-family: "Oswald", sans-serif;
+  font-size: 19px;
+  color: #0f4e47;
+}
+
+.form-field input {
+  width: 100%;
+  padding: 16px 18px;
+  border-radius: 12px;
+  border: 1px solid #d9e7e2;
+  background: #f6fdfb;
+  font-size: 18px;
+}
+
+.form-field input:focus {
+  border-color: #37c6a4;
+  background: #ffffff;
+}
+
+.form-field small {
+  display: block;
+  margin-top: 4px;
+  padding-left: 12px;
+  font-size: 13px;
+  color: #d9534f;
+}
+
+/* ------- Link Olvidé contraseña ------- */
+.forgot-link {
+  display: block;
+  margin-bottom: 26px;
+  padding-left: 12px;
+  font-family: "Oswald", sans-serif;
+  font-size: 16px;
+  color: #0f4e47;
+  text-decoration: underline;
+}
+
+/* ------- Botón ------- */
+.btn-login {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 30px;
+  background-color: #2dc7a3;
+  color: #ffffff;
+  font-family: "Oswald", sans-serif;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.btn-login:hover {
+  background-color: #23b392;
+}
+
+/* ------- Error general ------- */
+.error {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 15px;
+  color: #d9534f;
+}
+
+/* ------- Responsive pantallas grandes ------- */
+@media (min-width: 1400px) {
+  .login-card {
+    width: 560px;
+    padding: 60px 55px;
+  }
+
+  .login-header h2 {
+    font-size: 46px;
+  }
+
+  .login-logo {
+    width: 52px;
+  }
+
+  .form-field label {
+    font-size: 20px;
+  }
+
+  .form-field input {
+    font-size: 19px;
+    padding: 18px 20px;
+  }
+
+  .forgot-link {
+    font-size: 17px;
+  }
+
+  .btn-login {
+    font-size: 22px;
+    padding: 18px;
+  }
+}
+
+/* ------- Registro ------- */
+.register-text {
+  margin-top: 20px;
+  text-align: center;
+  font-family: "Oswald", sans-serif;
+  font-size: 16px;
+  color: #0f4e47;
+}
+
+.register-link {
+  margin-left: 6px;
+  color: #04796a;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.register-link:hover {
+  color: #23b392;
+}

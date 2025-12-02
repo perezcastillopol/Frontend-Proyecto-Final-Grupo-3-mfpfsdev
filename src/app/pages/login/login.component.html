@@ -1,6 +1,85 @@
-<h2>Entrar</h2>
-<form (ngSubmit)="login()">
-  <input [(ngModel)]="email" name="email" placeholder="Email">
-  <input [(ngModel)]="pass"  name="pass"  placeholder="Password" type="password">
-  <button>Acceder</button>
-</form>
+<div class="login-wrapper">
+  <div class="login-card card shadow-lg">
+
+    <div class="login-header">
+      <h2>Bienvenido a <span>TripBud</span></h2>
+      <img src="/images/logo.png" alt="TripBud logo" class="login-logo" />
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+
+      <!-- Correo -->
+      <div class="form-field mb-3">
+        <label for="email" class="form-label">Correo</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Introduce tu correo."
+          class="form-control"
+        />
+
+        <!-- Correo obligatorio -->
+        @if (loginForm.get('email')?.touched && loginForm.get('email')?.hasError('required')) {
+          <small class="text-danger d-block mt-1">
+            El correo es obligatorio.
+          </small>
+        }
+
+        <!-- Formato inválido -->
+        @if (loginForm.get('email')?.touched && loginForm.get('email')?.hasError('email')) {
+          <small class="text-danger d-block mt-1">
+            Introduce un correo válido.
+          </small>
+        }
+      </div>
+
+      <!-- Contraseña -->
+      <div class="form-field mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Introduce tu contraseña."
+          class="form-control"
+        />
+
+        <!-- Contraseña obligatoria -->
+        @if (loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')) {
+          <small class="text-danger d-block mt-1">
+            La contraseña es obligatoria.
+          </small>
+        }
+
+        <!-- Longitud mínima -->
+        @if (loginForm.get('password')?.touched && loginForm.get('password')?.hasError('minlength')) {
+          <small class="text-danger d-block mt-1">
+            La contraseña debe tener al menos 6 caracteres.
+          </small>
+        }
+      </div>
+
+      <a class="forgot-link" href="#">Olvidé mi contraseña.</a>
+
+      <!-- Botón de enviar -->
+      <button
+        class="btn-login btn btn-primary w-100"
+        type="submit"
+        [disabled]="loading || loginForm.invalid"
+      >
+        {{ loading ? 'Entrando...' : 'Entrar' }}
+      </button>
+
+      <div class="register-text text-center mt-3">
+        ¿No tienes cuenta?
+        <a routerLink="/register" class="register-link">Registrarse</a>
+      </div>
+
+      <!-- Error general de login -->
+      @if (errorMsg) {
+        <p class="error alert alert-danger text-center mt-3">{{ errorMsg }}</p>
+      }
+    </form>
+  </div>
+</div>

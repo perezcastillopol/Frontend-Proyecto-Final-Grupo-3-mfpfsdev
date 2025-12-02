@@ -1,22 +1,21 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { UserProfile } from '../../interfaces/user.interface';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {IUserProfile} from '../../interfaces/user.component';
+import {HttpServices} from './http.services';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService extends HttpServices {
 
-  private baseUrl = 'http://localhost:3000/api';
+  private url = '/users';
 
-  constructor(private http: HttpClient) {}
-
-  getUserById(userId: string | number): Observable<UserProfile> {
-    return this.http.get<UserProfile>(`${this.baseUrl}/users/${userId}`);
+  getMyProfile(): Observable<IUserProfile> {
+    return this.get(`${this.url}/users/me`);
   }
 
-  updateUser(user: UserProfile): Observable<any> {
-    return this.http.put(`${this.baseUrl}/users/${user.id_usuario}`, user);
+  updateMyProfile(profile: IUserProfile): Observable<IUserProfile> {
+    return this.put(`${this.url}/users/me`, profile);
   }
 }
