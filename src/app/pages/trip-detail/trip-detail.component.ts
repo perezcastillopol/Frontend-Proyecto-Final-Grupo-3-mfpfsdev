@@ -17,13 +17,17 @@ export class TripDetailComponent implements OnInit {
   trip: Trip | null = null;
 
   async ngOnInit() {
-    const apiTrip = await this.tripsService.getTripById(this.tripId);
-    this.trip = {
-      ...apiTrip,
-      imageUrl: `https://picsum.photos/seed/trip${apiTrip.tripId}/1200/600`,
-      currentPeople: 0,
-      maxPeople: apiTrip.max_participants ?? 10
-    };
+    try {
+      const apiTrip = await this.tripsService.getTripById(this.tripId);
+      this.trip = {
+        ...apiTrip,
+        imageUrl: apiTrip.imageUrl || `https://picsum.photos/seed/trip${apiTrip.tripId}/1200/600`,
+        currentPeople: apiTrip.currentPeople ?? 0,
+        maxPeople: apiTrip.maxPeople ?? apiTrip.max_participants ?? 10
+      };
+    } catch (error) {
+      this.trip = null;
+    }
   }
 
   modalityMap: Record<number, string> = {
