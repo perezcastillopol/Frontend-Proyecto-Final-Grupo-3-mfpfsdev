@@ -1,5 +1,4 @@
 import {Injectable, signal} from '@angular/core';
-import {lastValueFrom, map, Observable} from 'rxjs';
 import {ITrip as TripModel} from '../../interfaces/trip.interface';
 import {HttpServices} from './http.services';
 
@@ -40,28 +39,29 @@ export class TripsService extends HttpServices {
     };
   }
 
-  getTrips(): Promise<Trip[]> {
-    return lastValueFrom(
-      this.get(this.url).pipe(map((list: any[]) => list.map((t) => this.mapTrip(t))))
-    );
+  async getTrips(): Promise<Trip[]> {
+    const list = await this.get(this.url);
+    return list.map((t: any) => this.mapTrip(t));
   }
 
-  list(): Observable<Trip[]> {
-    return this.get(this.url).pipe(map((list: any[]) => list.map((t) => this.mapTrip(t))));
+  async list(): Promise<Trip[]> {
+    const list = await this.get(this.url);
+    return list.map((t: any) => this.mapTrip(t));
   }
 
-  myTrips(): Observable<Trip[]> {
+  async myTrips(): Promise<Trip[]> {
     const userId = this.me();
-    return this.list().pipe(map((trips) => trips.filter((t) => t.creatorId === userId)));
+    const trips = await this.list();
+    return trips.filter((t) => t.creatorId === userId);
   }
 
-  getTripById(id: number): Promise<Trip> {
-    return lastValueFrom(
-      this.get(`${this.url}/${id}`).pipe(map((trip) => this.mapTrip(trip)))
-    );
+  async getTripById(id: number): Promise<Trip> {
+    const trip = await this.get(`${this.url}/${id}`);
+    return this.mapTrip(trip);
   }
 
-  createTrip(tripData: Partial<TripModel>): Promise<Trip> | undefined {
-    return lastValueFrom(this.post(this.url, tripData)).then((trip) => this.mapTrip(trip));
+  async createTrip(tripData: Partial<TripModel>): Promise<Trip> {
+    const trip = await this.post(this.url, tripData);
+    return this.mapTrip(trip);
   }
 }

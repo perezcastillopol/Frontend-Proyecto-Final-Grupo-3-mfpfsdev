@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
 import {IUserProfile} from '../../interfaces/user.component';
 import {HttpServices} from './http.services';
 
@@ -11,11 +10,11 @@ export class UserService extends HttpServices {
 
   private url = '/users';
 
-  getMyProfile(): Observable<IUserProfile> {
+  getMyProfile(): Promise<IUserProfile> {
     return this.get(`${this.url}/users/me`);
   }
 
-  updateMyProfile(profile: IUserProfile): Observable<IUserProfile> {
+  updateMyProfile(profile: IUserProfile): Promise<IUserProfile> {
     return this.put(`${this.url}/users/me`, profile);
   }
 }

@@ -1,25 +1,27 @@
-<section class="explore-page">
-  <div class="page-container">
-    <h1 class="page-title">Explorar viajes</h1>
+<section class="explore-page bg-light">
+  <div class="container-fluid page-container">
+    <h1 class="page-title mb-3">Explorar viajes</h1>
 
-    <div class="search-block">
+    <div class="search-block mb-3">
       <app-search-banner (search)="onSearch($event)"></app-search-banner>
     </div>
 
-    <div class="results-header">
-      <h3>Viajes encontrados</h3>
-      <span class="results-count">{{ filteredTrips.length }} resultados</span>
+    <div class="results-header d-flex justify-content-between align-items-baseline flex-wrap gap-2 mb-3 px-1">
+      <h3 class="mb-0">Viajes encontrados</h3>
+      <span class="results-count text-muted">{{ filteredTrips.length }} resultados</span>
     </div>
 
     @if (filteredTrips.length === 0) {
-      <div class="empty-state">
-        <p>No hemos encontrado viajes con estos filtros.</p>
-        <small>Prueba a cambiar el estado, la categoría o las fechas.</small>
+      <div class="empty-state text-center p-4 border border-dashed rounded-3">
+        <p class="mb-2">No hemos encontrado viajes con estos filtros.</p>
+        <small class="text-muted">Prueba a cambiar el estado, la categoría o las fechas.</small>
       </div>
     } @else {
-      <div class="grid">
+      <div class="row g-4 trip-grid">
         @for (t of filteredTrips; track t.tripId) {
-          <app-trip-card [trip]="t" />
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <app-trip-card [trip]="t" />
+          </div>
         }
       </div>
     }

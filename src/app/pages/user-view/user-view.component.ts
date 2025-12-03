@@ -32,17 +32,15 @@ export class UserViewComponent implements OnInit {
     private fb: FormBuilder
   ) {}
 
-  ngOnInit(): void {
-    this.userService.getMyProfile().subscribe({
-      next: (profile) => {
-        this.profileData = profile;
-        this.buildForm(profile);
-        this.isLoading = false;
-      },
-      error: () => {
-        this.isLoading = false;
-      }
-    });
+  async ngOnInit(): Promise<void> {
+    try {
+      const profile = await this.userService.getMyProfile();
+      this.profileData = profile;
+      this.buildForm(profile);
+      this.isLoading = false;
+    } catch (error) {
+      this.isLoading = false;
+    }
   }
 
   private buildForm(profile: IUserProfile): void {
@@ -68,7 +66,7 @@ export class UserViewComponent implements OnInit {
     this.buildForm(this.profileData); // deshacer cambios
   }
 
-  onSave(): void {
+  async onSave(): Promise<void> {
     if (!this.profileForm.valid) return;
 
     const updatedProfile: IUserProfile = {
@@ -76,12 +74,14 @@ export class UserViewComponent implements OnInit {
       ...this.profileForm.value
     };
 
-    this.userService.updateMyProfile(updatedProfile).subscribe({
-      next: (savedProfile) => {
-        this.profileData = savedProfile;
-        this.isEditing = false;
-        this.buildForm(savedProfile);
-      }
-    });
+    try {
+      const savedProfile = await this.userService.updateMyProfile(updatedProfile);
+      this.profileData = savedProfile;
+      this.isEditing = false;
+      this.buildForm(savedProfile);
+    } catch (error) {
+      // Handle error if needed
+      console.error('Error updating profile:', error);
+    }
   }
 }

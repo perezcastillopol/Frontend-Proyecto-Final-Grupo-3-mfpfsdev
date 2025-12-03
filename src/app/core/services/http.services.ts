@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {lastValueFrom} from 'rxjs';
 import {HttpOptions} from '../../interfaces/httpOptions.interface';
 
 @Injectable({
@@ -35,19 +35,19 @@ export class HttpServices {
     return httpOptions;
   }
 
-  protected get(endpoint: string, options?: HttpOptions): Observable<any> {
-    return this.http.get(`${this.baseUrl}${endpoint}`, this.buildOptions(options));
+  protected get(endpoint: string, options?: HttpOptions): Promise<any> {
+    return lastValueFrom(this.http.get(`${this.baseUrl}${endpoint}`, this.buildOptions(options)));
   }
 
-  protected post(endpoint: string, body: any, options?: HttpOptions): Observable<any> {
-    return this.http.post(`${this.baseUrl}${endpoint}`, body, this.buildOptions(options));
+  protected post(endpoint: string, body: any, options?: HttpOptions): Promise<any> {
+    return lastValueFrom(this.http.post(`${this.baseUrl}${endpoint}`, body, this.buildOptions(options)));
   }
 
-  protected put(endpoint: string, body: any, options?: HttpOptions): Observable<any> {
-    return this.http.put(`${this.baseUrl}${endpoint}`, body, this.buildOptions(options));
+  protected put(endpoint: string, body: any, options?: HttpOptions): Promise<any> {
+    return lastValueFrom(this.http.put(`${this.baseUrl}${endpoint}`, body, this.buildOptions(options)));
   }
 
-  protected delete(endpoint: string, options?: HttpOptions): Observable<any> {
-    return this.http.delete(`${this.baseUrl}${endpoint}`, this.buildOptions(options));
+  protected delete(endpoint: string, options?: HttpOptions): Promise<any> {
+    return lastValueFrom(this.http.delete(`${this.baseUrl}${endpoint}`, this.buildOptions(options)));
   }
 }
