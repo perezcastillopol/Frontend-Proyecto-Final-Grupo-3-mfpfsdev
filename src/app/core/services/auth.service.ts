@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { lastValueFrom } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpServices} from './http.services';
 
 export interface LoginRequest {
   email: string;
@@ -14,18 +13,12 @@ export interface LoginResponse {
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService extends HttpServices {
 
-// Cambiar cuando backend esté listo
-  private readonly apiUrl = 'http://localhost:3000/api';
+  private url = '/auth';
 
-  constructor(private http: HttpClient) {}
-
-  async login(credentials: LoginRequest): Promise<LoginResponse> {
-    const response = await lastValueFrom(
-      this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, credentials)
-    );
-    // Guardar token en el navegador
+  async login(credentials: LoginRequest) {
+    const response = await this.post(`${this.url}/login`, credentials);
     localStorage.setItem('token', response.token);
     return response;
   }
