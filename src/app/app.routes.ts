@@ -17,6 +17,8 @@ export const routes: Routes = [
 
   { path: 'login', loadComponent: () => import('./pages/login/login.component').then(c => c.LoginComponent), title: 'Entrar' },
 
+  { path: 'register', loadComponent: () => import('./pages/user-form/user-form.component').then(c => c.UserFormComponent), title: 'Register' },
+
   { path: 'crear',
     loadComponent: () => import('./pages/trip-create/trip-create.component').then(c => c.TripCreateComponent),
     title: 'Crear viaje'

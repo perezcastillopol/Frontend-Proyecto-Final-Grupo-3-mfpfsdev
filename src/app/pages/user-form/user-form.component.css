@@ -1,0 +1,8 @@
+.form-error {
+  color: #dc3545;
+  font-size: 0.8rem;
+  margin: 0.2rem 0 0;
+  font-style: italic;
+  display: inline-block;
+  padding-bottom: 2px;
+}

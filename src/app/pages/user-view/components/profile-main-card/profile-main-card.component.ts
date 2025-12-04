@@ -13,8 +13,8 @@ export class ProfileMainCardComponent {
   @Input() form!: FormGroup;
   @Input() isEditing = false;
 
-  get fullNameControl(): FormControl {
-    return this.form.get('fullName') as FormControl;
+  get nameControl(): FormControl {
+    return this.form.get('name') as FormControl;
   }
 
   get usernameControl(): FormControl {

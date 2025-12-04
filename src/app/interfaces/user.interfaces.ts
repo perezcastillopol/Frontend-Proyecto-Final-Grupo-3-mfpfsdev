@@ -1,6 +1,6 @@
 export interface IUserProfile {
   id: string;
-  fullName: string;
+  name: string;
   username: string;
   rating: number;
 

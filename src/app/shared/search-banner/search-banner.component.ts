@@ -14,7 +14,7 @@ export interface SearchFilters {
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './search-banner.component.html',
-  styleUrl: './search-banner.component.css',
+  styleUrls: ['./search-banner.component.css'],
 })
 export class SearchBannerComponent {
   @Output() search = new EventEmitter<SearchFilters>();

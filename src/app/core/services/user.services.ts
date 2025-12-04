@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {IUserProfile} from '../../interfaces/user.component';
+import {Observable, lastValueFrom} from 'rxjs';
+import {IUserProfile} from '../../interfaces/user.interfaces';
 import {HttpServices} from './http.services';
 
 
@@ -18,4 +18,9 @@ export class UserService extends HttpServices {
   updateMyProfile(profile: IUserProfile): Observable<IUserProfile> {
     return this.put(`${this.url}/users/me`, profile);
   }
+
+  createUser(user: IUserProfile): Promise<IUserProfile> {
+    return lastValueFrom(this.post(this.url, user));
+  }
+  
 }

@@ -1,0 +1,106 @@
+<section class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+	<div class="card shadow-sm rounded-4 border-0" style="max-width: 1100px; width: 100%;">
+			<div class="card-body px-5 py-2" style="font-size: 1rem;">
+				<h2 class="card-title mb-3 text-center" style="font-size: 1.5rem;">Registro de usuario</h2>
+				<form [formGroup]="userForm" (ngSubmit)="getDataForm()">
+					<div class="mb-2">
+						<label for="name" class="form-label">Nombre completo</label>
+						<input type="text" class="form-control" id="name" name="name" formControlName="name">
+						@if (checkForm('required', 'name')){
+							<p class="form-error">El campo es obligatorio</p>
+						}
+						@if (checkForm('minlength', 'first_name')){
+							<p class="form-error">El campo debe tener mínimo tres caracteres</p>
+						}
+					</div>
+					<div class="mb-2">
+						<label for="photo_url" class="form-label">Imagen Usuario</label>
+						<input type="url" class="form-control" id="photo_url" name="photo_url" placeholder="https://..."formControlName="photo_url">
+						@if (checkForm('required', 'photo_url')){
+							<p class="form-error">El campo es obligatorio</p>
+						}
+						@if (checkForm('pattern', 'photo_url')){
+							<p class="form-error">Debe introducir la URL de la imagen</p>
+						}
+					</div>
+					<div class="mb-2">
+						<label for="birthDate" class="form-label">Fecha de nacimiento</label>
+						<input type="date" class="form-control" id="birthDate" name="birthDate" placeholder="dd/MM/yyyy"formControlName="birthDate">
+						@if (checkForm('required', 'birthDate')){
+							<p class="form-error">El campo es obligatorio</p>
+						}
+						@if (checkForm('minlength', 'birthDate')){
+							<p class="form-error">El campo debe tener mínimo dos caracteres</p>
+						}
+					</div>
+					<div class="mb-2">
+						<label for="email" class="form-label">Correo electrónico</label>
+						<input type="email" class="form-control" id="email" name="email" placeholder="correo@ejemplo.com"formControlName="email">
+						@if (checkForm('required', 'email')){
+							<p class="form-error">El campo es obligatorio</p>
+						}
+						@if (checkForm('pattern', 'email')){
+							<p class="form-error">El formato del email no es válido</p>
+						}
+					</div>
+					<div class="mb-2">
+						<label for="password_hash" class="form-label">Password</label>
+						<input type="text" class="form-control" id="password_hash" name="password_hash" placeholder="password_hash"formControlName="password_hash">
+						@if (checkForm('required', 'password_hash')){
+							<p class="form-error">El campo es obligatorio</p>
+						}
+						@if (checkForm('minlength', 'password_hash')){
+							<p class="form-error">El campo debe tener mínimo 6 caracteres</p>
+						}
+					</div>
+					<div class="mb-2">
+						<label for="phone" class="form-label">Teléfono</label>
+						<input type="text" class="form-control" id="phone" name="phone" formControlName="phone">
+						@if (checkForm('required', 'phone')){
+							<p class="form-error">El campo es obligatorio</p>
+						}
+						@if (checkForm('minlength', 'phone')){
+							<p class="form-error">El campo debe tener mínimo dos caracteres</p>
+						}
+					</div>	
+
+					<div class="mb-2">
+						<label for="location" class="form-label">Ubicación</label>
+						<input type="text" class="form-control" id="location" name="location" placeholder="Tu ciudad"formControlName="location">
+						@if (checkForm('required', 'location')){
+							<p class="form-error">El campo es obligatorio</p>
+						}
+						@if (checkForm('minlength', 'location')){
+							<p class="form-error">El campo debe tener mínimo dos caracteres</p>
+						}
+					</div>
+
+					<div class="mb-2">
+						<label for="bio" class="form-label">Biografía</label>
+						<textarea class="form-control" id="bio" name="bio" placeholder="Cuenta tu historia"formControlName="bio"></textarea>
+						@if (checkForm('required', 'bio')){
+							<p class="form-error">El campo es obligatorio</p>
+						}
+						@if (checkForm('minlength', 'bio')){
+							<p class="form-error">El campo debe tener mínimo dos caracteres</p>
+						}
+					</div>
+					<div class="mb-2">
+						<label for="interests" class="form-label">Intereses</label>
+						<textarea class="form-control" id="interests" name="interests" placeholder="¿Qué estás buscando?" formControlName="interests"></textarea>
+						@if (checkForm('required', 'interests')){
+							<p class="form-error">El campo es obligatorio</p>
+						}
+						@if (checkForm('minlength', 'interests')){
+							<p class="form-error">El campo debe tener mínimo dos caracteres</p>
+						}
+					</div>																		
+					
+					
+					<div class="d-flex justify-content-center gap-3 mt-3">
+						<input type="submit" class="btn btn-warning" [disabled]="userForm.invalid">
+					</div>
+				</form>
+			</div>
+	</div>
+</section>
