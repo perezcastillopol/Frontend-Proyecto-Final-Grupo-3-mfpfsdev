@@ -1,0 +1,15 @@
+<div class="review-item">
+  @if (review.reviewer_photo) {
+    <img [src]="review.reviewer_photo" class="avatar" alt="avatar" />
+  }
+  <div class="body">
+    <div class="header">
+      <strong>{{ review.reviewer_name || 'Usuario' }}</strong>
+      <span class="stars">{{ review.rating }} ⭐</span>
+      <small class="date">{{ review.created_at | date:'medium' }}</small>
+    </div>
+    @if (review.comment) {
+      <p>{{ review.comment }}</p>
+    }
+  </div>
+</div>

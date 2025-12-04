@@ -1,0 +1,30 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="review-form">
+  <label>
+    Usuario a valorar (ID)
+    <input formControlName="reviewee_id" type="number" />
+  </label>
+  @if (form.controls['reviewee_id'].invalid && form.controls['reviewee_id'].touched) {
+    <div class="error">ID obligatorio</div>
+  }
+
+  <label>
+    Puntuación (1-5)
+    <input formControlName="rating" type="number" min="1" max="5" />
+  </label>
+  @if (form.controls['rating'].invalid && form.controls['rating'].touched) {
+    <div class="error">Valor entre 1 y 5</div>
+  }
+
+  <label>
+    Comentario (opcional)
+    <textarea formControlName="comment"></textarea>
+  </label>
+
+  <div class="actions">
+    <button type="submit" [disabled]="form.invalid || submitting">Enviar valoración</button>
+  </div>
+
+  @if (error) {
+    <div class="error">{{ error }}</div>
+  }
+</form>

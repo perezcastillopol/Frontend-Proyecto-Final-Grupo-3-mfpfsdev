@@ -1,0 +1,14 @@
+.review-form {
+  display:flex;
+  flex-direction:column;
+  gap:.5rem;
+}
+
+.actions {
+  margin-top:.5rem;
+}
+
+.error {
+  color: #c00;
+  font-size:.9rem;
+}
