@@ -86,21 +86,30 @@
 						}
 					</div>
 					<div class="mb-2">
-						<label for="interests" class="form-label">Intereses</label>
-						<textarea class="form-control" id="interests" name="interests" placeholder="¿Qué estás buscando?" formControlName="interests"></textarea>
-						@if (checkForm('required', 'interests')){
-							<p class="form-error">El campo es obligatorio</p>
-						}
-						@if (checkForm('minlength', 'interests')){
-							<p class="form-error">El campo debe tener mínimo dos caracteres</p>
-						}
-					</div>																		
-					
-					
+						<label for="interests" class="form-label">Intereses</label>					
+					</div>
+					<div>
+						<select formControlName="modality" class="form-select">
+							<option value="">Selecciona una modalidad</option>
+							@for (mod of getModalities(); track mod) {
+      								<option value="{{mod.name}}">{{mod.name}}</option>
+							}
+						</select>
+					</div>						
+					<div class="mt-4">
+						<div class="d-flex flex-wrap gap-3">
+							@for (tag of selectedModalities; track $index) {
+								<div class="tag-wrapper position-relative">
+									<app-tags [tagText]="tag"></app-tags>
+									<button type="button" class="btn-close tag-close" (click)="removeTag($index)"></button>
+								</div>
+							}
+						</div>
+					</div>									
 					<div class="d-flex justify-content-center gap-3 mt-3">
 						<input type="submit" class="btn btn-warning" [disabled]="userForm.invalid">
 					</div>
-				</form>
+				</form>				
 			</div>
 	</div>
 </section>
