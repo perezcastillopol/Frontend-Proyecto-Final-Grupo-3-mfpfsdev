@@ -1,11 +1,26 @@
-.interest-chip {
-  background: var(--light-color);
-  color: var(--secondary-color);
-  padding: 6px 12px;
-  border-radius: 14px;
-  border: 1px solid var(--secondary-color);
+.profile-card.about-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 1.5rem;
 }
 
-hr {
-  border-top: 1px solid #ddd;
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.card-text {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #343a40;
+}
+
+.card-text.text-muted {
+  color: #6c757d;
+}
+
+textarea.form-control {
+  resize: none;
 }

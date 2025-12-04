@@ -1,20 +1,25 @@
 <div class="container py-4">
 
   <!-- Loader -->
-  <div class="text-center py-5" [hidden]="isLoaded">
-    <div class="spinner-border text-primary"></div>
-  </div>
+  @if (!isLoaded) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary"></div>
+    </div>
+  }
 
   <!-- Contenido -->
-  <div [hidden]="!isLoaded">
-
+  @if (isLoaded) {
     <!-- BANNER PRINCIPAL -->
     <div class="profile-banner d-flex justify-content-between align-items-center flex-wrap mb-4">
       <h1 class="profile-banner-title">Mi perfil</h1>
 
       <div class="d-flex gap-2 banner-buttons">
-        <button class="btn profile-btn-primary banner-edit-btn" (click)="editarPerfil()" [class.d-none]="isEditing">Editar perfil</button>
-        <button class="btn btn-success banner-edit-btn" (click)="guardarCambios()" [class.d-none]="!isEditing">Guardar cambios</button>
+        @if (!isEditing) {
+          <button class="btn profile-btn-primary banner-edit-btn" (click)="editarPerfil()">Editar perfil</button>
+        }
+        @if (isEditing) {
+          <button class="btn btn-success banner-edit-btn" (click)="guardarCambios()">Guardar cambios</button>
+        }
       </div>
     </div>
 
@@ -32,6 +37,5 @@
         <app-profile-info-card [user]="user" [isEditing]="isEditing"></app-profile-info-card>
       </div>
     </div>
-
-  </div>
+  }
 </div>
