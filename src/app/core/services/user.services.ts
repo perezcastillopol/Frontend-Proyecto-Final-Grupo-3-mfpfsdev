@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Observable, lastValueFrom} from 'rxjs';
 import {IUserProfile} from '../../interfaces/user.interfaces';
 import {HttpServices} from './http.services';
 
@@ -11,16 +10,17 @@ export class UserService extends HttpServices {
 
   private url = '/users';
 
-  getMyProfile(): Observable<IUserProfile> {
+  getMyProfile(): Promise<IUserProfile> {
     return this.get(`${this.url}/users/me`);
   }
 
-  updateMyProfile(profile: IUserProfile): Observable<IUserProfile> {
+  updateMyProfile(profile: IUserProfile): Promise<IUserProfile> {
     return this.put(`${this.url}/users/me`, profile);
   }
-
   createUser(user: IUserProfile): Promise<IUserProfile> {
-    return lastValueFrom(this.post(this.url, user));
+    return this.post(this.url, user);
   }
-  
 }
+
+  
+  

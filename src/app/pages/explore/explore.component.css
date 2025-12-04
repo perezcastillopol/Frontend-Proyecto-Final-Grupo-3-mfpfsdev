@@ -1,72 +1,51 @@
 :host {
   display: block;
-  background: #f6f8fa;
 }
 
 .explore-page {
   width: 100%;
+  min-height: 100vh;
 }
 
 .page-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 16px 16px 48px;
+  padding: 1rem 1rem 3rem;
 }
 
 .page-title {
-  margin: 8px 0 12px;
-  color: var(--dark-color);
+  margin-top: 0.5rem;
+  color: var(--dark-color, #1f2937);
   font-size: 2rem;
   font-weight: 600;
 }
 
-.search-block {
-  margin-bottom: 12px;
-}
-
-.results-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 8px;
-  margin-bottom: 16px;
-  padding: 0 4px;
-}
-
 .results-header h3 {
-  margin: 0;
   font-size: 1.3rem;
-  color: var(--dark-color);
+  color: var(--dark-color, #1f2937);
 }
 
 .results-count {
-  color: #6b7280;
   font-size: 0.95rem;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
+.empty-state {
+  background: #f9fafb;
+  color: #6b7280;
+  border-color: #d4d7dc;
 }
 
-.empty-state {
-  text-align: center;
-  padding: 28px 16px;
-  border: 1px dashed #d4d7dc;
-  border-radius: 12px;
-  color: #6b7280;
-  background: #f9fafb;
+.empty-state p {
+  margin-bottom: 0.5rem;
+}
+
+.border-dashed {
+  border-style: dashed !important;
 }
 
 @media (max-width: 768px) {
   .page-container {
-    padding: 12px;
-  }
-
-  .results-header {
-    flex-direction: column;
-    align-items: flex-start;
+    padding: 0.75rem;
   }
 
   .page-title {

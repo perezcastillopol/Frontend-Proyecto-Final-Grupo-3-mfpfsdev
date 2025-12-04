@@ -36,6 +36,6 @@ export class HeroBannerComponent {
   }
 
   onCreateTrip(): void {
-    this.router.navigateByUrl('/crear-viaje');
+    this.router.navigateByUrl("/crear");
   }
 }

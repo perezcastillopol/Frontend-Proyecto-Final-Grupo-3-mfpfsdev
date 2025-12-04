@@ -17,12 +17,11 @@ export class MyTripsComponent {
   participatingTrips: Trip[] = [];
   selectedTab: 'created' | 'participating' = 'created';
 
-  ngOnInit() {
+  async ngOnInit() {
     const userId = this.tripsSrv.me();
-    this.tripsSrv.list().subscribe((trips) => {
-      this.createdTrips = trips.filter((t) => t.creatorId === userId);
-      this.participatingTrips = trips.filter((t) => t.creatorId !== userId);
-    });
+    const trips = await this.tripsSrv.list();
+    this.createdTrips = trips.filter((t) => t.creatorId === userId);
+    this.participatingTrips = trips.filter((t) => t.creatorId !== userId);
   }
 
   get tripsToShow(): Trip[] {
