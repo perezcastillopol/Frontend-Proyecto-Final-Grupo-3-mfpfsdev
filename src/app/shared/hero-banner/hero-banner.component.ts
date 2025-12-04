@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './hero-banner.component.html',
-  styleUrl: './hero-banner.component.css',
+  styleUrls: ['./hero-banner.component.css'],
 })
 export class HeroBannerComponent {
   @Output() search = new EventEmitter<any>();
@@ -36,6 +36,6 @@ export class HeroBannerComponent {
   }
 
   onCreateTrip(): void {
-    this.router.navigateByUrl('/crear-viaje');
+    this.router.navigateByUrl("/crear");
   }
 }

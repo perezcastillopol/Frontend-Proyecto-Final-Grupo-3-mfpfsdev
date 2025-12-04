@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserProfile } from '../../interfaces/user.interface';
 import { CommonModule } from '@angular/common';
-
-// Importamos tus 3 tarjetas
-
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ProfileMainCardComponent } from './components/profile-main-card/profile-main-card.component';
+import { ProfileAboutCardComponent } from './components/profile-about-card/profile-about-card.component';
+import { ProfilePersonalInfoCardComponent } from './components/profile-personal-info-card/profile-personal-info-card.component';
+import { IUserProfile } from '../../interfaces/user.interfaces';
 import { UserService } from '../../core/services/user.services';
 import { ProfileAboutCardComponent } from './profile-about-card/profile-about-card.component';
 import { ProfileInfoCardComponent } from './profile-info-card/profile-info-card.component';
@@ -29,37 +31,54 @@ export class UserViewComponent {
     private userService: UserService
   ) {}
 
-  ngOnInit() {
-    const userId = this.route.snapshot.paramMap.get('id');
+  async ngOnInit(): Promise<void> {
+    try {
+      const profile = await this.userService.getMyProfile();
+      this.profileData = profile;
+      this.buildForm(profile);
+      this.isLoading = false;
+    } catch (error) {
+      this.isLoading = false;
+    }
+  }
 
-    this.userService.getUserById(userId!).subscribe({
-      next: (data) => {
-        this.user = {
-          ...data,
-          intereses: ["Senderismo", "Fotografía"],
-          fecha_nacimiento: "1995-04-20",
-          ubicacion: "Madrid",
-          estilo_viaje: "Aventura"
-        };
-        this.isLoaded = true;
-      },
-      error: () => this.isLoaded = true
+  private buildForm(profile: IUserProfile): void {
+    this.profileForm = this.fb.group({
+      name: [profile.name],
+      username: [profile.username],
+      rating: [profile.rating],
+      bio: [profile.bio],
+      interests: [profile.interests],
+      phone: [profile.phone],
+      birthDate: [profile.birthDate],
+      location: [profile.location],
+      travelStyle: [profile.travelStyle]
     });
   }
 
-  editarPerfil() {
+  onEdit(): void {
     this.isEditing = true;
   }
 
   guardarCambios() {
     console.log("GUARDANDO...", this.user);
 
-    this.userService.updateUser(this.user).subscribe({
-      next: () => {
-        console.log("Usuario actualizado");
-        this.isEditing = false;
-      },
-      error: (err) => console.error("ERROR:", err)
-    });
+  async onSave(): Promise<void> {
+    if (!this.profileForm.valid) return;
+
+    const updatedProfile: IUserProfile = {
+      ...this.profileData,
+      ...this.profileForm.value
+    };
+
+    try {
+      const savedProfile = await this.userService.updateMyProfile(updatedProfile);
+      this.profileData = savedProfile;
+      this.isEditing = false;
+      this.buildForm(savedProfile);
+    } catch (error) {
+      // Handle error if needed
+      console.error('Error updating profile:', error);
+    }
   }
 }

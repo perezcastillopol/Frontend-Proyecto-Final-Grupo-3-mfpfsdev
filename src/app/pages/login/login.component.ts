@@ -28,7 +28,7 @@ export class LoginComponent {
     });
   }
 
-  login() {
+  async login() {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       this.errorMsg = 'Completa los campos correctamente.';
@@ -40,22 +40,20 @@ export class LoginComponent {
 
     const { email, password } = this.loginForm.value;
 
-    this.authService.login({ email, password }).subscribe({
-      next: () => {
-        this.loading = false;
-        this.router.navigate(['/explorar']);
-      },
-      error: (err) => {
-        console.error('Error en login:', err);
+    try {
+      await this.authService.login({ email, password });
+      this.loading = false;
+      this.router.navigate(['/explorar']);
+    } catch (err: any) {
+      console.error('Error en login:', err);
 
-        if (err.status === 401) {
-          this.errorMsg = 'Correo o contraseña incorrectos.';
-        } else {
-          this.errorMsg = 'No se ha podido iniciar sesión. Inténtalo más tarde.';
-        }
-
-        this.loading = false;
+      if (err.status === 401) {
+        this.errorMsg = 'Correo o contraseña incorrectos.';
+      } else {
+        this.errorMsg = 'No se ha podido iniciar sesión. Inténtalo más tarde.';
       }
-    });
+
+      this.loading = false;
+    }
   }
 }

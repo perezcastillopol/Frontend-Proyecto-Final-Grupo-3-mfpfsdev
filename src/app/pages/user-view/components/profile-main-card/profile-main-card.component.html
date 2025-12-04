@@ -1,0 +1,27 @@
+<div class="card-container">
+  <div class="avatar-wrapper">
+    <div class="avatar-circle"></div>
+  </div>
+
+  <div class="text-center mt-3">
+    <input
+      type="text"
+      class="name-input"
+      [readonly]="!isEditing"
+      [formControl]="nameControl">
+
+    <div class="username">
+      @
+      <input
+        type="text"
+        class="username-input"
+        [readonly]="!isEditing"
+        [formControl]="usernameControl">
+    </div>
+
+    <div class="rating">
+      {{ rating }} ★
+    </div>
+  </div>
+</div>
+

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { lastValueFrom } from 'rxjs';
 
 export interface LoginRequest {
   email: string;
@@ -22,15 +21,13 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  login(credentials: LoginRequest): Observable<LoginResponse> {
-    return this.http
-      .post<LoginResponse>(`${this.apiUrl}/auth/login`, credentials)
-      .pipe(
-        tap((resp) => {
-          // Guardar token en el navegador
-          localStorage.setItem('token', resp.token);
-        })
-      );
+  async login(credentials: LoginRequest): Promise<LoginResponse> {
+    const response = await lastValueFrom(
+      this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, credentials)
+    );
+    // Guardar token en el navegador
+    localStorage.setItem('token', response.token);
+    return response;
   }
 
   logout() {
