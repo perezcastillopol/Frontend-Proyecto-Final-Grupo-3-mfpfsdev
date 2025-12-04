@@ -41,24 +41,36 @@ export class UserViewComponent {
   ) {}
 
   async ngOnInit(): Promise<void> {
-  this.isLoaded = false;
+    this.isLoaded = false;
 
-  if (!this.authService.isLoggedIn()) {
-    // No redirige, simplemente muestra un perfil vacío o modo visitante
-    console.warn('Usuario no autenticado. Mostrando perfil vacío.');
-    this.isLoaded = true;
-    return;
+    try {
+      if (this.authService.isLoggedIn()) {
+        // Usuario real desde backend
+        const profile = await this.userService.getMyProfile();
+        this.user = { ...profile };
+      } else {
+        // Usuario de prueba (modo invitado)
+        this.user = {
+          id: 'demo-1',
+          nombre: 'Usuario de Prueba',
+          apellidos: 'TripBud',
+          mail: 'demo@tripbud.com',
+          foto: 'assets/default-profile.png',
+          descripcion: 'Este es un perfil de prueba para visualizar la página de usuario.',
+          intereses: ['Viajar', 'Aventura', 'Fotografía'],
+          telefono: '000-000-000',
+          fecha_nacimiento: '1990-01-01',
+          ubicacion: 'Málaga, España',
+          estilo_viaje: 'Mochilero',
+          valoracion_promedio: 4.5
+        };
+      }
+    } catch (error) {
+      console.error('Error cargando perfil:', error);
+    } finally {
+      this.isLoaded = true;
+    }
   }
-
-  try {
-    const profile = await this.userService.getMyProfile();
-    this.user = { ...profile };
-  } catch (error) {
-    console.error('Error cargando perfil:', error);
-  } finally {
-    this.isLoaded = true;
-  }
-}
 
   editarPerfil(): void {
     this.isEditing = true;
