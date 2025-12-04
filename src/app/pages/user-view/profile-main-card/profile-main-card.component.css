@@ -1,14 +1,18 @@
-.main-card {
-  padding-top: 40px;
-  padding-bottom: 32px;
+.profile-card.main-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 1.5rem;
+  text-align: center;
 }
 
 .profile-img {
-  width: 140px;
-  height: 140px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   overflow: hidden;
-  background-color: #e9ecef;
+  border: 3px solid #007bff;
+  margin-bottom: 0.5rem;
 }
 
 .profile-img img {
@@ -18,31 +22,34 @@
 }
 
 .edit-photo-btn {
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--primary-color);
-  color: white;
-  padding: 6px 10px;
-  border-radius: 10px;
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #007bff;
   cursor: pointer;
 }
 
+.edit-photo-btn:hover {
+  text-decoration: underline;
+}
+
 .name-text {
-  font-family: var(--font-primary);
-  color: var(--dark-color);
-  font-size: 1.6rem;
+  font-weight: 600;
+  font-size: 1.4rem;
+  margin-top: 0.5rem;
 }
 
 .username-text {
-  color: var(--secondary-color);
+  font-size: 0.95rem;
+  color: #6c757d;
 }
 
 .rating-text {
-  font-family: var(--font-primary);
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  color: #ffc107;
 }
 
 .star-icon {
-  color: var(--primary-color);
+  margin-left: 4px;
 }

@@ -1,23 +1,59 @@
-<div class="profile-card">
-  <h4 class="profile-title">Información personal</h4>
+<div class="profile-card info-card">
+  <h4 class="card-title">Información personal</h4>
 
-  <div class="row g-3">
-    <div class="col-12 col-md-6">
-      <label class="form-label">Teléfono</label>
-      <input class="form-control" [(ngModel)]="user.telefono" [disabled]="!isEditing">
-    </div>
+  <!-- Teléfono -->
+  <div class="info-item">
+    <strong>Teléfono:</strong>
+    @if (isEditing) {
+      <input class="form-control" [(ngModel)]="user.telefono" placeholder="Introduce tu teléfono">
+    } @else {
+      @if (user.telefono && user.telefono.trim().length > 0) {
+        <span>{{ user.telefono }}</span>
+      } @else {
+        <span class="text-muted">No especificado</span>
+      }
+    }
+  </div>
 
-    <div class="col-12 col-md-6">
-      <label class="form-label">Fecha nacimiento</label>
-      <input class="form-control" type="date" [(ngModel)]="user.fecha_nacimiento" [disabled]="!isEditing">
-    </div>
+  <!-- Ubicación -->
+  <div class="info-item">
+    <strong>Ubicación:</strong>
+    @if (isEditing) {
+      <input class="form-control" [(ngModel)]="user.ubicacion" placeholder="Introduce tu ubicación">
+    } @else {
+      @if (user.ubicacion && user.ubicacion.trim().length > 0) {
+        <span>{{ user.ubicacion }}</span>
+      } @else {
+        <span class="text-muted">No especificada</span>
+      }
+    }
+  </div>
 
-    <div class="col-12 col-md-6">
-      <label class="form-label">Ubicación</label>
-      <input class="form-control" [(ngModel)]="user.ubicacion" [disabled]="!isEditing">
-    </div>
+  <!-- Fecha de nacimiento -->
+  <div class="info-item">
+    <strong>Fecha de nacimiento:</strong>
+    @if (isEditing) {
+      <input type="date" class="form-control" [(ngModel)]="user.fecha_nacimiento">
+    } @else {
+      @if (user.fecha_nacimiento && user.fecha_nacimiento.trim().length > 0) {
+        <span>{{ user.fecha_nacimiento }}</span>
+      } @else {
+        <span class="text-muted">No especificada</span>
+      }
+    }
+  </div>
 
-    <div class="col-12 col-md-6">
-      <label class="form-label">Estilo viaje</label>
-      <input class="form-control" [(ngModel)]="user.estilo_viaje" [disabled]="!isEditing">
-    </div>
+  <!-- Estilo de viaje -->
+  <div class="info-item">
+    <strong>Estilo de viaje:</strong>
+    @if (isEditing) {
+      <input class="form-control" [(ngModel)]="user.estilo_viaje" placeholder="Ej: mochilero, lujo, aventura...">
+    } @else {
+      @if (user.estilo_viaje && user.estilo_viaje.trim().length > 0) {
+        <span>{{ user.estilo_viaje }}</span>
+      } @else {
+        <span class="text-muted">No especificado</span>
+      }
+    }
+  </div>
+</div>

@@ -16,17 +16,37 @@ import { ProfileMainCardComponent } from './profile-main-card/profile-main-card.
   styleUrls: ['./user-view.component.css']
 })
 export class UserViewComponent {
-  user!: IUserProfile;
-  isLoaded = false;
-  isEditing = false;
+  user: IUserProfile = {
+    id: '',
+    nombre: '',
+    apellidos: '',
+    mail: '',
+    foto: '',
+    descripcion: '',
+    intereses: [],
+    telefono: '',
+    fecha_nacimiento: '',
+    ubicacion: '',
+    estilo_viaje: '',
+    valoracion_promedio: 0
+  };
 
-  constructor(private userService: UserService, private authService: AuthService, private router: Router) {}
+  isEditing = false;
+  isLoaded = false;
+
+  constructor(
+    private userService: UserService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   async ngOnInit(): Promise<void> {
   this.isLoaded = false;
 
   if (!this.authService.isLoggedIn()) {
-    this.router.navigate(['/login']);
+    // No redirige, simplemente muestra un perfil vacío o modo visitante
+    console.warn('Usuario no autenticado. Mostrando perfil vacío.');
+    this.isLoaded = true;
     return;
   }
 
