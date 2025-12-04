@@ -7,12 +7,19 @@ import {HttpOptions} from '../../interfaces/httpOptions.interface';
   providedIn: 'root',
 })
 export class HttpServices {
-
   protected http = inject(HttpClient);
   protected baseUrl = 'http://localhost:3000/api';
 
-  private buildOptions(options?: HttpOptions) {
-    let httpOptions: any = {};
+  private buildOptions(options?: HttpOptions): {
+    headers?: HttpHeaders;
+    params?: HttpParams;
+    observe: 'body';
+  } {
+    const httpOptions: {
+      headers?: HttpHeaders;
+      params?: HttpParams;
+      observe: 'body';
+    } = { observe: 'body' };
 
     if (options?.params) {
       let params = new HttpParams();
@@ -35,19 +42,27 @@ export class HttpServices {
     return httpOptions;
   }
 
-  protected get(endpoint: string, options?: HttpOptions): Promise<any> {
-    return lastValueFrom(this.http.get(`${this.baseUrl}${endpoint}`, this.buildOptions(options)));
+  protected get<T>(endpoint: string, options?: HttpOptions): Promise<T> {
+    return lastValueFrom(
+      this.http.get<T>(`${this.baseUrl}${endpoint}`, this.buildOptions(options))
+    );
   }
 
-  protected post(endpoint: string, body: any, options?: HttpOptions): Promise<any> {
-    return lastValueFrom(this.http.post(`${this.baseUrl}${endpoint}`, body, this.buildOptions(options)));
+  protected post<T>(endpoint: string, body: any, options?: HttpOptions): Promise<T> {
+    return lastValueFrom(
+      this.http.post<T>(`${this.baseUrl}${endpoint}`, body, this.buildOptions(options))
+    );
   }
 
-  protected put(endpoint: string, body: any, options?: HttpOptions): Promise<any> {
-    return lastValueFrom(this.http.put(`${this.baseUrl}${endpoint}`, body, this.buildOptions(options)));
+  protected put<T>(endpoint: string, body: any, options?: HttpOptions): Promise<T> {
+    return lastValueFrom(
+      this.http.put<T>(`${this.baseUrl}${endpoint}`, body, this.buildOptions(options))
+    );
   }
 
-  protected delete(endpoint: string, options?: HttpOptions): Promise<any> {
-    return lastValueFrom(this.http.delete(`${this.baseUrl}${endpoint}`, this.buildOptions(options)));
+  protected delete<T>(endpoint: string, options?: HttpOptions): Promise<T> {
+    return lastValueFrom(
+      this.http.delete<T>(`${this.baseUrl}${endpoint}`, this.buildOptions(options))
+    );
   }
 }
