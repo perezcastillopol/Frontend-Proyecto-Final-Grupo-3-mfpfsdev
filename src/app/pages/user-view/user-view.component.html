@@ -1,13 +1,13 @@
 @if (!isLoading) {
-  <div class="container my-4">
+  <div class="container">
     <!-- Cabecera -->
     <div class="d-flex justify-content-between align-items-center mb-4 header">
-      <h1 class="h3 mb-0">
+      <h1 class="h3 mb-0 my-4">
         Mi <span class="fw-bold">perfil</span>
       </h1>
 
       @if (!isEditing) {
-        <button class="btn edit-btn" (click)="onEdit()">
+        <button class="btn edit-btn my-4" (click)="onEdit()">
           Editar
         </button>
       } @else {
