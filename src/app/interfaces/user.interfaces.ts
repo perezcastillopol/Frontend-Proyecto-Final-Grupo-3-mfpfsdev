@@ -1,14 +1,16 @@
 export interface IUserProfile {
   id: string;
-  name: string;
-  username: string;
-  rating: number;
+  nombre: string;
+  apellidos?: string;
+  mail: string;
+  foto?: string;
+  descripcion?: string;
+  intereses: string[];
 
-  bio: string;
-  interests: string[];
+  telefono?: string;
+  fecha_nacimiento?: string; // 'YYYY-MM-DD'
+  ubicacion?: string;
+  estilo_viaje?: string;
 
-  phone: string;
-  birthDate: string;  // formato 'YYYY-MM-DD'
-  location: string;
-  travelStyle: string;
+  valoracion_promedio?: number;
 }

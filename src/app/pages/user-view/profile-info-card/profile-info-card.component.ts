@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { UserProfile } from '../../../interfaces/user.interface';
+import { IUserProfile } from '../../../interfaces/user.interfaces';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -8,9 +8,9 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './profile-info-card.component.html',
-  styleUrl: './profile-info-card.component.css',
+  styleUrls: ['./profile-info-card.component.css'],
 })
 export class ProfileInfoCardComponent {
-  @Input() user!: UserProfile
+  @Input() user!: IUserProfile;
   @Input() isEditing: boolean = false;
 }
