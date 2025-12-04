@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IUserProfile } from '../../interfaces/user.interfaces';
 import { UserService } from '../../core/services/user.services';
+import { AuthService } from '../../core/services/auth.service';
+import { Router } from '@angular/router';
 import { ProfileAboutCardComponent } from './profile-about-card/profile-about-card.component';
 import { ProfileInfoCardComponent } from './profile-info-card/profile-info-card.component';
 import { ProfileMainCardComponent } from './profile-main-card/profile-main-card.component';
@@ -18,19 +20,25 @@ export class UserViewComponent {
   isLoaded = false;
   isEditing = false;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private authService: AuthService, private router: Router) {}
 
   async ngOnInit(): Promise<void> {
-    this.isLoaded = false;
-    try {
-      const profile = await this.userService.getMyProfile();
-      this.user = { ...profile };
-      this.isLoaded = true;
-    } catch (error) {
-      console.error('Error cargando perfil:', error);
-      this.isLoaded = true;
-    }
+  this.isLoaded = false;
+
+  if (!this.authService.isLoggedIn()) {
+    this.router.navigate(['/login']);
+    return;
   }
+
+  try {
+    const profile = await this.userService.getMyProfile();
+    this.user = { ...profile };
+  } catch (error) {
+    console.error('Error cargando perfil:', error);
+  } finally {
+    this.isLoaded = true;
+  }
+}
 
   editarPerfil(): void {
     this.isEditing = true;
