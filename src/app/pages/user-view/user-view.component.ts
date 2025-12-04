@@ -55,7 +55,7 @@ export class UserViewComponent {
           nombre: 'Usuario de Prueba',
           apellidos: 'TripBud',
           mail: 'demo@tripbud.com',
-          foto: 'assets/default-profile.png',
+          foto: 'https://media.istockphoto.com/id/1200677760/es/foto/retrato-de-apuesto-joven-sonriente-con-los-brazos-cruzados.jpg?s=612x612&w=0&k=20&c=RhKR8pxX3y_YVe5CjrRnTcNFEGDryD2FVOcUT_w3m4w=',
           descripcion: 'Este es un perfil de prueba para visualizar la página de usuario.',
           intereses: ['Viajar', 'Aventura', 'Fotografía'],
           telefono: '000-000-000',
