@@ -1,4 +1,32 @@
 .form-label {
   font-family: var(--font-primary);
   color: var(--dark-color);
+  font-weight: 500;
+}
+
+.profile-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.07);
+}
+
+.profile-card .form-control {
+  background-color: #F7F8FA;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  color: #333;
+  padding: 10px 14px;
+}
+
+.profile-card .form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: none;
+}
+
+.profile-title {
+  font-size: 1.4rem;
+  color: var(--dark-color);
+  margin-bottom: 16px;
+  font-family: var(--font-primary);
 }

@@ -23,9 +23,8 @@ export class AuthService {
 
   async login(credentials: LoginRequest): Promise<LoginResponse> {
     const response = await lastValueFrom(
-      this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, credentials)
+      this.http.post<LoginResponse>(`${this.apiUrl}/users/login`, credentials)
     );
-    // Guardar token en el navegador
     localStorage.setItem('token', response.token);
     return response;
   }

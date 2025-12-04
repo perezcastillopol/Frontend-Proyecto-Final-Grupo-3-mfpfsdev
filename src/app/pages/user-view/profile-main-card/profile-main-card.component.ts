@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { UserProfile } from '../../../interfaces/user.interface';
+import { IUserProfile } from '../../../interfaces/user.interfaces';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -8,14 +8,15 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './profile-main-card.component.html',
-  styleUrl: './profile-main-card.component.css',
+  styleUrls: ['./profile-main-card.component.css'],
 })
 export class ProfileMainCardComponent {
-  @Input() user!: UserProfile;
+  @Input() user!: IUserProfile;
   @Input() isEditing: boolean = false;
 
-  actualizarFoto(event: any) {
-    const file = event.target.files[0];
+  actualizarFoto(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input?.files?.[0];
     if (!file) return;
 
     const reader = new FileReader();
@@ -23,7 +24,9 @@ export class ProfileMainCardComponent {
     reader.readAsDataURL(file);
   }
 
-  get fullName() {
-    return `${this.user.nombre} ${this.user.apellidos}`;
+  get fullName(): string {
+    const nombre = this.user?.nombre ?? '';
+    const apellidos = this.user?.apellidos ?? '';
+    return `${nombre} ${apellidos}`.trim();
   }
 }

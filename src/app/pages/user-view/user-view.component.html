@@ -10,57 +10,28 @@
 
     <!-- BANNER PRINCIPAL -->
     <div class="profile-banner d-flex justify-content-between align-items-center flex-wrap mb-4">
-
       <h1 class="profile-banner-title">Mi perfil</h1>
 
       <div class="d-flex gap-2 banner-buttons">
-
-        <!-- EDITAR -->
-        <button 
-          class="btn profile-btn-primary banner-edit-btn"
-          (click)="editarPerfil()"
-          [class.d-none]="isEditing">
-          Editar perfil
-        </button>
-
-        <!-- GUARDAR -->
-        <button 
-          class="btn btn-success banner-edit-btn"
-          (click)="guardarCambios()"
-          [class.d-none]="!isEditing">
-          Guardar cambios
-        </button>
-
+        <button class="btn profile-btn-primary banner-edit-btn" (click)="editarPerfil()" [class.d-none]="isEditing">Editar perfil</button>
+        <button class="btn btn-success banner-edit-btn" (click)="guardarCambios()" [class.d-none]="!isEditing">Guardar cambios</button>
       </div>
-
     </div>
 
     <!-- TARJETAS -->
     <div class="row g-4">
-      
       <div class="col-12 col-lg-4">
-        <app-profile-main-card 
-          [user]="user"
-          [isEditing]="isEditing">
-        </app-profile-main-card>
+        <app-profile-main-card [user]="user" [isEditing]="isEditing"></app-profile-main-card>
       </div>
 
       <div class="col-12 col-lg-8">
-        <app-profile-about-card 
-          [user]="user"
-          [isEditing]="isEditing">
-        </app-profile-about-card>
+        <app-profile-about-card [user]="user" [isEditing]="isEditing"></app-profile-about-card>
       </div>
 
       <div class="col-12">
-        <app-profile-info-card 
-          [user]="user"
-          [isEditing]="isEditing">
-        </app-profile-info-card>
+        <app-profile-info-card [user]="user" [isEditing]="isEditing"></app-profile-info-card>
       </div>
-
     </div>
 
   </div>
-
 </div>

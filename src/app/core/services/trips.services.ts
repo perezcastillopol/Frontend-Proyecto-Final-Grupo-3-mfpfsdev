@@ -40,13 +40,13 @@ export class TripsService extends HttpServices {
   }
 
   async getTrips(): Promise<Trip[]> {
-    const list = await this.get(this.url);
-    return list.map((t: any) => this.mapTrip(t));
+    const list = await this.get<Trip[]>(this.url);
+  return list.map((t) => this.mapTrip(t));
   }
 
   async list(): Promise<Trip[]> {
-    const list = await this.get(this.url);
-    return list.map((t: any) => this.mapTrip(t));
+    const list = await this.get<Trip[]>(this.url);
+  return list.map((t) => this.mapTrip(t));
   }
 
   async myTrips(): Promise<Trip[]> {
