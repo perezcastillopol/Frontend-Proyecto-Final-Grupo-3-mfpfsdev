@@ -16,6 +16,7 @@ export class TripsService extends HttpServices {
   private url = '/trips';
 
   private mapTrip(api: any): Trip {
+    const photoUrl = api.photo_url || api.imageUrl;
     return {
       tripId: Number(api.id),
       creatorId: Number(api.creator_id),
@@ -33,8 +34,10 @@ export class TripsService extends HttpServices {
       created_at: api.created_at,
       updated_at: api.updated_at,
       modality_trip_id: Number(api.modality_trip_id),
-      imageUrl: api.imageUrl || `https://picsum.photos/seed/trip${api.id}/600/400`,
-      currentPeople: api.current_people ?? 0,
+      num_participants: api.num_participants,
+      photo_url: photoUrl,
+      imageUrl: photoUrl || `https://picsum.photos/seed/trip${api.id}/600/400`,
+      currentPeople: api.current_people ?? api.num_participants ?? 0,
       maxPeople: api.maxPeople ?? api.max_participants ?? 0,
     };
   }

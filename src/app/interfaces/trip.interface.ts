@@ -15,4 +15,6 @@ export interface ITrip {
   created_at: string;
   updated_at: string;
   modality_trip_id: number;
+  num_participants?: number;
+  photo_url?: string;
 }

@@ -23,11 +23,10 @@ export class HomeComponent {
   async loadTrips() {
     const apiTrips = await this.tripService.getTrips();
     this.trips = apiTrips.slice(0, 4).map(trip => ({
-            //Esto es codigo placeholder hasta que el backend soporte las nuevas propiedades.
       ...trip,
-      imageUrl: `https://picsum.photos/seed/trip${trip.tripId}/600/400`,
-      currentPeople: 0,
-      maxPeople: trip.max_participants ?? 10
+      imageUrl: trip.imageUrl, 
+      currentPeople: trip.currentPeople ?? 0,
+      maxPeople: trip.maxPeople ?? trip.max_participants ?? 0
     }));
   }
 

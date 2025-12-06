@@ -34,6 +34,9 @@ export class TripCreateComponent {
       costPerPerson: new FormControl('', [Validators.required, Validators.min(0)]),
       minParticipants: new FormControl('', [Validators.required, Validators.min(1)]),
       transport: new FormControl('', [Validators.required]),
+      photoUrl: new FormControl('', [
+        Validators.pattern(/^(https?:\/\/).+/i),
+      ]),
       itinerary: new FormControl(''),
       modalityId: new FormControl('', [Validators.required])
     });
@@ -65,6 +68,8 @@ export class TripCreateComponent {
       max_participants: Number(formValue.minParticipants) * 2, // Default: 2x min participants
       transport: formValue.transport,
       itinerary: formValue.itinerary || '',
+      photo_url: (formValue.photoUrl || '').trim() || undefined, // optional image URL
+      num_participants: 0,                                    // start with 0 inscritos
       modality_trip_id: Number(formValue.modalityId),       // modalityId → modality_trip_id (as number)
       creator_id: 1,                                         // Stub - would come from auth
       status: 'published'                                     // Status must match ENUM value
