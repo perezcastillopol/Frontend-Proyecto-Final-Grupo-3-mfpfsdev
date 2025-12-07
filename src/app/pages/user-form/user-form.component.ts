@@ -8,13 +8,13 @@ import {
 } from '@angular/forms';
 import { UserService } from '../../core/services/user.services';
 import { ModalityService} from '../../core/services/modality.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { IModality } from '../../interfaces/modality.interface';
 import { TagsComponent } from '../../shared/tags/tags.component';
 
 @Component({
   selector: 'app-usuario-form',
-  imports: [ReactiveFormsModule, FormsModule, TagsComponent],
+  imports: [ReactiveFormsModule, FormsModule, TagsComponent, RouterLink],
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.css',
 })

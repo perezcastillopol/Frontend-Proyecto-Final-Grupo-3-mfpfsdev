@@ -1,18 +1,23 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ModalityService } from '../../core/services/modality.service';
+import { IModality } from '../../interfaces/modality.interface';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-hero-banner',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './hero-banner.component.html',
   styleUrls: ['./hero-banner.component.css'],
 })
-export class HeroBannerComponent {
+export class HeroBannerComponent implements OnInit {
   @Output() search = new EventEmitter<any>();
 
   searchForm: FormGroup;
+  modalities: IModality[] = [];
+  private modalityService = inject(ModalityService);
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.searchForm = this.fb.group({
@@ -20,6 +25,12 @@ export class HeroBannerComponent {
       experience: [''],
       startDate: [''],
       endDate: [''],
+    });
+  }
+
+  ngOnInit() {
+    this.modalityService.getAllModalities().then(modalities => {
+      this.modalities = modalities;
     });
   }
 
