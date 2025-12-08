@@ -168,6 +168,22 @@
             }
           </div>
 
+          <!-- Imagen del viaje -->
+          <div class="mb-3">
+            <label for="photoUrl" class="form-label">Imagen del viaje</label>
+            <input
+              type="url"
+              id="photoUrl"
+              formControlName="photoUrl"
+              class="form-control form-input"
+              [class.is-invalid]="checkControl('photoUrl', 'pattern')"
+              placeholder="https://ejemplo.com/imagen.jpg"
+            />
+            @if (checkControl('photoUrl', 'pattern')) {
+              <div class="invalid-feedback d-block">Introduce una URL válida (http/https)</div>
+            }
+          </div>
+
           <!-- Itinerario -->
           <div class="mb-4">
             <label for="itinerary" class="form-label">Itinerario (opcional)</label>

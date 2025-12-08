@@ -34,7 +34,7 @@
       <div class="info-row">
         <i class="bi bi-calendar"></i>
         <span>
-          {{ trip?.start_date || start_date }} - {{ trip?.end_date || end_date }}
+          {{ trip?.start_date || start_date | date:'dd/MM/yyyy'}} - {{ trip?.end_date || end_date | date:'dd/MM/yyyy'}}
         </span>
       </div>
 

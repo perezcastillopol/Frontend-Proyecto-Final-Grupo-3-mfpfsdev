@@ -1,0 +1,37 @@
+.profile-card.info-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 1.5rem;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.info-item {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.info-item strong {
+  min-width: 140px;
+  color: #343a40;
+}
+
+.info-item span {
+  font-size: 0.95rem;
+  color: #495057;
+}
+
+.info-item .text-muted {
+  color: #6c757d;
+}
+
+input.form-control {
+  max-width: 300px;
+}

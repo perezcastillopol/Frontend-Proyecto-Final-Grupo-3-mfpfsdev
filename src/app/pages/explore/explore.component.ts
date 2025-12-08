@@ -33,12 +33,11 @@ export class ExploreComponent implements OnInit {
 
   ngOnInit() {
     this.tripsService.getTrips().then(trips => {
-      //Esto es codigo placeholder hasta que el backend soporte las nuevas propiedades.
       this.allTrips = trips.map(trip => ({
         ...trip,
-        imageUrl: `https://picsum.photos/seed/trip${trip.tripId}/600/400`,
-        currentPeople: 0,
-        maxPeople: trip.max_participants ?? 10
+        imageUrl: trip.imageUrl, 
+        currentPeople: trip.currentPeople ?? 0,
+        maxPeople: trip.maxPeople ?? trip.max_participants ?? 0
       }));
       this.applyFilters(this.currentFilters);
     });

@@ -1,6 +1,7 @@
 import { Component, Input, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ITrip } from '../../interfaces/trip.interface';
+import { DatePipe } from '@angular/common';
 
 type TripCardTrip = Partial<ITrip> & {
   imageUrl?: string;
@@ -18,7 +19,8 @@ type TripCardTrip = Partial<ITrip> & {
   selector: 'app-trip-card',
   standalone: true,
   templateUrl: './trip-card.component.html',
-  styleUrl: './trip-card.component.css'
+  styleUrl: './trip-card.component.css',
+  imports: [DatePipe]
 })
 export class TripCardComponent {
   private router = inject(Router);

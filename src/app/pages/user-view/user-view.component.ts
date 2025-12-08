@@ -1,87 +1,88 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { ProfileMainCardComponent } from './components/profile-main-card/profile-main-card.component';
-import { ProfileAboutCardComponent } from './components/profile-about-card/profile-about-card.component';
-import { ProfilePersonalInfoCardComponent } from './components/profile-personal-info-card/profile-personal-info-card.component';
 import { IUserProfile } from '../../interfaces/user.interfaces';
 import { UserService } from '../../core/services/user.services';
+import { AuthService } from '../../core/services/auth.service';
+import { Router } from '@angular/router';
+import { ProfileAboutCardComponent } from './profile-about-card/profile-about-card.component';
+import { ProfileInfoCardComponent } from './profile-info-card/profile-info-card.component';
+import { ProfileMainCardComponent } from './profile-main-card/profile-main-card.component';
 
 @Component({
   selector: 'app-user-view',
   standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ProfileMainCardComponent,
-    ProfileAboutCardComponent,
-    ProfilePersonalInfoCardComponent
-  ],
+  imports: [CommonModule, ProfileAboutCardComponent, ProfileInfoCardComponent, ProfileMainCardComponent],
   templateUrl: './user-view.component.html',
   styleUrls: ['./user-view.component.css']
 })
-export class UserViewComponent implements OnInit {
+export class UserViewComponent {
+  user: IUserProfile = {
+    id: '',
+    nombre: '',
+    apellidos: '',
+    mail: '',
+    foto: '',
+    descripcion: '',
+    intereses: [],
+    telefono: '',
+    fecha_nacimiento: '',
+    ubicacion: '',
+    estilo_viaje: '',
+    valoracion_promedio: 0
+  };
 
-  profileForm!: FormGroup;
-  profileData!: IUserProfile;
   isEditing = false;
-  isLoading = true;
+  isLoaded = false;
 
   constructor(
     private userService: UserService,
-    private fb: FormBuilder
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   async ngOnInit(): Promise<void> {
+    this.isLoaded = false;
+
     try {
-      const profile = await this.userService.getMyProfile();
-      this.profileData = profile;
-      this.buildForm(profile);
-      this.isLoading = false;
+      if (this.authService.isLoggedIn()) {
+        // Usuario real desde backend
+        const profile = await this.userService.getMyProfile();
+        this.user = { ...profile };
+      } else {
+        // Usuario de prueba (modo invitado)
+        this.user = {
+          id: 'demo-1',
+          nombre: 'Usuario de Prueba',
+          apellidos: 'TripBud',
+          mail: 'demo@tripbud.com',
+          foto: 'https://media.istockphoto.com/id/1200677760/es/foto/retrato-de-apuesto-joven-sonriente-con-los-brazos-cruzados.jpg?s=612x612&w=0&k=20&c=RhKR8pxX3y_YVe5CjrRnTcNFEGDryD2FVOcUT_w3m4w=',
+          descripcion: 'Este es un perfil de prueba para visualizar la página de usuario.',
+          intereses: ['Viajar', 'Aventura', 'Fotografía'],
+          telefono: '000-000-000',
+          fecha_nacimiento: '1990-01-01',
+          ubicacion: 'Málaga, España',
+          estilo_viaje: 'Mochilero',
+          valoracion_promedio: 4.5
+        };
+      }
     } catch (error) {
-      this.isLoading = false;
+      console.error('Error cargando perfil:', error);
+    } finally {
+      this.isLoaded = true;
     }
   }
 
-  private buildForm(profile: IUserProfile): void {
-    this.profileForm = this.fb.group({
-      name: [profile.name],
-      username: [profile.username],
-      rating: [profile.rating],
-      bio: [profile.bio],
-      interests: [profile.interests],
-      phone: [profile.phone],
-      birthDate: [profile.birthDate],
-      location: [profile.location],
-      travelStyle: [profile.travelStyle]
-    });
-  }
-
-  onEdit(): void {
+  editarPerfil(): void {
     this.isEditing = true;
   }
 
-  onCancel(): void {
-    this.isEditing = false;
-    this.buildForm(this.profileData); // deshacer cambios
-  }
-
-  async onSave(): Promise<void> {
-    if (!this.profileForm.valid) return;
-
-    const updatedProfile: IUserProfile = {
-      ...this.profileData,
-      ...this.profileForm.value
-    };
-
+  async guardarCambios(): Promise<void> {
     try {
-      const savedProfile = await this.userService.updateMyProfile(updatedProfile);
-      this.profileData = savedProfile;
+      const saved = await this.userService.updateMyProfile(this.user);
+      this.user = { ...saved };
       this.isEditing = false;
-      this.buildForm(savedProfile);
     } catch (error) {
-      // Handle error if needed
-      console.error('Error updating profile:', error);
+      console.error('Error guardando cambios:', error);
     }
   }
 }
