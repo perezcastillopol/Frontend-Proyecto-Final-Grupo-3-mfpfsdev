@@ -1,18 +1,54 @@
 <div class="profile-card about-card">
   <h4 class="card-title">Sobre mí</h4>
 
+  <!-- Bio -->
   @if (isEditing) {
     <textarea
       class="form-control"
-      [(ngModel)]="user.descripcion"
+      [(ngModel)]="user.bio"
       rows="4"
-      placeholder="Escribe algo sobre ti...">
-    </textarea>
+      placeholder="Escribe algo sobre ti..."
+    ></textarea>
   } @else {
-    @if (user.descripcion && user.descripcion.trim().length > 0) {
-      <p class="card-text">{{ user.descripcion }}</p>
+    @if (user.bio && user.bio.trim().length > 0) {
+      <p class="card-text">{{ user.bio }}</p>
     } @else {
       <p class="card-text text-muted">Aún no has escrito nada sobre ti.</p>
     }
   }
+
+  <!-- Intereses -->
+  <div class="mt-3">
+    <h6>Intereses</h6>
+
+    @if (!isEditing) {
+      <ul class="interests-list">
+        @for (interest of user.interests; track interest.id) {
+          <li>{{ interest.id }}</li>
+        }
+      </ul>
+    }
+
+    @if (isEditing) {
+      <div class="d-flex gap-2">
+        <input
+          #interestInput
+          type="text"
+          class="form-control"
+          placeholder="Añadir interés"
+        />
+        <button
+          class="btn btn-primary"
+          (click)="agregar(interestInput.value, interestInput)"
+        >
+          Añadir
+        </button>
+      </div>
+      <ul class="interests-list mt-2">
+        @for (interest of user.interests; track interest.id) {
+          <li>{{ interest.id }}</li>
+        }
+      </ul>
+    }
+  </div>
 </div>

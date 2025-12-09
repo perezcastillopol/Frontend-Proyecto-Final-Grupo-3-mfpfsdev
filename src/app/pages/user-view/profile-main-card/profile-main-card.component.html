@@ -1,27 +1,38 @@
 <div class="profile-card main-card">
   <div class="text-center position-relative">
     <div class="profile-img mx-auto">
-      <img [src]="user.foto" alt="Foto perfil">
+      <img [src]="user.photo_url" alt="Foto perfil" />
     </div>
 
     <label class="edit-photo-btn" [hidden]="!isEditing">
       Cambiar foto
-      <input type="file" accept="image/*" hidden (change)="actualizarFoto($event)">
+      <input type="file" accept="image/*" hidden (change)="actualizarFoto($event)" />
     </label>
   </div>
 
   <!-- Nombre editable -->
-  <input class="form-control mt-3 text-center" [(ngModel)]="user.nombre" [hidden]="!isEditing">
+  <input
+    class="form-control mt-3 text-center"
+    [(ngModel)]="user.name"
+    placeholder="Nombre"
+    [hidden]="!isEditing"
+  />
+  <input
+    class="form-control mt-2 text-center"
+    [(ngModel)]="user.last_name"
+    placeholder="Apellidos"
+    [hidden]="!isEditing"
+  />
 
   <!-- Nombre lectura -->
   <h3 class="text-center mt-3 name-text" [hidden]="isEditing">
     {{ fullName }}
   </h3>
 
-  <p class="text-center username-text">@{{ user.mail }}</p>
+  <p class="text-center username-text">@{{ user.email }}</p>
 
   <div class="text-center rating-text">
-    {{ user.valoracion_promedio }}⭐
+    {{ user.average_rating }}⭐
     <i class="fa-solid fa-star star-icon"></i>
   </div>
 </div>
