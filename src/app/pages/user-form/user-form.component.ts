@@ -33,6 +33,10 @@ export class UserFormComponent {
         Validators.required,
         Validators.minLength(3),
       ]),
+      last_name: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
       bio: new FormControl('', [
         Validators.required,
         Validators.minLength(50),

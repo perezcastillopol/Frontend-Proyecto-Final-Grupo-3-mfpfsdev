@@ -4,12 +4,22 @@
 				<h2 class="card-title mb-3 text-center" style="font-size: 1.5rem;">Registro de usuario</h2>
 				<form [formGroup]="userForm" (ngSubmit)="getDataForm()">
 					<div class="mb-2">
-						<label for="name" class="form-label">Nombre completo</label>
+						<label for="name" class="form-label">Nombre</label>
 						<input type="text" class="form-control" id="name" name="name" formControlName="name">
 						@if (checkForm('required', 'name')){
 							<p class="form-error">El campo es obligatorio</p>
 						}
-						@if (checkForm('minlength', 'first_name')){
+						@if (checkForm('minlength', 'name')){
+							<p class="form-error">El campo debe tener mínimo tres caracteres</p>
+						}
+					</div>
+					<div class="mb-2">
+						<label for="last_name" class="form-label">Primer apellido</label>
+						<input type="text" class="form-control" id="last_name" name="last_name" formControlName="last_name">
+						@if (checkForm('required', 'last_name')){
+							<p class="form-error">El campo es obligatorio</p>
+						}
+						@if (checkForm('minlength', 'last_name')){
 							<p class="form-error">El campo debe tener mínimo tres caracteres</p>
 						}
 					</div>
