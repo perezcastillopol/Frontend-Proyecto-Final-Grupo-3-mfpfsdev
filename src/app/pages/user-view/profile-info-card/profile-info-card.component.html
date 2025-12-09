@@ -5,10 +5,10 @@
   <div class="info-item">
     <strong>Teléfono:</strong>
     @if (isEditing) {
-      <input class="form-control" [(ngModel)]="user.telefono" placeholder="Introduce tu teléfono">
+      <input class="form-control" [(ngModel)]="user.phone" placeholder="Introduce tu teléfono">
     } @else {
-      @if (user.telefono && user.telefono.trim().length > 0) {
-        <span>{{ user.telefono }}</span>
+      @if (user.phone && user.phone.trim().length > 0) {
+        <span>{{ user.phone }}</span>
       } @else {
         <span class="text-muted">No especificado</span>
       }
@@ -19,10 +19,10 @@
   <div class="info-item">
     <strong>Ubicación:</strong>
     @if (isEditing) {
-      <input class="form-control" [(ngModel)]="user.ubicacion" placeholder="Introduce tu ubicación">
+      <input class="form-control" [(ngModel)]="user.location" placeholder="Introduce tu ubicación">
     } @else {
-      @if (user.ubicacion && user.ubicacion.trim().length > 0) {
-        <span>{{ user.ubicacion }}</span>
+      @if (user.location && user.location.trim().length > 0) {
+        <span>{{ user.location }}</span>
       } @else {
         <span class="text-muted">No especificada</span>
       }
@@ -33,24 +33,24 @@
   <div class="info-item">
     <strong>Fecha de nacimiento:</strong>
     @if (isEditing) {
-      <input type="date" class="form-control" [(ngModel)]="user.fecha_nacimiento">
+      <input type="date" class="form-control" [(ngModel)]="user.birthDate">
     } @else {
-      @if (user.fecha_nacimiento && user.fecha_nacimiento.trim().length > 0) {
-        <span>{{ user.fecha_nacimiento }}</span>
+      @if (user.birthDate && user.birthDate.trim().length > 0) {
+        <span>{{ user.birthDate }}</span>
       } @else {
         <span class="text-muted">No especificada</span>
       }
     }
   </div>
 
-  <!-- Estilo de viaje -->
+  <!-- Nickname / estilo de viaje -->
   <div class="info-item">
-    <strong>Estilo de viaje:</strong>
+    <strong>Nickname:</strong>
     @if (isEditing) {
-      <input class="form-control" [(ngModel)]="user.estilo_viaje" placeholder="Ej: mochilero, lujo, aventura...">
+      <input class="form-control" [(ngModel)]="user.nickname" placeholder="Ej: mochilero, lujo, aventura...">
     } @else {
-      @if (user.estilo_viaje && user.estilo_viaje.trim().length > 0) {
-        <span>{{ user.estilo_viaje }}</span>
+      @if (user.nickname && user.nickname.trim().length > 0) {
+        <span>{{ user.nickname }}</span>
       } @else {
         <span class="text-muted">No especificado</span>
       }

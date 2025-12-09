@@ -1,4 +1,4 @@
-/* ✅ Tus estilos originales */
+/*  Estilos originales */
 .profile-banner {
   background: var(--light-color);
   padding: 20px 28px;
@@ -24,19 +24,17 @@
   z-index: 20 !important;
 }
 
-/* ✅ Botón eliminar */
+/*  Botón eliminar */
 .delete-user {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 30;
+  margin-top: 2rem;
+  margin-right: 0; /* se alinea con text-end */
 }
 
 .delete-user button {
   min-width: 150px;
 }
 
-/* ✅ Modal estilos */
+/*  Modal estilos */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -54,4 +52,26 @@
   max-width: 400px;
   width: 100%;
   box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+}
+
+/*  Popup estilos */
+.popup-alert {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #28a745; /* verde éxito */
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+  font-size: 0.95rem;
+  z-index: 200;
+  animation: fadeInOut 3s ease forwards;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(20px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(20px); }
 }

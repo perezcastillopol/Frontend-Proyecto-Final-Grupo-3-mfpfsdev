@@ -39,7 +39,8 @@ export class UserViewComponent {
 
   isEditing = false;
   isLoaded = false;
-  showDeleteConfirm = false; // ✅ estado para modal
+  showDeleteConfirm = false; // modal de confirmación
+  showDeletePopup = false;   // popup de aviso
 
   constructor(
     private userService: UserService,
@@ -110,11 +111,19 @@ export class UserViewComponent {
   async confirmarEliminar(): Promise<void> {
     try {
       await this.userService.deleteMyProfile();
-      console.log('Usuario eliminado correctamente');
-      this.router.navigate(['/']);
+      this.showDeleteConfirm = false;
+
+      // ✅ Mostrar popup de aviso
+      this.showDeletePopup = true;
+
+      // Ocultar popup tras 3 segundos y redirigir
+      setTimeout(() => {
+        this.showDeletePopup = false;
+        this.router.navigate(['/']);
+      }, 3000);
+
     } catch (error) {
       console.error('Error eliminando usuario:', error);
-    } finally {
       this.showDeleteConfirm = false;
     }
   }

@@ -18,8 +18,12 @@ export class ProfileAboutCardComponent {
     if (!txt.trim()) return;
     if (!this.user.interests) this.user.interests = [];
     const nuevo = txt.trim();
-    if (!this.user.interests.includes(nuevo)) {
-      this.user.interests.push(nuevo);
+
+    // ✅ Como interests es un array de objetos { id: number },
+    // podemos simular IDs incrementales para nuevos intereses
+    const existe = this.user.interests.some(i => i.id.toString() === nuevo);
+    if (!existe) {
+      this.user.interests.push({ id: Date.now() }); // id único temporal
     }
   }
 
