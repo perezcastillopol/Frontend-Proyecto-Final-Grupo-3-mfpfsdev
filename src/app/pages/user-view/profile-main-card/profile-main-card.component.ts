@@ -20,7 +20,9 @@ export class ProfileMainCardComponent {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = () => { this.user.photo_url = reader.result as string; };
+    reader.onload = () => {
+      this.user.photo_url = reader.result as string;
+    };
     reader.readAsDataURL(file);
   }
 
