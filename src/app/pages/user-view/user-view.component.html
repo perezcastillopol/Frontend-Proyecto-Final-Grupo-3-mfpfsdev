@@ -18,7 +18,10 @@
           <button class="btn profile-btn-primary banner-edit-btn" (click)="editarPerfil()">Editar perfil</button>
         }
         @if (isEditing) {
-          <button class="btn btn-success banner-edit-btn" (click)="guardarCambios()">Guardar cambios</button>
+          <button class="btn profile-btn-primary banner-edit-btn" (click)="guardarCambios()">Guardar cambios</button>
+        }
+        @if (isEditing) {
+          <button class="btn btn-danger banner-edit-btn-danger" (click)="cancelarEdicion()">Cancelar</button>
         }
       </div>
     </div>

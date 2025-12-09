@@ -85,4 +85,9 @@ export class UserViewComponent {
       console.error('Error guardando cambios:', error);
     }
   }
+
+  cancelarEdicion(): void {
+    this.isEditing = false;
+    this.ngOnInit(); // Recargar los datos originales del perfil
+  }
 }
