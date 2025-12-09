@@ -1,83 +1,48 @@
-import {Injectable} from '@angular/core';
-import {IUserProfile} from '../../interfaces/user.interfaces';
-import {HttpServices} from './http.services';
-import { ApiUser } from '../../interfaces/user.interface';
-
+import { Injectable } from '@angular/core';
+import { HttpServices } from './http.services';
+import { IUser } from '../../interfaces/user.interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService extends HttpServices {
-  private base = '/users';
+  private readonly base = '/users';
 
-  private getUserIdFromToken(): string | null {
-    const token = localStorage.getItem('token');
-    if (!token) return null;
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload?.id?.toString() ?? null;
-    } catch {
-      return null;
-    }
+  constructor() {
+    super();
   }
 
-  private apiToUi(user: ApiUser): IUserProfile {
-    return {
-      id: String(user.id),
-      nombre: user.name,
-      apellidos: '', // si decides almacenarlo en el futuro
-      mail: user.email,
-      foto: user.photo_url,
-      descripcion: user.bio,
-      intereses: Array.isArray(user.interests)
-        ? user.interests
-        : (typeof user.interests === 'string' ? user.interests.split(',').map(s => s.trim()).filter(Boolean) : []),
-
-      telefono: user.phone,
-      fecha_nacimiento: user.birthDate,
-      ubicacion: user.location,
-      estilo_viaje: user.travelStyle,
-      valoracion_promedio: user.rating,
-    };
+  /**
+   * Crea un nuevo usuario en el sistema.
+   */
+  async createUser(user: IUser): Promise<IUser> {
+    return await this.post<IUser>(`${this.base}`, user);
   }
 
-  private uiToApi(user: IUserProfile): ApiUser {
-    return {
-      id: user.id,
-      name: user.nombre,
-      email: user.mail,
-      photo_url: user.foto,
-      bio: user.descripcion,
-      interests: user.intereses ?? [],
-      birthDate: user.fecha_nacimiento,
-      phone: user.telefono,
-      location: user.ubicacion,
-      travelStyle: user.estilo_viaje,
-      rating: user.valoracion_promedio,
-    };
-  }
-
-  async getMyProfile(): Promise<IUserProfile> {
-    const id = this.getUserIdFromToken();
+  /**
+   * Obtiene el perfil del usuario logeado usando el ID del token.
+   */
+  async getMyProfile(): Promise<IUser> {
+    const id = this.auth.getUserId();
     if (!id) throw new Error('No hay token o ID de usuario.');
-    const apiUser = await this.get<ApiUser>(`${this.base}/${id}`);
-    return this.apiToUi(apiUser);
+    return await this.get<IUser>(`${this.base}/${id}`);
   }
 
-  async updateMyProfile(profile: IUserProfile): Promise<IUserProfile> {
-    const id = this.getUserIdFromToken();
+  /**
+   * Actualiza el perfil del usuario logeado.
+   */
+  async updateMyProfile(profile: IUser): Promise<IUser> {
+    const id = this.auth.getUserId();
     if (!id) throw new Error('No hay token o ID de usuario.');
-    const payload = this.uiToApi(profile);
-    const apiUser = await this.put<ApiUser>(`${this.base}/${id}`, payload);
-    return this.apiToUi(apiUser);
+    return await this.put<IUser>(`${this.base}/${id}`, profile);
   }
 
-  async createUser(user: IUserProfile): Promise<IUserProfile> {
-    const payload = this.uiToApi(user);
-    const apiUser = await this.post<ApiUser>(this.base, payload); 
-    return this.apiToUi(apiUser);
+  /**
+   * Elimina el usuario logeado (opcional).
+   */
+  async deleteMyProfile(): Promise<void> {
+    const id = this.auth.getUserId();
+    if (!id) throw new Error('No hay token o ID de usuario.');
+    await this.delete<void>(`${this.base}/${id}`);
   }
 }
-
-  
-  

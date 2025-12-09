@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { IUserProfile } from '../../../interfaces/user.interfaces';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { IUser } from '../../../interfaces/user.interfaces';
 
 @Component({
   selector: 'app-profile-about-card',
@@ -11,15 +11,15 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./profile-about-card.component.css'],
 })
 export class ProfileAboutCardComponent {
-  @Input() user!: IUserProfile;
+  @Input() user!: IUser;
   @Input() isEditing: boolean = false;
 
   añadirInteres(txt: string) {
     if (!txt.trim()) return;
-    if (!this.user.intereses) this.user.intereses = [];
+    if (!this.user.interests) this.user.interests = [];
     const nuevo = txt.trim();
-    if (!this.user.intereses.includes(nuevo)) {
-      this.user.intereses.push(nuevo);
+    if (!this.user.interests.includes(nuevo)) {
+      this.user.interests.push(nuevo);
     }
   }
 

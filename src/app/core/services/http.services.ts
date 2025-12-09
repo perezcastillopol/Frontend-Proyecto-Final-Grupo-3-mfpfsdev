@@ -1,45 +1,48 @@
-import {inject, Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {lastValueFrom} from 'rxjs';
-import {HttpOptions} from '../../interfaces/httpOptions.interface';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { lastValueFrom } from 'rxjs';
+import { HttpOptions } from '../../interfaces/httpOptions.interface';
+import { AuthService } from './auth.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class HttpServices {
   protected http = inject(HttpClient);
+  protected auth: AuthService = inject(AuthService); // ✅ Tipado explícito
   protected baseUrl = 'http://localhost:3000/api';
 
+  /**
+   * Construye las opciones de la petición (headers, params).
+   * Añade automáticamente el token si existe.
+   */
   private buildOptions(options?: HttpOptions): {
     headers?: HttpHeaders;
     params?: HttpParams;
     observe: 'body';
   } {
-    const httpOptions: {
-      headers?: HttpHeaders;
-      params?: HttpParams;
-      observe: 'body';
-    } = { observe: 'body' };
+    let headers = new HttpHeaders();
 
-    if (options?.params) {
-      let params = new HttpParams();
-      Object.entries(options.params).forEach(([key, value]) => {
-        if (value !== null && value !== undefined) {
-          params = params.set(key, value as any);
-        }
-      });
-      httpOptions.params = params;
+    const token = this.auth.getToken();
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
     }
 
     if (options?.headers) {
-      let headers = new HttpHeaders();
-      Object.entries(options.headers).forEach(([key, value]) => {
+      for (const [key, value] of Object.entries(options.headers)) {
         headers = headers.set(key, value);
-      });
-      httpOptions.headers = headers;
+      }
     }
 
-    return httpOptions;
+    let params: HttpParams | undefined;
+    if (options?.params) {
+      params = new HttpParams();
+      for (const [key, value] of Object.entries(options.params)) {
+        if (value !== null && value !== undefined) {
+          params = params.set(key, value as any);
+        }
+      }
+    }
+
+    return { observe: 'body', headers, params };
   }
 
   protected get<T>(endpoint: string, options?: HttpOptions): Promise<T> {
