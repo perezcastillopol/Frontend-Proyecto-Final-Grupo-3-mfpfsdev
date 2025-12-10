@@ -1,30 +1,32 @@
 <form [formGroup]="form" (ngSubmit)="submit()" class="review-form">
-  <label>
-    Usuario a valorar (ID)
-    <input formControlName="reviewee_id" type="number" />
-  </label>
-  @if (form.controls['reviewee_id'].invalid && form.controls['reviewee_id'].touched) {
-    <div class="error">ID obligatorio</div>
-  }
+  <div class="mb-3">
+    <label class="form-label">Usuario a valorar (ID)</label>
+    <input class="form-control" formControlName="reviewee_id" type="number" placeholder="Ej: 12" />
+    @if (form.controls['reviewee_id'].invalid && form.controls['reviewee_id'].touched) {
+      <div class="error small mt-1">ID obligatorio</div>
+    }
+  </div>
 
-  <label>
-    Puntuación (1-5)
-    <input formControlName="rating" type="number" min="1" max="5" />
-  </label>
-  @if (form.controls['rating'].invalid && form.controls['rating'].touched) {
-    <div class="error">Valor entre 1 y 5</div>
-  }
+  <div class="mb-3">
+    <label class="form-label">Puntuación (1-5)</label>
+    <input class="form-control rating-input" formControlName="rating" type="number" min="1" max="5" />
+    @if (form.controls['rating'].invalid && form.controls['rating'].touched) {
+      <div class="error small mt-1">Valor entre 1 y 5</div>
+    }
+  </div>
 
-  <label>
-    Comentario (opcional)
-    <textarea formControlName="comment"></textarea>
-  </label>
+  <div class="mb-3">
+    <label class="form-label">Comentario (opcional)</label>
+    <textarea class="form-control" formControlName="comment" rows="4" placeholder="¿Cómo fue tu experiencia?"></textarea>
+  </div>
 
-  <div class="actions">
-    <button type="submit" [disabled]="form.invalid || submitting">Enviar valoración</button>
+  <div class="d-grid">
+    <button class="btn review-submit text-white" type="submit" [disabled]="form.invalid || submitting">
+      Enviar valoración
+    </button>
   </div>
 
   @if (error) {
-    <div class="error">{{ error }}</div>
+    <div class="error mt-2 small">{{ error }}</div>
   }
 </form>
