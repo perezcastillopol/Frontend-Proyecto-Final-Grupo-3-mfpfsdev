@@ -44,9 +44,9 @@
             }
           </div>
 
-          <!-- Destino y Modalidad -->
+          <!-- Destino -->
           <div class="row g-3 mb-3">
-            <div class="col-md-6">
+            <div class="col-12">
               <label for="destination" class="form-label">Destino *</label>
               <input
                 type="text"
@@ -61,6 +61,10 @@
               }
             </div>
 
+          </div>
+
+          <!-- Modalidad y Precio -->
+          <div class="row g-3 mb-3">
             <div class="col-md-6">
               <label for="modalityId" class="form-label">Modalidad *</label>
               <select
@@ -76,6 +80,25 @@
               </select>
               @if (checkControl('modalityId', 'required')) {
                 <div class="invalid-feedback d-block">La modalidad es obligatoria</div>
+              }
+            </div>
+
+            <div class="col-md-6">
+              <label for="costPerPerson" class="form-label">Precio por persona (€) *</label>
+              <input
+                type="number"
+                id="costPerPerson"
+                formControlName="costPerPerson"
+                class="form-control form-input"
+                [class.is-invalid]="checkControl('costPerPerson', 'required') || checkControl('costPerPerson', 'min')"
+                placeholder="0"
+                min="0"
+              />
+              @if (checkControl('costPerPerson', 'required')) {
+                <div class="invalid-feedback d-block">El precio es obligatorio</div>
+              }
+              @if (checkControl('costPerPerson', 'min')) {
+                <div class="invalid-feedback d-block">El precio debe ser mayor o igual a 0</div>
               }
             </div>
           </div>
@@ -111,27 +134,8 @@
             </div>
           </div>
 
-          <!-- Precio y Participantes -->
+          <!-- Participantes -->
           <div class="row g-3 mb-3">
-            <div class="col-md-6">
-              <label for="costPerPerson" class="form-label">Precio por persona (€) *</label>
-              <input
-                type="number"
-                id="costPerPerson"
-                formControlName="costPerPerson"
-                class="form-control form-input"
-                [class.is-invalid]="checkControl('costPerPerson', 'required') || checkControl('costPerPerson', 'min')"
-                placeholder="0"
-                min="0"
-              />
-              @if (checkControl('costPerPerson', 'required')) {
-                <div class="invalid-feedback d-block">El precio es obligatorio</div>
-              }
-              @if (checkControl('costPerPerson', 'min')) {
-                <div class="invalid-feedback d-block">El precio debe ser mayor o igual a 0</div>
-              }
-            </div>
-
             <div class="col-md-6">
               <label for="minParticipants" class="form-label">Participantes mínimos *</label>
               <input
@@ -148,6 +152,28 @@
               }
               @if (checkControl('minParticipants', 'min')) {
                 <div class="invalid-feedback d-block">Debe haber al menos 1 participante</div>
+              }
+            </div>
+
+            <div class="col-md-6">
+              <label for="maxParticipants" class="form-label">Participantes máximos *</label>
+              <input
+                type="number"
+                id="maxParticipants"
+                formControlName="maxParticipants"
+                class="form-control form-input"
+                [class.is-invalid]="checkControl('maxParticipants', 'required') || checkControl('maxParticipants', 'min') || checkControl('maxParticipants', 'lessThanMin')"
+                placeholder="Ej: 10"
+                min="1"
+              />
+              @if (checkControl('maxParticipants', 'required')) {
+                <div class="invalid-feedback d-block">Los participantes máximos son obligatorios</div>
+              }
+              @if (checkControl('maxParticipants', 'min')) {
+                <div class="invalid-feedback d-block">Debe haber al menos 1 participante</div>
+              }
+              @if (checkControl('maxParticipants', 'lessThanMin')) {
+                <div class="invalid-feedback d-block">Debe ser mayor o igual que los participantes mínimos</div>
               }
             </div>
           </div>
