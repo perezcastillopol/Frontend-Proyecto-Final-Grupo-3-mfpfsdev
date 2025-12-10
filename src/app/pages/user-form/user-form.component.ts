@@ -75,7 +75,7 @@ export class UserFormComponent {
     try {
         const resp = await this.authService.register({...this.userForm.value, interests:JSON.stringify(this.interests)});
         if (resp) {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/login']);
         }
     } catch (msg) {
       console.log(msg);
