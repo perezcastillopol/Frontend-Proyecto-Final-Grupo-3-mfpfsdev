@@ -101,3 +101,23 @@
     font-size: 2rem;
   }
 }
+
+/* Reviews block */
+.reviews-block {
+  background: #f5f5f5;
+}
+
+.reviews-card {
+  border-radius: 20px;
+}
+
+.reviews-card .row {
+  align-items: stretch;
+}
+
+.reviews-icon {
+  width: 44px;
+  height: 44px;
+  color: var(--secondary-color);
+  font-size: 1.25rem;
+}
