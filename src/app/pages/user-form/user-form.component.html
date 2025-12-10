@@ -27,6 +27,26 @@
 						}
 					</div>
 					<div class="mb-2">
+						<label for="email" class="form-label">Email *</label>
+						<input type="email" class="form-control" id="email" name="email" formControlName="email" placeholder="tu@email.com">
+						@if (checkForm('required', 'email')){
+							<p class="form-error">El email es obligatorio</p>
+						}
+						@if (checkForm('pattern', 'email')){
+							<p class="form-error">Debe introducir un email válido</p>
+						}
+					</div>
+					<div class="mb-2">
+						<label for="password_hash" class="form-label">Contraseña *</label>
+						<input type="password" class="form-control" id="password_hash" name="password_hash" formControlName="password_hash" placeholder="Mínimo 6 caracteres">
+						@if (checkForm('required', 'password_hash')){
+							<p class="form-error">La contraseña es obligatoria</p>
+						}
+						@if (checkForm('minlength', 'password_hash')){
+							<p class="form-error">La contraseña debe tener mínimo 6 caracteres</p>
+						}
+					</div>
+					<div class="mb-2">
 						<label for="photo_url" class="form-label">Imagen Usuario</label>
 						<input type="url" class="form-control" id="photo_url" name="photo_url" placeholder="https://..."formControlName="photo_url">
 						@if (checkForm('required', 'photo_url')){
