@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TripsService } from '../../core/services/trips.services';
 import { ITrip } from '../../interfaces/trip.interface';
@@ -33,6 +33,11 @@ export class TripCreateComponent {
       endDate: new FormControl('', [Validators.required]),
       costPerPerson: new FormControl('', [Validators.required, Validators.min(0)]),
       minParticipants: new FormControl('', [Validators.required, Validators.min(1)]),
+      maxParticipants: new FormControl('', [
+        Validators.required,
+        Validators.min(1),
+        this.maxParticipantsValidator
+      ]),
       transport: new FormControl('', [Validators.required]),
       photoUrl: new FormControl('', [
         Validators.pattern(/^(https?:\/\/).+/i),
@@ -40,10 +45,37 @@ export class TripCreateComponent {
       itinerary: new FormControl(''),
       modalityId: new FormControl('', [Validators.required])
     });
+
+    this.tripForm.get('minParticipants')?.valueChanges.subscribe(() => {
+      this.tripForm.get('maxParticipants')?.updateValueAndValidity();
+    });
   }
   checkControl(controlName: string, errorName: string):boolean | undefined{
     return this.tripForm.get(controlName)?.hasError(errorName) && this.tripForm.get(controlName)?.touched;
   }
+
+  maxParticipantsValidator = (control: AbstractControl): ValidationErrors | null => {
+    const parent = control.parent;
+    if (!parent) {
+      return null;
+    }
+
+    const rawMax = control.value;
+    const rawMin = parent.get('minParticipants')?.value;
+
+    if (rawMax === null || rawMax === '' || rawMin === null || rawMin === '') {
+      return null;
+    }
+
+    const maxValue = Number(rawMax);
+    const minValue = Number(rawMin);
+
+    if (isNaN(maxValue) || isNaN(minValue)) {
+      return null;
+    }
+
+    return maxValue < minValue ? { lessThanMin: true } : null;
+  };
 
   async onSubmit() {
     if (!this.tripForm.valid) {
@@ -65,7 +97,7 @@ export class TripCreateComponent {
       end_date: formValue.endDate,                          // endDate → end_date
       cost_per_person: Number(formValue.costPerPerson),     // costPerPerson → cost_per_person (as number)
       min_participants: Number(formValue.minParticipants),  // minParticipants → min_participants (as number)
-      max_participants: Number(formValue.minParticipants) * 2, // Default: 2x min participants
+      max_participants: Number(formValue.maxParticipants),  // maxParticipants → max_participants (as number)
       transport: formValue.transport,
       itinerary: formValue.itinerary || '',
       photo_url: (formValue.photoUrl || '').trim() || undefined, // optional image URL
