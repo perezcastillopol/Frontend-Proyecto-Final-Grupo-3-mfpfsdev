@@ -21,11 +21,13 @@ export class AuthService extends HttpServices {
   async login(credentials: LoginRequest) {
     const response = await this.post<LoginResponse>(`${this.url}/login`, credentials);
     localStorage.setItem('token', response.token);
+    localStorage.setItem('userId', response.user?.id);
     return response;
   }
 
   logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('userId');
   }
 
   isLoggedIn(): boolean {
@@ -41,11 +43,8 @@ export class AuthService extends HttpServices {
   }
 
   getUserId(): string | null {
-    const token = this.getToken();
-    if (!token) return null;
     try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload?.id?.toString() ?? null;
+      return localStorage.getItem('userId')
     } catch {
       return null;
     }

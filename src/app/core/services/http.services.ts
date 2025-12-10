@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
 @Injectable({ providedIn: 'root' })
 export class HttpServices {
   protected http = inject(HttpClient);
-  protected auth: AuthService = inject(AuthService); // ✅ Tipado explícito
+  protected auth: AuthService = inject(AuthService);
   protected baseUrl = 'http://localhost:3000/api';
 
   /**

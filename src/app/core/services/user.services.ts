@@ -23,26 +23,23 @@ export class UserService extends HttpServices {
    * Obtiene el perfil del usuario logeado usando el ID del token.
    */
   async getMyProfile(): Promise<IUser> {
-    const id = this.auth.getUserId();
-    if (!id) throw new Error('No hay token o ID de usuario.');
-    return await this.get<IUser>(`${this.base}/${id}`);
+    const userId = this.auth.getUserId();
+    return await this.get<IUser>(`${this.base}/${userId}`);
   }
 
   /**
    * Actualiza el perfil del usuario logeado.
    */
   async updateMyProfile(profile: IUser): Promise<IUser> {
-    const id = this.auth.getUserId();
-    if (!id) throw new Error('No hay token o ID de usuario.');
-    return await this.put<IUser>(`${this.base}/${id}`, profile);
+    const userId = this.auth.getUserId();
+    return await this.put<IUser>(`${this.base}/${userId}`, profile);
   }
 
   /**
    * Elimina el usuario logeado (opcional).
    */
   async deleteMyProfile(): Promise<void> {
-    const id = this.auth.getUserId();
-    if (!id) throw new Error('No hay token o ID de usuario.');
-    await this.delete<void>(`${this.base}/${id}`);
+    const userId = this.auth.getUserId();
+    await this.delete<void>(`${this.base}/${userId}`);
   }
 }
