@@ -1,7 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { TripCardComponent } from '../../shared/trip-card/trip-card.component';
 import { SearchBannerComponent, SearchFilters } from '../../shared/search-banner/search-banner.component';
 import { Trip, TripsService } from '../../core/services/trips.services';
+import { ModalityService } from '../../core/services/modality.service';
+import { IModality } from '../../interfaces/modality.interface';
 
 @Component({
   selector: 'app-explore',
@@ -13,9 +17,12 @@ import { Trip, TripsService } from '../../core/services/trips.services';
 export class ExploreComponent implements OnInit {
   searchParams: any = {};
   private tripsService = inject(TripsService);
+  private modalityService = inject(ModalityService);
+  private route = inject(ActivatedRoute);
 
   allTrips: Trip[] = [];
   filteredTrips: Trip[] = [];
+  modalities: IModality[] = [];
   private currentFilters: SearchFilters = {
     query: '',
     category: '',
@@ -24,28 +31,57 @@ export class ExploreComponent implements OnInit {
     endDate: '',
   };
 
-  private categoryToModality: Record<string, number> = {
-    Aventura: 1,
-    Naturaleza: 2,
-    Ciudad: 3,
-    Playa: 4,
-  };
+  private categoryToModality: Record<string, number> = {};
 
-  ngOnInit() {
-    this.tripsService.getTrips().then(trips => {
-      this.allTrips = trips.map(trip => ({
-        ...trip,
-        imageUrl: trip.imageUrl, 
-        currentPeople: trip.currentPeople ?? 0,
-        maxPeople: trip.maxPeople ?? trip.max_participants ?? 0
-      }));
-      this.applyFilters(this.currentFilters);
-    });
+  async ngOnInit() {
+    // Load modalities first
+    const modalities = await this.modalityService.getAllModalities();
+    this.modalities = modalities;
+
+    // Build the categoryToModality mapping dynamically
+    this.categoryToModality = modalities.reduce((acc, modality) => {
+      acc[modality.name] = modality.id;
+      return acc;
+    }, {} as Record<string, number>);
+
+    // Read query params from URL using firstValueFrom
+    const params = await firstValueFrom(this.route.queryParams);
+    const filters: SearchFilters = {
+      query: params['destination'] || '',
+      category: this.mapExperienceToCategory(params['experience']) || '',
+      status: '',
+      startDate: params['startDate'] || '',
+      endDate: params['endDate'] || '',
+    };
+    this.currentFilters = filters;
+
+    // Load trips
+    const trips = await this.tripsService.getTrips();
+    this.allTrips = trips.map(trip => ({
+      ...trip,
+      imageUrl: trip.imageUrl,
+      currentPeople: trip.currentPeople ?? 0,
+      maxPeople: trip.maxPeople ?? trip.max_participants ?? 0
+    }));
+    this.applyFilters(this.currentFilters);
   }
 
   onSearch(filters: SearchFilters) {
     this.currentFilters = filters;
     this.applyFilters(filters);
+  }
+
+  private mapExperienceToCategory(experience: string | undefined): string {
+    if (!experience) return '';
+
+    const experienceLower = experience.toLowerCase().trim();
+
+    // Find matching modality by name (case-insensitive)
+    const matchingModality = this.modalities.find(
+      modality => modality.name.toLowerCase() === experienceLower
+    );
+
+    return matchingModality ? matchingModality.name : '';
   }
 
   private applyFilters(filters: SearchFilters) {
