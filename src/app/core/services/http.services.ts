@@ -7,12 +7,10 @@ import { AuthService } from './auth.service';
 @Injectable({ providedIn: 'root' })
 export class HttpServices {
   protected http = inject(HttpClient);
-  protected auth: AuthService = inject(AuthService);
   protected baseUrl = 'http://localhost:3000/api';
 
   /**
    * Construye las opciones de la petición (headers, params).
-   * Añade automáticamente el token si existe.
    */
   private buildOptions(options?: HttpOptions): {
     headers?: HttpHeaders;
@@ -20,17 +18,6 @@ export class HttpServices {
     observe: 'body';
   } {
     let headers = new HttpHeaders();
-
-    const token = this.auth.getToken();
-    if (token) {
-      headers = headers.set('Authorization', `Bearer ${token}`);
-    }
-
-    if (options?.headers) {
-      for (const [key, value] of Object.entries(options.headers)) {
-        headers = headers.set(key, value);
-      }
-    }
 
     let params: HttpParams | undefined;
     if (options?.params) {

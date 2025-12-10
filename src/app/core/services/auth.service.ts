@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpServices} from './http.services';
+import {IUser} from '../../interfaces/user.interfaces';
 
 export interface LoginRequest {
   email: string;
@@ -23,6 +24,10 @@ export class AuthService extends HttpServices {
     localStorage.setItem('token', response.token);
     localStorage.setItem('userId', response.user?.id);
     return response;
+  }
+
+  async register(user: IUser): Promise<IUser> {
+    return await this.post<IUser>(`${this.url}`, user);
   }
 
   logout() {

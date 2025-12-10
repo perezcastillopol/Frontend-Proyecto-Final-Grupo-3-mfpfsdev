@@ -11,6 +11,7 @@ import { ModalityService} from '../../core/services/modality.service';
 import { Router } from '@angular/router';
 import { IModality } from '../../interfaces/modality.interface';
 import { TagsComponent } from '../../shared/tags/tags.component';
+import {AuthService} from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-usuario-form',
@@ -25,6 +26,7 @@ export class UserFormComponent {
   interests: any[] = [];
 
   private srv = inject(UserService);
+  private authService = inject(AuthService);
   srvModalities = inject(ModalityService)
   router = inject(Router);
   constructor() {
@@ -71,7 +73,7 @@ export class UserFormComponent {
 
   async getDataForm() {
     try {
-        const resp = await this.srv.createUser({...this.userForm.value, interests:JSON.stringify(this.interests)});
+        const resp = await this.authService.register({...this.userForm.value, interests:JSON.stringify(this.interests)});
         if (resp) {
           this.router.navigate(['/home']);
         }

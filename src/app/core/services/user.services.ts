@@ -1,23 +1,14 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import { HttpServices } from './http.services';
 import { IUser } from '../../interfaces/user.interfaces';
+import {AuthService} from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService extends HttpServices {
   private readonly base = '/users';
-
-  constructor() {
-    super();
-  }
-
-  /**
-   * Crea un nuevo usuario en el sistema.
-   */
-  async createUser(user: IUser): Promise<IUser> {
-    return await this.post<IUser>(`${this.base}`, user);
-  }
+  private auth = inject(AuthService);
 
   /**
    * Obtiene el perfil del usuario logeado usando el ID del token.
