@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { IModality } from '../../interfaces/modality.interface';
 
 export interface SearchFilters {
   query: string;
@@ -17,15 +18,12 @@ export interface SearchFilters {
   styleUrls: ['./search-banner.component.css'],
 })
 export class SearchBannerComponent {
+  @Input() modalities: IModality[] = [];
   @Output() search = new EventEmitter<SearchFilters>();
 
-  categories = [
-    'Categorías',
-    'Aventura',
-    'Naturaleza',
-    'Ciudad',
-    'Playa',
-  ];
+  get categories(): string[] {
+    return ['Categorías', ...this.modalities.map(m => m.name)];
+  }
 
   statusOptions = ['Estado', 'Abierto', 'Cerrado', 'Próximamente'];
 

@@ -3,7 +3,7 @@
     <h1 class="page-title mb-3">Explorar viajes</h1>
 
     <div class="search-block mb-3">
-      <app-search-banner (search)="onSearch($event)"></app-search-banner>
+      <app-search-banner [modalities]="modalities" (search)="onSearch($event)"></app-search-banner>
     </div>
 
     <div class="results-header d-flex justify-content-between align-items-baseline flex-wrap gap-2 mb-3 px-1">
