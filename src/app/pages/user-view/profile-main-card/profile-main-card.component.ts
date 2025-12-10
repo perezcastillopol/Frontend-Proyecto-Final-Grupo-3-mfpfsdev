@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { IUserProfile } from '../../../interfaces/user.interfaces';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { IUser } from '../../../interfaces/user.interfaces';
 
 @Component({
   selector: 'app-profile-main-card',
@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./profile-main-card.component.css'],
 })
 export class ProfileMainCardComponent {
-  @Input() user!: IUserProfile;
+  @Input() user!: IUser;
   @Input() isEditing: boolean = false;
 
   actualizarFoto(event: Event) {
@@ -20,13 +20,15 @@ export class ProfileMainCardComponent {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = () => { this.user.foto = reader.result as string; };
+    reader.onload = () => {
+      this.user.photo_url = reader.result as string;
+    };
     reader.readAsDataURL(file);
   }
 
   get fullName(): string {
-    const nombre = this.user?.nombre ?? '';
-    const apellidos = this.user?.apellidos ?? '';
+    const nombre = this.user?.name ?? '';
+    const apellidos = this.user?.last_name ?? '';
     return `${nombre} ${apellidos}`.trim();
   }
 }

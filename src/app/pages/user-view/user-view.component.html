@@ -1,5 +1,4 @@
 <div class="container py-4">
-
   <!-- Loader -->
   @if (!isLoaded) {
     <div class="text-center py-5">
@@ -18,7 +17,10 @@
           <button class="btn profile-btn-primary banner-edit-btn" (click)="editarPerfil()">Editar perfil</button>
         }
         @if (isEditing) {
-          <button class="btn btn-success banner-edit-btn" (click)="guardarCambios()">Guardar cambios</button>
+          <button class="btn profile-btn-primary banner-edit-btn" (click)="guardarCambios()">Guardar cambios</button>
+        }
+        @if (isEditing) {
+          <button class="btn btn-danger banner-edit-btn-danger" (click)="cancelarEdicion()">Cancelar</button>
         }
       </div>
     </div>
@@ -37,5 +39,32 @@
         <app-profile-info-card [user]="user" [isEditing]="isEditing"></app-profile-info-card>
       </div>
     </div>
+
+    <!-- Botón de eliminar usuario -->
+    <div class="delete-user text-end mt-4">
+      <button class="btn btn-outline-danger" (click)="abrirModalEliminar()">
+        Eliminar usuario
+      </button>
+    </div>
+
+    <!-- Modal de confirmación -->
+    @if (showDeleteConfirm) {
+      <div class="modal-backdrop">
+        <div class="modal-box">
+          <h5>⚠️ ¿Seguro que quieres eliminar tu usuario?</h5>
+          <p>Esta acción no se puede deshacer.</p>
+          <div class="d-flex gap-2 justify-content-end mt-3">
+            <button class="btn btn-secondary" (click)="cerrarModalEliminar()">Cancelar</button>
+            <button class="btn btn-danger" (click)="confirmarEliminar()">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    }
+
+    @if (showDeletePopup) {
+      <div class="popup-alert">
+        <p>✅ Usuario eliminado correctamente</p>
+      </div>
+    }
   }
 </div>

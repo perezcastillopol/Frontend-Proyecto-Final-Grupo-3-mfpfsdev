@@ -1,38 +1,46 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IUserProfile } from '../../interfaces/user.interfaces';
 import { UserService } from '../../core/services/user.services';
 import { AuthService } from '../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { ProfileAboutCardComponent } from './profile-about-card/profile-about-card.component';
 import { ProfileInfoCardComponent } from './profile-info-card/profile-info-card.component';
 import { ProfileMainCardComponent } from './profile-main-card/profile-main-card.component';
+import { IUser } from '../../interfaces/user.interfaces';
 
 @Component({
   selector: 'app-user-view',
   standalone: true,
-  imports: [CommonModule, ProfileAboutCardComponent, ProfileInfoCardComponent, ProfileMainCardComponent],
+  imports: [
+    CommonModule,
+    ProfileAboutCardComponent,
+    ProfileInfoCardComponent,
+    ProfileMainCardComponent
+  ],
   templateUrl: './user-view.component.html',
   styleUrls: ['./user-view.component.css']
 })
 export class UserViewComponent {
-  user: IUserProfile = {
+  user: IUser = {
     id: '',
-    nombre: '',
-    apellidos: '',
-    mail: '',
-    foto: '',
-    descripcion: '',
-    intereses: [],
-    telefono: '',
-    fecha_nacimiento: '',
-    ubicacion: '',
-    estilo_viaje: '',
-    valoracion_promedio: 0
+    name: '',
+    last_name: '',
+    email: '',
+    photo_url: '',
+    bio: '',
+    interests: [],
+    phone: '',
+    birthDate: '',
+    location: '',
+    nickname: '',
+    average_rating: 0,
+    created_at: ''
   };
 
   isEditing = false;
   isLoaded = false;
+  showDeleteConfirm = false; // modal de confirmación
+  showDeletePopup = false;   // popup de aviso
 
   constructor(
     private userService: UserService,
@@ -45,24 +53,25 @@ export class UserViewComponent {
 
     try {
       if (this.authService.isLoggedIn()) {
-        // Usuario real desde backend
         const profile = await this.userService.getMyProfile();
         this.user = { ...profile };
       } else {
-        // Usuario de prueba (modo invitado)
+        // Usuario demo
         this.user = {
           id: 'demo-1',
-          nombre: 'Usuario de Prueba',
-          apellidos: 'TripBud',
-          mail: 'demo@tripbud.com',
-          foto: 'https://media.istockphoto.com/id/1200677760/es/foto/retrato-de-apuesto-joven-sonriente-con-los-brazos-cruzados.jpg?s=612x612&w=0&k=20&c=RhKR8pxX3y_YVe5CjrRnTcNFEGDryD2FVOcUT_w3m4w=',
-          descripcion: 'Este es un perfil de prueba para visualizar la página de usuario.',
-          intereses: ['Viajar', 'Aventura', 'Fotografía'],
-          telefono: '000-000-000',
-          fecha_nacimiento: '1990-01-01',
-          ubicacion: 'Málaga, España',
-          estilo_viaje: 'Mochilero',
-          valoracion_promedio: 4.5
+          name: 'Demo',
+          last_name: 'TripBud',
+          email: 'demo@tripbud.com',
+          photo_url:
+            'https://media.istockphoto.com/id/1200677760/es/foto/retrato-de-apuesto-joven-sonriente-con-los-brazos-cruzados.jpg?s=612x612&w=0&k=20&c=RhKR8pxX3y_YVe5CjrRnTcNFEGDryD2FVOcUT_w3m4w=',
+          bio: 'Este es un perfil de prueba para visualizar la página de usuario.',
+          interests: [{ id: 1 }, { id: 2 }, { id: 3 }],
+          phone: '000-000-000',
+          birthDate: '1990-01-01',
+          location: 'Málaga, España',
+          nickname: 'Mochilero',
+          average_rating: 4.5,
+          created_at: '2020-01-01'
         };
       }
     } catch (error) {
@@ -83,6 +92,39 @@ export class UserViewComponent {
       this.isEditing = false;
     } catch (error) {
       console.error('Error guardando cambios:', error);
+    }
+  }
+
+  cancelarEdicion(): void {
+    this.isEditing = false;
+    this.ngOnInit();
+  }
+
+  abrirModalEliminar(): void {
+    this.showDeleteConfirm = true;
+  }
+
+  cerrarModalEliminar(): void {
+    this.showDeleteConfirm = false;
+  }
+
+  async confirmarEliminar(): Promise<void> {
+    try {
+      await this.userService.deleteMyProfile();
+      this.showDeleteConfirm = false;
+
+      // ✅ Mostrar popup de aviso
+      this.showDeletePopup = true;
+
+      // Ocultar popup tras 3 segundos y redirigir
+      setTimeout(() => {
+        this.showDeletePopup = false;
+        this.router.navigate(['/']);
+      }, 3000);
+
+    } catch (error) {
+      console.error('Error eliminando usuario:', error);
+      this.showDeleteConfirm = false;
     }
   }
 }
