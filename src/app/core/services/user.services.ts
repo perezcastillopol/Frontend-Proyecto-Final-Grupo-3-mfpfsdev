@@ -74,10 +74,10 @@ export class UserService extends HttpServices {
 
   async createUser(user: IUserProfile): Promise<IUserProfile> {
     const payload = this.uiToApi(user);
-    const apiUser = await this.post<ApiUser>(this.base, payload); 
+    const apiUser = await this.post<ApiUser>('auth/register', payload);
     return this.apiToUi(apiUser);
   }
 }
 
-  
-  
+
+

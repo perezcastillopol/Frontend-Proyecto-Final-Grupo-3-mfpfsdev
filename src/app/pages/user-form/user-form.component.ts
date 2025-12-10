@@ -23,8 +23,8 @@ export class UserFormComponent {
   modalities: IModality[] = [];
   selectedModalities: string[] = [];
   interests: any[] = [];
-  
-  srv = inject(UserService);
+
+  private srv = inject(UserService);
   srvModalities = inject(ModalityService)
   router = inject(Router);
   constructor() {
@@ -66,11 +66,11 @@ export class UserFormComponent {
   }
 
   async getDataForm() {
-    try {        
+    try {
         const resp = await this.srv.createUser({...this.userForm.value, interests:JSON.stringify(this.interests)});
         if (resp) {
-          this.router.navigate(['/home']);          
-        }      
+          this.router.navigate(['/home']);
+        }
     } catch (msg) {
       console.log(msg);
     }
@@ -92,9 +92,9 @@ export class UserFormComponent {
       if (mod) {
         this.interests.push({
           id: mod.id,
-          name: mod.name,          
+          name: mod.name,
         });
-      }     
+      }
     }
   }
 

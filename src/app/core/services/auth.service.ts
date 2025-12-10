@@ -18,7 +18,7 @@ export class AuthService extends HttpServices {
   private url = '/auth';
 
   async login(credentials: LoginRequest) {
-    const response = await this.post(`${this.url}/login`, credentials);
+    const response = await this.post<LoginResponse>(`${this.url}/login`, credentials);
     localStorage.setItem('token', response.token);
     return response;
   }
@@ -29,5 +29,13 @@ export class AuthService extends HttpServices {
 
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
+  }
+
+  getToken(): string | null {
+    try {
+      return localStorage.getItem('token');
+    } catch {
+      return null;
+    }
   }
 }
