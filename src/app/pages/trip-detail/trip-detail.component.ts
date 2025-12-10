@@ -1,5 +1,5 @@
 import {Component, inject, OnInit, ViewChild} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe, CurrencyPipe, TitleCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TripsService, Trip } from '../../core/services/trips.services';
@@ -11,7 +11,7 @@ import { ITripInvitation } from '../../interfaces/trip-invitation.interface';
 @Component({
   selector: 'app-trip-detail',
   standalone: true,
-  imports: [DatePipe, CurrencyPipe, TitleCasePipe, ReviewFormComponent, ReviewListComponent],
+  imports: [DatePipe, CurrencyPipe, TitleCasePipe, ReviewFormComponent, ReviewListComponent, FormsModule],
   templateUrl: './trip-detail.component.html',
   styleUrl: './trip-detail.component.css'
 })
