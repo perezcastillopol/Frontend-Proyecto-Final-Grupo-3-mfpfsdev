@@ -7,6 +7,8 @@ import {ReviewListComponent} from '../reviews/review-list/review-list.component'
 import {ReviewFormComponent} from '../reviews/review-form/review-form.component';
 import { TripInvitationService } from '../../core/services/trip-invitation.service';
 import { ITripInvitation } from '../../interfaces/trip-invitation.interface';
+import {TripParticipant} from '../../interfaces/trip-participant.interface';
+import {ParticipantsService} from '../../core/services/participants.service';
 
 @Component({
   selector: 'app-trip-detail',
@@ -21,10 +23,13 @@ export class TripDetailComponent implements OnInit {
   private tripsService = inject(TripsService);
   private invitationService = inject(TripInvitationService);
   private tripId = Number(this.route.snapshot.paramMap.get('id'));
+  private participantService = inject(ParticipantsService);
 
   trip: Trip | null = null;
   isOwner = false;
+  currentUserId: number | null = null;
   userInvitation: ITripInvitation | null = null;
+  participants: TripParticipant[] = [];
   isRequestingInvitation = false;
   invitationNote = '';
 
@@ -43,7 +48,11 @@ export class TripDetailComponent implements OnInit {
 
       // Check if current user is the owner
       const currentUserId = this.tripsService.me();
+      this.currentUserId = currentUserId;
       this.isOwner = this.trip.creatorId === currentUserId;
+
+      // Load accepted participants to show in review form
+      await this.loadParticipants();
 
       // Check if user has already requested invitation
       if (!this.isOwner) {
@@ -139,4 +148,19 @@ export class TripDetailComponent implements OnInit {
   canRequestInvitation(): boolean {
     return !this.isOwner && !this.userInvitation;
   }
+
+  private async loadParticipants() {
+    try {
+      const list = await this.participantService.getParticipants(this.tripId);
+      this.participants = list;
+    } catch (error) {
+      console.error('Error loading participants', error);
+      this.participants = [];
+    }
+  }
+  canReview(): boolean {
+    if (!this.currentUserId) return false;
+    return this.participants.some(participant => participant.id === this.currentUserId);
+  }
 }
+

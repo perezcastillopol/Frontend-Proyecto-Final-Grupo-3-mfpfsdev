@@ -22,6 +22,8 @@ const skipAuthRules = [
 
   // REVIEWS públicos (GET)
   { url: /^\/api\/reviews\/trip\/\d+$/, methods: ['GET'] },
+  //Participants públicos (GET)
+  { url: /^\/api\/participants\/trip\/\d+$/, methods: ['GET'] },
 ];
 
 function isPublicRequest(reqUrl: string, reqMethod: string): boolean {
