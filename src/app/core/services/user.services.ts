@@ -62,6 +62,7 @@ export class UserService extends HttpServices {
    */
   async deleteMyProfile(): Promise<void> {
     const userId = this.auth.getUserId();
+    console.log(userId)
     await this.delete<void>(`${this.base}/${userId}`);
   }
 }
