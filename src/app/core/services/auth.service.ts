@@ -27,7 +27,7 @@ export class AuthService extends HttpServices {
   }
 
   async register(user: IUser): Promise<IUser> {
-    return await this.post<IUser>(`${this.url}`, user);
+    return await this.post<IUser>(`${this.url}/register`, user);
   }
 
   logout() {

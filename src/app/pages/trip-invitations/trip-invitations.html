@@ -1,0 +1,86 @@
+<div class="container py-4">
+    @if (isLoading) {
+    <div class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+    </div>
+    } @else {
+    <!-- Header -->
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <button class="btn btn-link text-decoration-none p-0 mb-2" (click)="goBack()">
+                <i class="bi bi-arrow-left me-2"></i>
+                Volver al viaje
+            </button>
+            <h1 class="h3 mb-1">Gestionar solicitudes</h1>
+            @if (trip) {
+            <p class="text-muted mb-0">{{ trip.title }}</p>
+            }
+        </div>
+        <button class="btn btn-outline-secondary" (click)="viewHistory()">
+            <i class="bi bi-clock-history me-2"></i>
+            Ver historial
+        </button>
+    </div>
+
+    <!-- Pending Invitations -->
+    @if (pendingInvitations.length === 0) {
+    <div class="alert alert-info">
+        <i class="bi bi-info-circle me-2"></i>
+        No hay solicitudes pendientes en este momento.
+    </div>
+    } @else {
+    <div class="row g-3">
+        @for (invitation of pendingInvitations; track invitation.id) {
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h5 class="card-title mb-1">
+                                Usuario #{{ invitation.user_id }}
+                            </h5>
+                            <small class="text-muted">
+                                <i class="bi bi-clock me-1"></i>
+                                Solicitado: {{ invitation.requested_at | date:'dd/MM/yyyy HH:mm' }}
+                            </small>
+                        </div>
+                        <span class="badge bg-warning text-dark">Pendiente</span>
+                    </div>
+
+                    @if (invitation.note) {
+                    <div class="mb-3">
+                        <strong class="d-block mb-1">Mensaje:</strong>
+                        <p class="card-text text-muted mb-0">{{ invitation.note }}</p>
+                    </div>
+                    }
+
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-success" (click)="acceptInvitation(invitation)"
+                            [disabled]="processingInvitationId === invitation.id">
+                            @if (processingInvitationId === invitation.id) {
+                            <span class="spinner-border spinner-border-sm me-2"></span>
+                            } @else {
+                            <i class="bi bi-check-circle me-2"></i>
+                            }
+                            Aceptar
+                        </button>
+                        <button class="btn btn-danger" (click)="rejectInvitation(invitation)"
+                            [disabled]="processingInvitationId === invitation.id">
+                            @if (processingInvitationId === invitation.id) {
+                            <span class="spinner-border spinner-border-sm me-2"></span>
+                            } @else {
+                            <i class="bi bi-x-circle me-2"></i>
+                            }
+                            Rechazar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+    }
+    }
+</div>

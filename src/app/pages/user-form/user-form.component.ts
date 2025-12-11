@@ -8,14 +8,14 @@ import {
 } from '@angular/forms';
 import { UserService } from '../../core/services/user.services';
 import { ModalityService} from '../../core/services/modality.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { IModality } from '../../interfaces/modality.interface';
 import { TagsComponent } from '../../shared/tags/tags.component';
 import {AuthService} from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-usuario-form',
-  imports: [ReactiveFormsModule, FormsModule, TagsComponent],
+  imports: [ReactiveFormsModule, FormsModule, TagsComponent, RouterLink],
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.css',
 })
@@ -75,7 +75,7 @@ export class UserFormComponent {
     try {
         const resp = await this.authService.register({...this.userForm.value, interests:JSON.stringify(this.interests)});
         if (resp) {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/login']);
         }
     } catch (msg) {
       console.log(msg);

@@ -1,0 +1,26 @@
+:host {
+  display: block;
+}
+
+.review-list {
+  background: #f7f8fa;
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  padding: 12px 14px;
+  min-height: 100%;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.04);
+}
+
+.review-list h3 {
+  color: var(--dark-color);
+  letter-spacing: 0.01rem;
+}
+
+.review-row:not(:last-child) {
+  margin-bottom: 12px;
+}
+
+.empty {
+  padding: 8px 0;
+  color: #6b7280;
+}

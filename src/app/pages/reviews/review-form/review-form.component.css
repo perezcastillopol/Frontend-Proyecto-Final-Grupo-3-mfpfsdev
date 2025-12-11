@@ -1,14 +1,59 @@
-.review-form {
-  display:flex;
-  flex-direction:column;
-  gap:.5rem;
+:host {
+  display: block;
 }
 
-.actions {
-  margin-top:.5rem;
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  background: #f7f8fa;
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+}
+
+.review-form .form-label {
+  color: var(--dark-color);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.review-form .form-control {
+  background-color: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+.review-form .form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.15rem rgba(33, 209, 194, 0.2);
+}
+
+.rating-input {
+  max-width: 160px;
+}
+
+.review-submit {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-weight: 600;
+}
+
+.review-submit:hover {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.review-submit:disabled {
+  background-color: #a8dcd7;
+  border-color: #a8dcd7;
 }
 
 .error {
-  color: #c00;
-  font-size:.9rem;
+  color: #c0392b;
+  font-size: 0.9rem;
 }

@@ -23,12 +23,17 @@
         </div>
 
         <div class="form-field">
-          <input
-            type="text"
+          <select
             formControlName="experience"
             class="form-input"
-            placeholder="Experiencia"
-          />
+          >
+            <option value="">Experiencia</option>
+            @for (modality of modalities; track modality.id) {
+              <option [value]="modality.name">
+                {{ modality.name }}
+              </option>
+            }
+          </select>
         </div>
 
         <div class="form-row">

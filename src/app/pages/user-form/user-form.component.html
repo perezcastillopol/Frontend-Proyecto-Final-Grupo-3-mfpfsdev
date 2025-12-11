@@ -1,7 +1,10 @@
-<section class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-	<div class="card shadow-sm rounded-4 border-0" style="max-width: 1100px; width: 100%;">
-			<div class="card-body px-5 py-2" style="font-size: 1rem;">
-				<h2 class="card-title mb-3 text-center" style="font-size: 1.5rem;">Registro de usuario</h2>
+<div class="min-vh-100 py-5 bg-light d-flex align-items-start justify-content-center">
+	<div class="container" style="max-width: 900px;">
+		<div class="card shadow-sm border-0 rounded-4 p-4 p-md-5">
+			<div class="card-body p-0">
+				<h2 class="form-title mb-2">Registro de usuario</h2>
+				<p class="form-subtitle mb-4">Completa tu perfil para unirte a la comunidad</p>
+
 				<form [formGroup]="userForm" (ngSubmit)="getDataForm()">
 					<div class="mb-2">
 						<label for="name" class="form-label">Nombre</label>
@@ -24,102 +27,155 @@
 						}
 					</div>
 					<div class="mb-2">
-						<label for="photo_url" class="form-label">Imagen Usuario</label>
-						<input type="url" class="form-control" id="photo_url" name="photo_url" placeholder="https://..."formControlName="photo_url">
-						@if (checkForm('required', 'photo_url')){
-							<p class="form-error">El campo es obligatorio</p>
-						}
-						@if (checkForm('pattern', 'photo_url')){
-							<p class="form-error">Debe introducir la URL de la imagen</p>
-						}
-					</div>
-					<div class="mb-2">
-						<label for="birthDate" class="form-label">Fecha de nacimiento</label>
-						<input type="date" class="form-control" id="birthDate" name="birthDate" placeholder="dd/MM/yyyy"formControlName="birthDate">
-						@if (checkForm('required', 'birthDate')){
-							<p class="form-error">El campo es obligatorio</p>
-						}
-						@if (checkForm('minlength', 'birthDate')){
-							<p class="form-error">El campo debe tener mínimo dos caracteres</p>
-						}
-					</div>
-					<div class="mb-2">
-						<label for="email" class="form-label">Correo electrónico</label>
-						<input type="email" class="form-control" id="email" name="email" placeholder="correo@ejemplo.com"formControlName="email">
+						<label for="email" class="form-label">Email *</label>
+						<input type="email" class="form-control" id="email" name="email" formControlName="email" placeholder="tu@email.com">
 						@if (checkForm('required', 'email')){
-							<p class="form-error">El campo es obligatorio</p>
+							<p class="form-error">El email es obligatorio</p>
 						}
 						@if (checkForm('pattern', 'email')){
-							<p class="form-error">El formato del email no es válido</p>
+							<p class="form-error">Debe introducir un email válido</p>
 						}
 					</div>
 					<div class="mb-2">
-						<label for="password_hash" class="form-label">Password</label>
-						<input type="text" class="form-control" id="password_hash" name="password_hash" placeholder="password_hash"formControlName="password_hash">
+						<label for="password_hash" class="form-label">Contraseña *</label>
+						<input type="password" class="form-control" id="password_hash" name="password_hash" formControlName="password_hash" placeholder="Mínimo 6 caracteres">
 						@if (checkForm('required', 'password_hash')){
-							<p class="form-error">El campo es obligatorio</p>
+							<p class="form-error">La contraseña es obligatoria</p>
 						}
 						@if (checkForm('minlength', 'password_hash')){
-							<p class="form-error">El campo debe tener mínimo 6 caracteres</p>
-						}
-					</div>
-					<div class="mb-2">
-						<label for="phone" class="form-label">Teléfono</label>
-						<input type="text" class="form-control" id="phone" name="phone" formControlName="phone">
-						@if (checkForm('required', 'phone')){
-							<p class="form-error">El campo es obligatorio</p>
-						}
-						@if (checkForm('minlength', 'phone')){
-							<p class="form-error">El campo debe tener mínimo dos caracteres</p>
-						}
-					</div>	
-
-					<div class="mb-2">
-						<label for="location" class="form-label">Ubicación</label>
-						<input type="text" class="form-control" id="location" name="location" placeholder="Tu ciudad"formControlName="location">
-						@if (checkForm('required', 'location')){
-							<p class="form-error">El campo es obligatorio</p>
-						}
-						@if (checkForm('minlength', 'location')){
-							<p class="form-error">El campo debe tener mínimo dos caracteres</p>
+							<p class="form-error">La contraseña debe tener mínimo 6 caracteres</p>
 						}
 					</div>
 
-					<div class="mb-2">
-						<label for="bio" class="form-label">Biografía</label>
-						<textarea class="form-control" id="bio" name="bio" placeholder="Cuenta tu historia"formControlName="bio"></textarea>
-						@if (checkForm('required', 'bio')){
-							<p class="form-error">El campo es obligatorio</p>
-						}
-						@if (checkForm('minlength', 'bio')){
-							<p class="form-error">El campo debe tener mínimo dos caracteres</p>
-						}
-					</div>
-					<div class="mb-2">
-						<label for="interests" class="form-label">Intereses</label>					
-					</div>
-					<div>
-						<select formControlName="modality" class="form-select">
-							<option value="">Selecciona una modalidad</option>
-							@for (mod of getModalities(); track mod) {
-      								<option value="{{mod.name}}">{{mod.name}}</option>
+					<!-- Teléfono y Fecha de nacimiento -->
+					<div class="row g-3 mb-3">
+						<div class="col-md-6">
+							<label for="phone" class="form-label">Teléfono *</label>
+							<input
+								type="tel"
+								class="form-control form-input"
+								id="phone"
+								formControlName="phone"
+								[class.is-invalid]="checkForm('required', 'phone') || checkForm('minlength', 'phone')"
+								placeholder="Tu número de teléfono"
+							>
+							@if (checkForm('required', 'phone')) {
+								<div class="invalid-feedback d-block">El teléfono es obligatorio</div>
 							}
-						</select>
-					</div>						
-					<div class="mt-4">
-						<div class="d-flex flex-wrap gap-3">
-							@for (tag of selectedModalities; track $index) {
-								<div class="tag-wrapper position-relative">
-									<app-tags [tagText]="tag"></app-tags>
-									<button type="button" class="btn-close tag-close" (click)="removeTag($index)"></button>
-								</div>
+							@if (checkForm('minlength', 'phone')) {
+								<div class="invalid-feedback d-block">El teléfono debe tener mínimo 9 caracteres</div>
 							}
 						</div>
-					</div>									
-					<div class="d-flex justify-content-center gap-3 mt-3">
-						<input type="submit" class="btn btn-warning" [disabled]="userForm.invalid">
+
+						<div class="col-md-6">
+							<label for="birthDate" class="form-label">Fecha de nacimiento *</label>
+							<input
+								type="date"
+								class="form-control form-input"
+								id="birthDate"
+								formControlName="birthDate"
+								[class.is-invalid]="checkForm('required', 'birthDate')"
+							>
+							@if (checkForm('required', 'birthDate')) {
+								<div class="invalid-feedback d-block">La fecha de nacimiento es obligatoria</div>
+							}
+						</div>
 					</div>
-				</form>				
+
+					<!-- Ubicación -->
+					<div class="mb-3">
+						<label for="location" class="form-label">Ubicación *</label>
+						<input
+							type="text"
+							class="form-control form-input"
+							id="location"
+							formControlName="location"
+							[class.is-invalid]="checkForm('required', 'location') || checkForm('minlength', 'location')"
+							placeholder="Tu ciudad"
+						>
+						@if (checkForm('required', 'location')) {
+							<div class="invalid-feedback d-block">La ubicación es obligatoria</div>
+						}
+						@if (checkForm('minlength', 'location')) {
+							<div class="invalid-feedback d-block">La ubicación debe tener mínimo 2 caracteres</div>
+						}
+					</div>
+
+					<!-- Biografía -->
+					<div class="mb-3">
+						<label for="bio" class="form-label">Biografía *</label>
+						<textarea
+							class="form-control form-input"
+							id="bio"
+							formControlName="bio"
+							[class.is-invalid]="checkForm('required', 'bio') || checkForm('minlength', 'bio')"
+							rows="4"
+							placeholder="Cuéntanos sobre ti, tus experiencias viajeras..."
+						></textarea>
+						@if (checkForm('required', 'bio')) {
+							<div class="invalid-feedback d-block">La biografía es obligatoria</div>
+						}
+						@if (checkForm('minlength', 'bio')) {
+							<div class="invalid-feedback d-block">La biografía debe tener mínimo 50 caracteres</div>
+						}
+					</div>
+
+					<!-- Imagen de perfil -->
+					<div class="mb-3">
+						<label for="photo_url" class="form-label">Imagen de perfil *</label>
+						<input
+							type="url"
+							class="form-control form-input"
+							id="photo_url"
+							formControlName="photo_url"
+							[class.is-invalid]="checkForm('required', 'photo_url') || checkForm('pattern', 'photo_url')"
+							placeholder="https://ejemplo.com/tu-foto.jpg"
+						>
+						@if (checkForm('required', 'photo_url')) {
+							<div class="invalid-feedback d-block">La imagen de perfil es obligatoria</div>
+						}
+						@if (checkForm('pattern', 'photo_url')) {
+							<div class="invalid-feedback d-block">Debe introducir una URL válida (http/https)</div>
+						}
+					</div>
+
+					<!-- Intereses -->
+					<div class="mb-3">
+						<label for="modality" class="form-label">Intereses *</label>
+						<select formControlName="modality" class="form-select form-input">
+							<option value="">Selecciona tus intereses</option>
+							@for (mod of getModalities(); track mod.id) {
+								<option [value]="mod.name">{{ mod.name }}</option>
+							}
+						</select>
+						<small class="text-muted">Selecciona las modalidades que te interesan</small>
+					</div>
+
+					<!-- Tags de intereses seleccionados -->
+					@if (selectedModalities.length > 0) {
+						<div class="mb-4">
+							<div class="d-flex flex-wrap gap-3">
+								@for (tag of selectedModalities; track $index) {
+									<div class="tag-wrapper position-relative">
+										<app-tags [tagText]="tag"></app-tags>
+										<button type="button" class="btn-close tag-close" (click)="removeTag($index)"></button>
+									</div>
+								}
+							</div>
+						</div>
+					}
+
+					<!-- Form Actions -->
+					<div class="d-flex flex-column-reverse flex-md-row gap-3 justify-content-md-end">
+						<button type="button" class="btn btn-lg btn-cancel" routerLink="/">
+							Cancelar
+						</button>
+						<button type="submit" class="btn btn-lg btn-submit" [disabled]="userForm.invalid">
+							Crear cuenta
+						</button>
+					</div>
+				</form>
 			</div>
+		</div>
 	</div>
-</section>
+</div>
