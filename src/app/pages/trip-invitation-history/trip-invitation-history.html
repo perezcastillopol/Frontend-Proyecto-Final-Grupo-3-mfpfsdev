@@ -22,71 +22,71 @@
     <ul class="nav nav-pills mb-4">
         <li class="nav-item">
             <button class="nav-link" [class.active]="selectedFilter === 'all'" (click)="setFilter('all')">
-                Todas ({{ getInvitationCount('all') }})
+                Todas ({{ getRequestCount('all') }})
             </button>
         </li>
         <li class="nav-item">
             <button class="nav-link" [class.active]="selectedFilter === 'pending'" (click)="setFilter('pending')">
-                Pendientes ({{ getInvitationCount('pending') }})
+                Pendientes ({{ getRequestCount('pending') }})
             </button>
         </li>
         <li class="nav-item">
             <button class="nav-link" [class.active]="selectedFilter === 'accepted'" (click)="setFilter('accepted')">
-                Aceptadas ({{ getInvitationCount('accepted') }})
+                Aceptadas ({{ getRequestCount('accepted') }})
             </button>
         </li>
         <li class="nav-item">
             <button class="nav-link" [class.active]="selectedFilter === 'rejected'" (click)="setFilter('rejected')">
-                Rechazadas ({{ getInvitationCount('rejected') }})
+                Rechazadas ({{ getRequestCount('rejected') }})
             </button>
         </li>
     </ul>
 
-    <!-- Invitations List -->
-    @if (filteredInvitations.length === 0) {
+    <!-- Requests List -->
+    @if (filteredRequests.length === 0) {
     <div class="alert alert-info">
         <i class="bi bi-info-circle me-2"></i>
         No hay solicitudes para mostrar.
     </div>
     } @else {
     <div class="row g-3">
-        @for (invitation of filteredInvitations; track invitation.id) {
+        @for (request of filteredRequests; track request.id) {
         <div class="col-12">
             <div class="card shadow-sm">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <div>
                             <h5 class="card-title mb-1">
-                                Usuario #{{ invitation.user_id }}
+                                Usuario #{{ request.user_id }}
                             </h5>
                             <div class="small text-muted">
                                 <div>
                                     <i class="bi bi-clock me-1"></i>
-                                    Solicitado: {{ invitation.requested_at | date:'dd/MM/yyyy HH:mm' }}
+                                    Solicitado: {{ request.requested_at | date:'dd/MM/yyyy HH:mm' }}
                                 </div>
-                                @if (invitation.responded_at) {
+                                @if (request.responded_at) {
                                 <div>
                                     <i class="bi bi-check2 me-1"></i>
-                                    Respondido: {{ invitation.responded_at | date:'dd/MM/yyyy HH:mm' }}
+                                    Respondido: {{ request.responded_at | date:'dd/MM/yyyy HH:mm' }}
                                 </div>
                                 }
-                                @if (invitation.responder_id) {
+                                @if (request.responder_id) {
                                 <div>
                                     <i class="bi bi-person me-1"></i>
-                                    Por: Usuario #{{ invitation.responder_id }}
+                                    Por: Usuario #{{ request.responder_id }}
                                 </div>
                                 }
                             </div>
                         </div>
-                        <span class="badge" [ngClass]="getStatusBadgeClass(invitation.status)">
-                            {{ getStatusText(invitation.status) }}
+                        <span class="badge" [ngClass]="getStatusBadgeClass(request.status)">
+                            {{ getStatusText(request.status) }}
                         </span>
                     </div>
 
-                    @if (invitation.note) {
+                    @if (request.note) {
                     <div>
                         <strong class="d-block mb-1">Mensaje:</strong>
-                        <p class="card-text text-muted mb-0">{{ invitation.note }}</p>
+                        <p class="card-text text-muted mb-0">{{ request.note }}</p>
                     </div>
                     }
                 </div>

@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { TripsService, Trip } from '../../core/services/trips.services';
 import {ReviewListComponent} from '../reviews/review-list/review-list.component';
 import {ReviewFormComponent} from '../reviews/review-form/review-form.component';
-import { TripInvitationService } from '../../core/services/trip-invitation.service';
-import { ITripInvitation } from '../../interfaces/trip-invitation.interface';
+import { TripRequestService } from '../../core/services/trip-request.service';
+import { ITripRequest } from '../../interfaces/trip-request.interface';
 
 @Component({
   selector: 'app-trip-detail',
@@ -19,14 +19,14 @@ export class TripDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private tripsService = inject(TripsService);
-  private invitationService = inject(TripInvitationService);
+  private requestService = inject(TripRequestService);
   private tripId = Number(this.route.snapshot.paramMap.get('id'));
 
   trip: Trip | null = null;
   isOwner = false;
-  userInvitation: ITripInvitation | null = null;
-  isRequestingInvitation = false;
-  invitationNote = '';
+  userRequest: ITripRequest | null = null;
+  isRequestingToJoin = false;
+  requestNote = '';
 
   @ViewChild('reviewList') reviewList!: ReviewListComponent;
   @ViewChild('reviewForm') reviewForm!: ReviewFormComponent;
@@ -45,9 +45,9 @@ export class TripDetailComponent implements OnInit {
       const currentUserId = this.tripsService.me();
       this.isOwner = this.trip.creatorId === currentUserId;
 
-      // Check if user has already requested invitation
+      // Check if user has already requested to join
       if (!this.isOwner) {
-        this.userInvitation = await this.invitationService.getUserInvitationStatus(this.tripId, currentUserId);
+        this.userRequest = await this.requestService.getUserRequestStatus(this.tripId, currentUserId);
       }
     } catch (error) {
       this.trip = null;
@@ -77,18 +77,18 @@ export class TripDetailComponent implements OnInit {
   }
 
   /**
-   * Navigate to manage invitations page (owner only)
+   * Navigate to manage requests page (owner only)
    */
-  manageInvitations() {
+  manageRequests() {
     if (this.isOwner) {
       this.router.navigate(['/trips', this.tripId, 'invitations']);
     }
   }
 
   /**
-   * Navigate to invitation history page
+   * Navigate to request history page
    */
-  viewInvitationHistory() {
+  viewRequestHistory() {
     this.router.navigate(['/trips', this.tripId, 'invitations', 'history']);
   }
 
@@ -96,32 +96,31 @@ export class TripDetailComponent implements OnInit {
    * Request to join the trip
    */
   async requestToJoin() {
-    if (this.isRequestingInvitation || this.userInvitation) return;
+    if (this.isRequestingToJoin || this.userRequest) return;
 
-    this.isRequestingInvitation = true;
+    this.isRequestingToJoin = true;
     try {
-      const currentUserId = this.tripsService.me();
-      this.userInvitation = await this.invitationService.requestInvitation(
+      this.userRequest = await this.requestService.createRequest(
         this.tripId,
-        this.invitationNote || undefined
+        this.requestNote || undefined
       );
-      alert('Invitation request sent successfully!');
-      this.invitationNote = '';
+      alert('Request to join sent successfully!');
+      this.requestNote = '';
     } catch (error) {
-      console.error('Error requesting invitation:', error);
-      alert('Failed to send invitation request. Please try again.');
+      console.error('Error requesting to join:', error);
+      alert('Failed to send request. Please try again.');
     } finally {
-      this.isRequestingInvitation = false;
+      this.isRequestingToJoin = false;
     }
   }
 
   /**
-   * Get button text based on invitation status
+   * Get button text based on request status
    */
-  getInvitationButtonText(): string {
-    if (!this.userInvitation) return 'Request to Join';
+  getRequestButtonText(): string {
+    if (!this.userRequest) return 'Request to Join';
 
-    switch (this.userInvitation.status) {
+    switch (this.userRequest.status) {
       case 'pending':
         return 'Request Pending';
       case 'accepted':
@@ -134,9 +133,9 @@ export class TripDetailComponent implements OnInit {
   }
 
   /**
-   * Check if user can request invitation
+   * Check if user can request to join
    */
-  canRequestInvitation(): boolean {
-    return !this.isOwner && !this.userInvitation;
+  canRequestToJoin(): boolean {
+    return !this.isOwner && !this.userRequest;
   }
 }

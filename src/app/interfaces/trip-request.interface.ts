@@ -1,4 +1,4 @@
-export interface ITripInvitation {
+export interface ITripRequest {
     id: number;
     trip_id: number;
     user_id: number;
@@ -9,12 +9,10 @@ export interface ITripInvitation {
     responder_id: number | null;
 }
 
-export interface ICreateInvitationRequest {
-    userId: number;
+export interface ICreateTripRequestRequest {
     note?: string;
 }
 
-export interface IRespondToInvitationRequest {
+export interface IRespondToTripRequestRequest {
     status: 'accepted' | 'rejected';
-    responderId: number;
 }

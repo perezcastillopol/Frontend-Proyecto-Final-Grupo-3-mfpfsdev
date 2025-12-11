@@ -24,51 +24,51 @@
         </button>
     </div>
 
-    <!-- Pending Invitations -->
-    @if (pendingInvitations.length === 0) {
+    <!-- Pending Requests -->
+    @if (pendingRequests.length === 0) {
     <div class="alert alert-info">
         <i class="bi bi-info-circle me-2"></i>
         No hay solicitudes pendientes en este momento.
     </div>
     } @else {
     <div class="row g-3">
-        @for (invitation of pendingInvitations; track invitation.id) {
+        @for (request of pendingRequests; track request.id) {
         <div class="col-12">
             <div class="card shadow-sm">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <div>
                             <h5 class="card-title mb-1">
-                                Usuario #{{ invitation.user_id }}
+                                Usuario #{{ request.user_id }}
                             </h5>
                             <small class="text-muted">
                                 <i class="bi bi-clock me-1"></i>
-                                Solicitado: {{ invitation.requested_at | date:'dd/MM/yyyy HH:mm' }}
+                                Solicitado: {{ request.requested_at | date:'dd/MM/yyyy HH:mm' }}
                             </small>
                         </div>
                         <span class="badge bg-warning text-dark">Pendiente</span>
                     </div>
 
-                    @if (invitation.note) {
+                    @if (request.note) {
                     <div class="mb-3">
                         <strong class="d-block mb-1">Mensaje:</strong>
-                        <p class="card-text text-muted mb-0">{{ invitation.note }}</p>
+                        <p class="card-text text-muted mb-0">{{ request.note }}</p>
                     </div>
                     }
 
                     <div class="d-flex gap-2">
-                        <button class="btn btn-success" (click)="acceptInvitation(invitation)"
-                            [disabled]="processingInvitationId === invitation.id">
-                            @if (processingInvitationId === invitation.id) {
+                        <button class="btn btn-success" (click)="acceptRequest(request)"
+                            [disabled]="processingRequestId === request.id">
+                            @if (processingRequestId === request.id) {
                             <span class="spinner-border spinner-border-sm me-2"></span>
                             } @else {
                             <i class="bi bi-check-circle me-2"></i>
                             }
                             Aceptar
                         </button>
-                        <button class="btn btn-danger" (click)="rejectInvitation(invitation)"
-                            [disabled]="processingInvitationId === invitation.id">
-                            @if (processingInvitationId === invitation.id) {
+                        <button class="btn btn-danger" (click)="rejectRequest(request)"
+                            [disabled]="processingRequestId === request.id">
+                            @if (processingRequestId === request.id) {
                             <span class="spinner-border spinner-border-sm me-2"></span>
                             } @else {
                             <i class="bi bi-x-circle me-2"></i>

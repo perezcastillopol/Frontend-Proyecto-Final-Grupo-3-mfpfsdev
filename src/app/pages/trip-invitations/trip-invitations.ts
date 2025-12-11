@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { TripInvitationService } from '../../core/services/trip-invitation.service';
-import { ITripInvitation } from '../../interfaces/trip-invitation.interface';
+import { TripRequestService } from '../../core/services/trip-request.service';
+import { ITripRequest } from '../../interfaces/trip-request.interface';
 import { TripsService, Trip } from '../../core/services/trips.services';
 
 @Component({
@@ -15,15 +15,15 @@ import { TripsService, Trip } from '../../core/services/trips.services';
 export class TripInvitations implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private invitationService = inject(TripInvitationService);
+  private requestService = inject(TripRequestService);
   private tripsService = inject(TripsService);
 
   tripId!: number;
   trip: Trip | null = null;
-  invitations: ITripInvitation[] = [];
-  pendingInvitations: ITripInvitation[] = [];
+  requests: ITripRequest[] = [];
+  pendingRequests: ITripRequest[] = [];
   isLoading = true;
-  processingInvitationId: number | null = null;
+  processingRequestId: number | null = null;
 
   async ngOnInit() {
     this.tripId = Number(this.route.snapshot.paramMap.get('id'));
@@ -39,7 +39,7 @@ export class TripInvitations implements OnInit {
         return;
       }
 
-      await this.loadInvitations();
+      await this.loadRequests();
     } catch (error) {
       console.error('Error loading trip:', error);
       this.router.navigate(['/trips']);
@@ -48,52 +48,52 @@ export class TripInvitations implements OnInit {
     }
   }
 
-  async loadInvitations() {
+  async loadRequests() {
     try {
-      this.invitations = await this.invitationService.getInvitations(this.tripId);
-      this.pendingInvitations = this.invitations.filter(inv => inv.status === 'pending');
+      this.requests = await this.requestService.getRequests(this.tripId);
+      this.pendingRequests = this.requests.filter((req: ITripRequest) => req.status === 'pending');
     } catch (error) {
-      console.error('Error loading invitations:', error);
-      this.invitations = [];
-      this.pendingInvitations = [];
+      console.error('Error loading requests:', error);
+      this.requests = [];
+      this.pendingRequests = [];
     }
   }
 
-  async acceptInvitation(invitation: ITripInvitation) {
-    if (this.processingInvitationId) return;
+  async acceptRequest(request: ITripRequest) {
+    if (this.processingRequestId) return;
 
-    this.processingInvitationId = invitation.id;
+    this.processingRequestId = request.id;
     try {
-      await this.invitationService.respondToInvitation(
+      await this.requestService.respondToRequest(
         this.tripId,
-        invitation.id,
+        request.id,
         'accepted'
       );
-      await this.loadInvitations();
+      await this.loadRequests();
     } catch (error) {
-      console.error('Error accepting invitation:', error);
-      alert('Failed to accept invitation. Please try again.');
+      console.error('Error accepting request:', error);
+      alert('Failed to accept request. Please try again.');
     } finally {
-      this.processingInvitationId = null;
+      this.processingRequestId = null;
     }
   }
 
-  async rejectInvitation(invitation: ITripInvitation) {
-    if (this.processingInvitationId) return;
+  async rejectRequest(request: ITripRequest) {
+    if (this.processingRequestId) return;
 
-    this.processingInvitationId = invitation.id;
+    this.processingRequestId = request.id;
     try {
-      await this.invitationService.respondToInvitation(
+      await this.requestService.respondToRequest(
         this.tripId,
-        invitation.id,
+        request.id,
         'rejected'
       );
-      await this.loadInvitations();
+      await this.loadRequests();
     } catch (error) {
-      console.error('Error rejecting invitation:', error);
-      alert('Failed to reject invitation. Please try again.');
+      console.error('Error rejecting request:', error);
+      alert('Failed to reject request. Please try again.');
     } finally {
-      this.processingInvitationId = null;
+      this.processingRequestId = null;
     }
   }
 
