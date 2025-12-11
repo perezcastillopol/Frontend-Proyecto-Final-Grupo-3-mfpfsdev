@@ -21,6 +21,8 @@ import { IUser } from '../../interfaces/user.interfaces';
   styleUrls: ['./user-view.component.css']
 })
 export class UserViewComponent {
+  userInterests: any[] = [];
+  
   user: IUser = {
     id: '',
     name: '',
@@ -65,7 +67,7 @@ export class UserViewComponent {
           photo_url:
             'https://media.istockphoto.com/id/1200677760/es/foto/retrato-de-apuesto-joven-sonriente-con-los-brazos-cruzados.jpg?s=612x612&w=0&k=20&c=RhKR8pxX3y_YVe5CjrRnTcNFEGDryD2FVOcUT_w3m4w=',
           bio: 'Este es un perfil de prueba para visualizar la página de usuario.',
-          interests: [{ id: 1 }, { id: 2 }, { id: 3 }],
+          //interests: [{ id: 1 }, { id: 2 }, { id: 3 }],
           phone: '000-000-000',
           birthDate: '1990-01-01',
           location: 'Málaga, España',
@@ -85,10 +87,15 @@ export class UserViewComponent {
     this.isEditing = true;
   }
 
+  onInterestsChanged(interests: any[]): void {
+    this.userInterests = interests;
+  }
+
   async guardarCambios(): Promise<void> {
     try {
-      const saved = await this.userService.updateMyProfile(this.user);
-      this.user = { ...saved };
+      const args: any = {...this.user,interests: this.userInterests};
+      const result = await this.userService.updateMyProfile(args);
+      this.user = { ...result };
       this.isEditing = false;
     } catch (error) {
       console.error('Error guardando cambios:', error);

@@ -12,5 +12,8 @@ export interface IUser {
   average_rating?: number;
   created_at?: string;
   updated_at?: string;
-  interests?: Array<{ id: number }>;
+  interests?: Array<{
+    id: number;
+    name: string;
+  }>;
 }

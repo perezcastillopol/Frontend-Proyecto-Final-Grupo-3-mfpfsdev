@@ -107,7 +107,6 @@ export class UserFormComponent {
   removeTag(index: number): void {
     this.selectedModalities.splice(index, 1);
     this.interests.splice(index, 1);
-    console.log('JSON actualizado:', JSON.stringify(this.interests, null, 2));
   }
 
   getModalities(): IModality[] {

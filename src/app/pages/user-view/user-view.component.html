@@ -32,7 +32,11 @@
       </div>
 
       <div class="col-12 col-lg-8">
-        <app-profile-about-card [user]="user" [isEditing]="isEditing"></app-profile-about-card>
+        <app-profile-about-card 
+          [user]="user" 
+          [isEditing]="isEditing"
+          (interestsChanged)="onInterestsChanged($event)">
+        </app-profile-about-card>
       </div>
 
       <div class="col-12">

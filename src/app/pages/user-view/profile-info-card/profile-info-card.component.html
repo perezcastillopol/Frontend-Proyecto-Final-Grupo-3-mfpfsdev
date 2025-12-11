@@ -36,24 +36,21 @@
       <input type="date" class="form-control" [(ngModel)]="user.birthDate">
     } @else {
       @if (user.birthDate && user.birthDate.trim().length > 0) {
-        <span>{{ user.birthDate }}</span>
+        <span>{{ user.birthDate | date:'dd/MM/yyyy' }}</span>
       } @else {
         <span class="text-muted">No especificada</span>
       }
     }
   </div>
 
-  <!-- Nickname / estilo de viaje -->
+  <!-- Nickname -->
   <div class="info-item">
-    <strong>Nickname:</strong>
-    @if (isEditing) {
-      <input class="form-control" [(ngModel)]="user.nickname" placeholder="Ej: mochilero, lujo, aventura...">
-    } @else {
+    <strong>Nickname:</strong>   
       @if (user.nickname && user.nickname.trim().length > 0) {
         <span>{{ user.nickname }}</span>
       } @else {
         <span class="text-muted">No especificado</span>
       }
-    }
+    
   </div>
 </div>

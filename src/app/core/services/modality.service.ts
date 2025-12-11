@@ -13,4 +13,8 @@ export class ModalityService extends HttpServices {
   getAllModalities(): Promise<IModality[]> {
     return this.get(`${this.url}`);
   }
+
+  getModalityById(id: number): Promise<IModality> {
+    return this.get(`${this.url}/${id}`);
+  }
 }
