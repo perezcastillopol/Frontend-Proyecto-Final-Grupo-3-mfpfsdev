@@ -6,9 +6,16 @@
   <ul class="nav flex-column fs-5 gap-3">
     <li><i class="bi bi-house me-2"></i><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Inicio</a></li>
     <li><i class="bi bi-compass me-2"></i><a routerLink="/explorar" routerLinkActive="active">Explorar</a></li>
-    <li><i class="bi bi-map me-2"></i><a routerLink="/mis-viajes" routerLinkActive="active">Mis viajes</a></li>
-    <li><i class="bi bi-person me-2"></i><a routerLink="/perfil/:username" routerLinkActive="active">Mi perfil</a></li>
-    <li><i class="bi bi-person me-2"></i><a routerLink="/login" routerLinkActive="active">Login/Registrate</a></li>
+    @if (authService.isLoggedIn()) {
+      <li><i class="bi bi-map me-2"></i><a routerLink="/mis-viajes" routerLinkActive="active">Mis viajes</a></li>
+      <li><i class="bi bi-person me-2"></i><a routerLink="/perfil" routerLinkActive="active">Mi perfil</a></li>
+    }
+    @if (!authService.isLoggedIn()) {
+      <li><i class="bi bi-box-arrow-in-right me-2"></i><a routerLink="/login" routerLinkActive="active">Login/Registrate</a></li>
+    }
+    @if (authService.isLoggedIn()) {
+      <li><i class="bi bi-box-arrow-right me-2"></i><a class="logout-link" (click)="openLogoutModal()" style="cursor: pointer;">Cerrar sesión</a></li>
+    }
   </ul>
 </nav>
 
@@ -25,10 +32,51 @@
       <ul class="dropdown-menu p-2 w-64 bgc">
         <li><a class="dropdown-item flex items-center gap-3 text-lg mb-2" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><i class="bi bi-house text-xl me-2"></i>Inicio</a></li>
         <li><a class="dropdown-item flex items-center gap-3 text-lg mb-2" routerLink="/explorar" routerLinkActive="active"><i class="bi bi-compass me-2"></i>Explorar</a></li>
-        <li><a class="dropdown-item flex items-center gap-3 text-lg mb-2" routerLink="/mis-viajes" routerLinkActive="active"><i class="bi bi-map me-2"></i>Mis viajes</a></li>
-        <li><a class="dropdown-item flex items-center gap-3 text-lg mb-2" routerLink="/perfil/:username" routerLinkActive="active"><i class="bi bi-person me-2"></i>Mi perfil</a></li>
+        @if (authService.isLoggedIn()) {
+          <li><a class="dropdown-item flex items-center gap-3 text-lg mb-2" routerLink="/mis-viajes" routerLinkActive="active"><i class="bi bi-map me-2"></i>Mis viajes</a></li>
+          <li><a class="dropdown-item flex items-center gap-3 text-lg mb-2" routerLink="/perfil" routerLinkActive="active"><i class="bi bi-person me-2"></i>Mi perfil</a></li>
+        }
+        @if (!authService.isLoggedIn()) {
+          <li><a class="dropdown-item flex items-center gap-3 text-lg mb-2" routerLink="/login" routerLinkActive="active"><i class="bi bi-box-arrow-in-right me-2"></i>Login/Registrate</a></li>
+        }
+        @if (authService.isLoggedIn()) {
+          <li><a class="dropdown-item flex items-center gap-3 text-lg mb-2 logout-link" (click)="openLogoutModal()" style="cursor: pointer;"><i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión</a></li>
+        }
       </ul>
     </div>
   </div>
 </nav>
+
+<div class="modal fade" [class.show]="showLogoutModal" [style.display]="showLogoutModal ? 'block' : 'none'" tabindex="-1" aria-labelledby="logoutModalLabel" [attr.aria-hidden]="!showLogoutModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content logout-modal">
+      <div class="modal-header logout-modal-header">
+        <h5 class="modal-title" id="logoutModalLabel">Cerrar sesión</h5>
+        <button type="button" class="btn-close" (click)="closeLogoutModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body logout-modal-body">
+        ¿Estás seguro de que quieres cerrar sesión?
+      </div>
+      <div class="modal-footer logout-modal-footer">
+        <button type="button" class="btn logout-btn-cancel" (click)="closeLogoutModal()">Cancelar</button>
+        <button type="button" class="btn logout-btn-confirm" (click)="confirmLogout()">Cerrar sesión</button>
+      </div>
+    </div>
+  </div>
+</div>
+@if (showLogoutModal) {
+  <div class="modal-backdrop fade show"></div>
+}
+
+<div class="toast-container position-fixed top-0 end-0 p-3">
+  <div class="toast logout-toast" [class.show]="showLogoutToast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex align-items-center p-2">
+      <i class="bi bi-check-circle-fill me-2"></i>
+      <div class="flex-grow-1">
+        Has cerrado sesión correctamente
+      </div>
+      <button type="button" class="btn-close ms-2" (click)="showLogoutToast = false" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
   

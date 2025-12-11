@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -19,7 +19,7 @@ import {AuthService} from '../../core/services/auth.service';
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.css',
 })
-export class UserFormComponent {
+export class UserFormComponent implements OnInit{
   userForm: FormGroup;
   modalities: IModality[] = [];
   selectedModalities: string[] = [];
