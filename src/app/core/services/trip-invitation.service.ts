@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpServices } from './http.services';
 import { ITripInvitation, ICreateInvitationRequest, IRespondToInvitationRequest } from '../../interfaces/trip-invitation.interface';
+import {TripParticipant} from '../../interfaces/trip-participant.interface';
 
 @Injectable({ providedIn: 'root' })
 export class TripInvitationService extends HttpServices {

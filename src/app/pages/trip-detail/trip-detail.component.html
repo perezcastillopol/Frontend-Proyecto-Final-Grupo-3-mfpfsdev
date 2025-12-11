@@ -210,12 +210,19 @@
         </div>
 
         <div class="row g-4 align-items-start">
+          @if (canReview()) {
           <div class="col-12 col-lg-5">
-            <app-review-form #reviewForm [tripId]="trip.tripId" (created)="onReviewCreated()"></app-review-form>
+            <app-review-form #reviewForm [tripId]="trip.tripId" [participants]="participants" [currentUserId]="currentUserId" (created)="onReviewCreated()"></app-review-form>
           </div>
+          
           <div class="col-12 col-lg-7">
             <app-review-list #reviewList [tripId]="trip.tripId"></app-review-list>
           </div>
+        } @else {
+          <div class="col-12">
+            <app-review-list #reviewList [tripId]="trip.tripId"></app-review-list>
+          </div>
+        }
         </div>
       </div>
     </div>

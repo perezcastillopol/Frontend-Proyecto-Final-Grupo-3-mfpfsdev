@@ -11,7 +11,7 @@ export type Trip = TripModel & {
 @Injectable({ providedIn: 'root' })
 
 export class TripsService extends HttpServices {
-  private userId = 1; // stub de usuario actual. Cambiar cuando hagamos conexión con el front.
+  private userId = 1; // stub de usuario actual. Cambiar cuando hagamos conexión con el front. 
   me = signal<number>(this.userId);
   private url = '/trips';
 
