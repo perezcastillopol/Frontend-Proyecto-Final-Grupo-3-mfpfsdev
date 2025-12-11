@@ -46,16 +46,6 @@
 							<p class="form-error">La contraseña debe tener mínimo 6 caracteres</p>
 						}
 					</div>
-					<div class="mb-2">
-						<label for="photo_url" class="form-label">Imagen Usuario</label>
-						<input type="url" class="form-control" id="photo_url" name="photo_url" placeholder="https://..."formControlName="photo_url">
-						@if (checkForm('required', 'photo_url')){
-							<p class="form-error">El campo es obligatorio</p>
-						}
-						@if (checkForm('pattern', 'photo_url')){
-							<p class="form-error">Debe introducir la URL de la imagen</p>
-						}
-					</div>
 
 					<!-- Teléfono y Fecha de nacimiento -->
 					<div class="row g-3 mb-3">
