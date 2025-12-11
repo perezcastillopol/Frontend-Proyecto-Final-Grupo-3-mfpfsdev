@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { TripInvitationService } from '../../core/services/trip-invitation.service';
-import { ITripInvitation } from '../../interfaces/trip-invitation.interface';
+import { TripRequestService } from '../../core/services/trip-request.service';
+import { ITripRequest } from '../../interfaces/trip-request.interface';
 import { TripsService, Trip } from '../../core/services/trips.services';
 
 @Component({
@@ -15,13 +15,13 @@ import { TripsService, Trip } from '../../core/services/trips.services';
 export class TripInvitationHistory implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private invitationService = inject(TripInvitationService);
+  private requestService = inject(TripRequestService);
   private tripsService = inject(TripsService);
 
   tripId!: number;
   trip: Trip | null = null;
-  invitations: ITripInvitation[] = [];
-  filteredInvitations: ITripInvitation[] = [];
+  requests: ITripRequest[] = [];
+  filteredRequests: ITripRequest[] = [];
   isLoading = true;
   selectedFilter: 'all' | 'pending' | 'accepted' | 'rejected' = 'all';
 
@@ -30,7 +30,7 @@ export class TripInvitationHistory implements OnInit {
 
     try {
       this.trip = await this.tripsService.getTripById(this.tripId);
-      await this.loadInvitations();
+      await this.loadRequests();
     } catch (error) {
       console.error('Error loading trip:', error);
       this.router.navigate(['/trips']);
@@ -39,23 +39,23 @@ export class TripInvitationHistory implements OnInit {
     }
   }
 
-  async loadInvitations() {
+  async loadRequests() {
     try {
-      this.invitations = await this.invitationService.getInvitationHistory(this.tripId);
+      this.requests = await this.requestService.getRequestHistory(this.tripId);
       this.applyFilter();
     } catch (error) {
-      console.error('Error loading invitation history:', error);
-      this.invitations = [];
-      this.filteredInvitations = [];
+      console.error('Error loading request history:', error);
+      this.requests = [];
+      this.filteredRequests = [];
     }
   }
 
   applyFilter() {
     if (this.selectedFilter === 'all') {
-      this.filteredInvitations = this.invitations;
+      this.filteredRequests = this.requests;
     } else {
-      this.filteredInvitations = this.invitations.filter(
-        inv => inv.status === this.selectedFilter
+      this.filteredRequests = this.requests.filter(
+        (req: ITripRequest) => req.status === this.selectedFilter
       );
     }
   }
@@ -95,8 +95,8 @@ export class TripInvitationHistory implements OnInit {
     this.router.navigate(['/trips', this.tripId]);
   }
 
-  getInvitationCount(status: 'all' | 'pending' | 'accepted' | 'rejected'): number {
-    if (status === 'all') return this.invitations.length;
-    return this.invitations.filter(inv => inv.status === status).length;
+  getRequestCount(status: 'all' | 'pending' | 'accepted' | 'rejected'): number {
+    if (status === 'all') return this.requests.length;
+    return this.requests.filter((req: ITripRequest) => req.status === status).length;
   }
 }
