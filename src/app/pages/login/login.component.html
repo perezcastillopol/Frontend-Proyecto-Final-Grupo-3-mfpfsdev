@@ -43,6 +43,9 @@
           formControlName="password"
           placeholder="Introduce tu contraseña."
           class="form-control"
+          autocomplete="new-password"
+          readonly 
+          onfocus="this.removeAttribute('readonly');"
         />
 
         <!-- Contraseña obligatoria -->
