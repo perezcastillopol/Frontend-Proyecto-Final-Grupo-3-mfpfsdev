@@ -126,8 +126,8 @@ export class UserViewComponent {
       // Ocultar popup tras 3 segundos y redirigir
       setTimeout(() => {
         this.showDeletePopup = false;
-        this.router.navigate(['/']);
-      }, 3000);
+        this.router.navigate(['/login']);
+      }, 1500);
 
     } catch (error) {
       console.error('Error eliminando usuario:', error);
