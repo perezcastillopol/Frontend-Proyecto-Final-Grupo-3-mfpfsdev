@@ -7,8 +7,6 @@ import {ReviewListComponent} from '../reviews/review-list/review-list.component'
 import {ReviewFormComponent} from '../reviews/review-form/review-form.component';
 import { TripRequestService } from '../../core/services/trip-request.service';
 import { ITripRequest } from '../../interfaces/trip-request.interface';
-import { TripInvitationService } from '../../core/services/trip-invitation.service';
-import { ITripInvitation } from '../../interfaces/trip-invitation.interface';
 import {TripParticipant} from '../../interfaces/trip-participant.interface';
 import {ParticipantsService} from '../../core/services/participants.service';
 
@@ -33,7 +31,6 @@ export class TripDetailComponent implements OnInit {
   isRequestingToJoin = false;
   requestNote = '';
   currentUserId: number | null = null;
-  userInvitation: ITripInvitation | null = null;
   participants: TripParticipant[] = [];
   isRequestingInvitation = false;
   invitationNote = '';
