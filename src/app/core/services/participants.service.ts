@@ -15,5 +15,9 @@ export class ParticipantsService extends HttpServices {
         return this.get(`${this.url}/trip/${tripId}/`);
     }
 
+      isParticipants(idTrip: number, idUser: number): Promise<{is_participant: boolean}> {
+    return this.get(`${this.url}/${idTrip}/${idUser}`);
+  }
+
 
 }

@@ -9,11 +9,12 @@ import { TripRequestService } from '../../core/services/trip-request.service';
 import { ITripRequest } from '../../interfaces/trip-request.interface';
 import {TripParticipant} from '../../interfaces/trip-participant.interface';
 import {ParticipantsService} from '../../core/services/participants.service';
+import { ForumComponent } from '../../shared/forum/forum.component';
 
 @Component({
   selector: 'app-trip-detail',
   standalone: true,
-  imports: [DatePipe, CurrencyPipe, TitleCasePipe, ReviewFormComponent, ReviewListComponent, FormsModule],
+  imports: [DatePipe, CurrencyPipe, TitleCasePipe, ReviewFormComponent, ReviewListComponent, FormsModule, ForumComponent],
   templateUrl: './trip-detail.component.html',
   styleUrl: './trip-detail.component.css'
 })
@@ -21,7 +22,7 @@ export class TripDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private tripsService = inject(TripsService);
-  private requestService = inject(TripRequestService);
+  private requestService  = inject(TripRequestService);
   private tripId = Number(this.route.snapshot.paramMap.get('id'));
   private participantService = inject(ParticipantsService);
 
@@ -34,6 +35,8 @@ export class TripDetailComponent implements OnInit {
   participants: TripParticipant[] = [];
   isRequestingInvitation = false;
   invitationNote = '';
+  isParticipant = false;
+
 
   @ViewChild('reviewList') reviewList!: ReviewListComponent;
   @ViewChild('reviewForm') reviewForm!: ReviewFormComponent;
@@ -60,6 +63,10 @@ export class TripDetailComponent implements OnInit {
       if (!this.isOwner) {
         this.userRequest = await this.requestService.getUserRequestStatus(this.tripId, currentUserId);
       }
+
+      // Check if user is participant
+      const participantResponse = await this.participantService.isParticipants(this.tripId, currentUserId);
+      this.isParticipant = participantResponse.is_participant;
     } catch (error) {
       this.trip = null;
     }

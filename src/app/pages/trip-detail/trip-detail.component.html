@@ -226,6 +226,19 @@
         </div>
       </div>
     </div>
+
+    @if (isParticipant) {
+      <div class="card border-0 shadow-sm mt-3">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center gap-3 mb-3">         
+            <div>
+              <h3 class="card-title h5 mb-1">Foro del viaje</h3>
+            </div>
+          </div>
+          <app-forum [tripId]="trip.tripId"></app-forum>
+        </div>
+      </div>
+    }
   </div>
 </section>
 } @else {
