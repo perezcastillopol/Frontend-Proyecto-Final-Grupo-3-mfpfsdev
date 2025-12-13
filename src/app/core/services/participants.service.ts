@@ -5,7 +5,7 @@ import {TripParticipant} from '../../interfaces/trip-participant.interface';
 @Injectable({ providedIn: 'root' })
 export class ParticipantsService extends HttpServices {
 
-   
+
   private url = '/participants';
 
     /**

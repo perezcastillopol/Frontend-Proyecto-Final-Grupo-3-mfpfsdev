@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
+import { TripsService } from '../../core/services/trips.services';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
@@ -20,6 +21,7 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private tripsService: TripsService,
     private router: Router
   ) {
     this.loginForm = this.fb.group({
@@ -42,6 +44,8 @@ export class LoginComponent {
 
     try {
       await this.authService.login({ email, password });
+      // Refresh the user ID in the trips service after successful login
+      this.tripsService.refreshUserId();
       this.loading = false;
       this.router.navigate(['/explorar']);
     } catch (err: any) {

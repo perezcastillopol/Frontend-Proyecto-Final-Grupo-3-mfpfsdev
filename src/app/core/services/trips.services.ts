@@ -1,6 +1,7 @@
-import {Injectable, signal} from '@angular/core';
+import {Injectable, inject, signal} from '@angular/core';
 import {ITrip as TripModel} from '../../interfaces/trip.interface';
 import {HttpServices} from './http.services';
+import {AuthService} from './auth.service';
 
 export type Trip = TripModel & {
   imageUrl?: string;
@@ -11,9 +12,21 @@ export type Trip = TripModel & {
 @Injectable({ providedIn: 'root' })
 
 export class TripsService extends HttpServices {
-  private userId = 1; // stub de usuario actual. Cambiar cuando hagamos conexión con el front. 
-  me = signal<number>(this.userId);
+  private authService = inject(AuthService);
+  me = signal<number>(this.getCurrentUserId());
   private url = '/trips';
+
+  private getCurrentUserId(): number {
+    const userId = this.authService.getUserId();
+    return userId ? Number(userId) : 0;
+  }
+
+  /**
+   * Refresh the current user ID from auth service
+   */
+  refreshUserId(): void {
+    this.me.set(this.getCurrentUserId());
+  }
 
   private mapTrip(api: any): Trip {
     const photoUrl = api.photo_url || api.imageUrl;

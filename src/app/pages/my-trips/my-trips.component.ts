@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TripsService, Trip } from '../../core/services/trips.services';
+import { ParticipantsService } from '../../core/services/participants.service';
 import { TripCardComponent } from '../../shared/trip-card/trip-card.component';
 
 @Component({
@@ -12,6 +13,7 @@ import { TripCardComponent } from '../../shared/trip-card/trip-card.component';
 })
 export class MyTripsComponent {
   private tripsSrv = inject(TripsService);
+  private participantsSrv = inject(ParticipantsService);
 
   createdTrips: Trip[] = [];
   participatingTrips: Trip[] = [];
@@ -20,8 +22,32 @@ export class MyTripsComponent {
   async ngOnInit() {
     const userId = this.tripsSrv.me();
     const trips = await this.tripsSrv.list();
+
+    // Filter trips created by the user
     this.createdTrips = trips.filter((t) => t.creatorId === userId);
-    this.participatingTrips = trips.filter((t) => t.creatorId !== userId);
+
+    // Get trips where the user is a participant (but not the creator)
+    await this.loadParticipatingTrips(trips, userId);
+  }
+
+  private async loadParticipatingTrips(allTrips: Trip[], userId: number) {
+    // Check each trip to see if the user is a participant
+    const participantChecks = await Promise.all(
+      allTrips
+        .filter((t) => t.creatorId !== userId) // Exclude trips created by user
+        .map(async (trip) => {
+          try {
+            const result = await this.participantsSrv.isParticipants(trip.tripId, userId);
+            return result.is_participant ? trip : null;
+          } catch (error) {
+            console.error(`Error checking participation for trip ${trip.tripId}:`, error);
+            return null;
+          }
+        })
+    );
+
+    // Filter out null values and assign to participatingTrips
+    this.participatingTrips = participantChecks.filter((trip): trip is Trip => trip !== null);
   }
 
   get tripsToShow(): Trip[] {

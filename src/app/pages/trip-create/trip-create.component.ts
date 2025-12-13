@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TripsService } from '../../core/services/trips.services';
+import { AuthService } from '../../core/services/auth.service';
 import { ITrip } from '../../interfaces/trip.interface';
 
 @Component({
@@ -14,6 +15,7 @@ import { ITrip } from '../../interfaces/trip.interface';
 export class TripCreateComponent {
   tripForm: FormGroup;
   tripService = inject(TripsService);
+  authService = inject(AuthService);
   trip!: ITrip;
   router = inject(Router);
 
@@ -86,6 +88,14 @@ export class TripCreateComponent {
       return;
     }
 
+    // Get the current logged-in user ID
+    const currentUserId = this.authService.getUserId();
+    if (!currentUserId) {
+      alert('Debes iniciar sesión para crear un viaje.');
+      this.router.navigateByUrl('/login');
+      return;
+    }
+
     const formValue = this.tripForm.value;
 
     // Transform form data to match backend API structure (camelCase → snake_case)
@@ -103,7 +113,7 @@ export class TripCreateComponent {
       photo_url: (formValue.photoUrl || '').trim() || undefined, // optional image URL
       num_participants: 0,                                    // start with 0 inscritos
       modality_trip_id: Number(formValue.modalityId),       // modalityId → modality_trip_id (as number)
-      creator_id: 1,                                         // Stub - would come from auth
+      creator_id: Number(currentUserId),                    // Real user ID from auth service
       status: 'published'                                     // Status must match ENUM value
     };
 
