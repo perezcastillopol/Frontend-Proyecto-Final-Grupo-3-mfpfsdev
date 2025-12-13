@@ -33,6 +33,26 @@ export class UserService extends HttpServices {
   }
 
   /**
+   * Obtiene el perfil de un usuario por su ID.
+   */
+  async getUserById(id: string | number): Promise<IUser> {
+    const user = await this.get<IUser>(`${this.base}/${id}`);
+    if (user.interests && typeof user.interests === 'string') {
+      try {
+        user.interests = JSON.parse(user.interests as any);
+      } catch (error) {
+        console.error('Error parsing interests:', error);
+        user.interests = [];
+      }
+    }
+    if (!user.interests) {
+      user.interests = [];
+    }
+    
+    return user;
+  }
+
+  /**
    * Actualiza el perfil del usuario logeado.
    */
   async updateMyProfile(profile: IUser): Promise<IUser> {

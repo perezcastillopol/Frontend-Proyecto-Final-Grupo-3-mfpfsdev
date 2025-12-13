@@ -16,6 +16,7 @@ export const routes: Routes = [
   { path: 'explorar', component: ExploreComponent, title: 'Explorar viajes' },
   { path: 'mis-viajes', component: MyTripsComponent, title: 'Mis viajes' },
   { path: 'perfil', component: UserViewComponent, title: 'Perfil' },
+  { path: 'users/:id', component: UserViewComponent, title: 'Perfil de usuario' },
   { path: 'login', component: LoginComponent, title: 'Entrar' },
   { path: 'crear', component: TripCreateComponent, title: 'Crear viaje' },
   { path: 'viaje/:id', component: TripDetailComponent, title: 'Detalle del viaje' },

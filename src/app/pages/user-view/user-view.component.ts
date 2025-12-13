@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../core/services/user.services';
 import { AuthService } from '../../core/services/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ProfileAboutCardComponent } from './profile-about-card/profile-about-card.component';
 import { ProfileInfoCardComponent } from './profile-info-card/profile-info-card.component';
 import { ProfileMainCardComponent } from './profile-main-card/profile-main-card.component';
@@ -41,22 +41,31 @@ export class UserViewComponent {
 
   isEditing = false;
   isLoaded = false;
+  isOwnProfile = true;
   showDeleteConfirm = false; // modal de confirmación
   showDeletePopup = false;   // popup de aviso
 
   constructor(
     private userService: UserService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   async ngOnInit(): Promise<void> {
     this.isLoaded = false;
 
     try {
-      if (this.authService.isLoggedIn()) {
+      const userId = this.route.snapshot.paramMap.get('id');
+      if (userId) {
+        const profile = await this.userService.getUserById(userId);
+        this.user = { ...profile };
+        this.isEditing = false;
+        this.isOwnProfile = false;
+      } else if (this.authService.isLoggedIn()) {
         const profile = await this.userService.getMyProfile();
         this.user = { ...profile };
+        this.isOwnProfile = true;
       } else {
         // Usuario demo
         this.user = {
@@ -75,6 +84,7 @@ export class UserViewComponent {
           average_rating: 4.5,
           created_at: '2020-01-01'
         };
+        this.isOwnProfile = true;
       }
     } catch (error) {
       console.error('Error cargando perfil:', error);

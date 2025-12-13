@@ -188,10 +188,25 @@
         <div class="card participants-card border-0 shadow-sm">
           <div class="card-body p-4">
             <div class="d-flex align-items-center justify-content-between mb-3">
-              <h4 class="mb-0 h6">Participantes ({{ trip.currentPeople || 0 }})</h4>
-              <i class="bi bi-people"></i>
+              <h4 class="mb-0 h6">Participantes ({{ participants.length }})</h4>
             </div>
-            <p class="card-text text-body mb-0 lh-base">Próximamente listado de participantes.</p>
+            
+            @if (participants.length === 0) {
+              <p class="card-text text-body mb-0 lh-base">No hay participantes todavía.</p>
+            } @else {
+              <div class="d-flex flex-column gap-2">
+                @for (participant of participants; track participant.id) {
+                  <a [routerLink]="['/users', participant.id]" class="d-flex align-items-center gap-2 p-2 rounded bg-light text-decoration-none text-dark">
+                    <img 
+                      [src]="participant.photo_url || 'https://ui-avatars.com/api/?name=' + participant.name + '&background=21D1C2&color=fff&size=40'" 
+                      alt="{{ participant.name }}"
+                      class="rounded-circle"
+                      style="width: 40px; height: 40px; object-fit: cover;">
+                    <span class="text-truncate">{{ participant.name }}</span>
+                  </a>
+                }
+              </div>
+            }
           </div>
         </div>
       </div>

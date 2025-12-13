@@ -10,19 +10,21 @@
   @if (isLoaded) {
     <!-- BANNER PRINCIPAL -->
     <div class="profile-banner d-flex justify-content-between align-items-center flex-wrap mb-4">
-      <h1 class="profile-banner-title">Mi perfil</h1>
+      <h1 class="profile-banner-title">{{ isOwnProfile ? 'Mi perfil' : 'Perfil de ' + user.nickname }}</h1>
 
-      <div class="d-flex gap-2 banner-buttons">
-        @if (!isEditing) {
-          <button class="btn profile-btn-primary banner-edit-btn" (click)="editarPerfil()">Editar perfil</button>
-        }
-        @if (isEditing) {
-          <button class="btn profile-btn-primary banner-edit-btn" (click)="guardarCambios()">Guardar cambios</button>
-        }
-        @if (isEditing) {
-          <button class="btn btn-danger banner-edit-btn-danger" (click)="cancelarEdicion()">Cancelar</button>
-        }
-      </div>
+      @if (isOwnProfile) {
+        <div class="d-flex gap-2 banner-buttons">
+          @if (!isEditing) {
+            <button class="btn profile-btn-primary banner-edit-btn" (click)="editarPerfil()">Editar perfil</button>
+          }
+          @if (isEditing) {
+            <button class="btn profile-btn-primary banner-edit-btn" (click)="guardarCambios()">Guardar cambios</button>
+          }
+          @if (isEditing) {
+            <button class="btn btn-danger banner-edit-btn-danger" (click)="cancelarEdicion()">Cancelar</button>
+          }
+        </div>
+      }
     </div>
 
     <!-- TARJETAS -->
@@ -45,11 +47,13 @@
     </div>
 
     <!-- Botón de eliminar usuario -->
-    <div class="delete-user text-end mt-4">
-      <button class="btn" (click)="abrirModalEliminar()">
-        Eliminar usuario
-      </button>
-    </div>
+    @if (isOwnProfile) {
+      <div class="delete-user text-end mt-4">
+        <button class="btn" (click)="abrirModalEliminar()">
+          Eliminar usuario
+        </button>
+      </div>
+    }
 
     <!-- Modal de confirmación -->
     @if (showDeleteConfirm) {
