@@ -38,7 +38,7 @@
 					</div>
 					<div class="mb-2">
 						<label for="password_hash" class="form-label">Contraseña *</label>
-						<input type="password" class="form-control" id="password_hash" name="password_hash" formControlName="password_hash" placeholder="Mínimo 6 caracteres">
+						<input type="password" class="form-control" id="password_hash" name="password_hash" formControlName="password_hash" placeholder="Mínimo 6 caracteres"autocomplete="new-password"readonly onfocus="this.removeAttribute('readonly');" >
 						@if (checkForm('required', 'password_hash')){
 							<p class="form-error">La contraseña es obligatoria</p>
 						}
