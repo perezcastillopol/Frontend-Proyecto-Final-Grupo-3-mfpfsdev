@@ -1,6 +1,6 @@
 import {Component, inject, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { DatePipe, CurrencyPipe, TitleCasePipe } from '@angular/common';
+import { DatePipe, CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TripsService, Trip } from '../../core/services/trips.services';
 import {ReviewListComponent} from '../reviews/review-list/review-list.component';
@@ -14,7 +14,7 @@ import { ForumComponent } from '../../shared/forum/forum.component';
 @Component({
   selector: 'app-trip-detail',
   standalone: true,
-  imports: [DatePipe, CurrencyPipe, TitleCasePipe, ReviewFormComponent, ReviewListComponent, FormsModule, ForumComponent, RouterLink],
+  imports: [DatePipe, CurrencyPipe, ReviewFormComponent, ReviewListComponent, FormsModule, ForumComponent, RouterLink],
   templateUrl: './trip-detail.component.html',
   styleUrl: './trip-detail.component.css'
 })
@@ -171,4 +171,3 @@ export class TripDetailComponent implements OnInit {
     return this.participants.some(participant => participant.id === this.currentUserId);
   }
 }
-

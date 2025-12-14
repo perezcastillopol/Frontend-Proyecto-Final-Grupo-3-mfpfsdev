@@ -52,12 +52,48 @@
           {{ ctaLabel }}
         </a>
       </div>
-    } @else {
-      <div class="grid">
-        @for (t of tripsToShow; track t.tripId) {
-          <app-trip-card [trip]="t" />
-        }
-      </div>
-    }
-  </div>
-</section>
+	    } @else {
+	      <div class="grid">
+	        @for (t of pagedTripsToShow; track t.tripId) {
+	          <app-trip-card [trip]="t" />
+	        }
+	      </div>
+
+	      @if (totalPages > 1) {
+	        <nav class="pagination-wrapper d-flex justify-content-center mt-4" aria-label="Paginación de mis viajes">
+	          <ul class="pagination mb-0">
+	            <li class="page-item" [class.disabled]="currentPage === 1">
+	              <button
+	                type="button"
+	                class="page-link"
+	                (click)="goToPage(currentPage - 1)"
+	                [disabled]="currentPage === 1"
+	                aria-label="Página anterior"
+	              >
+	                <span aria-hidden="true">&laquo;</span>
+	              </button>
+	            </li>
+
+	            @for (page of pageNumbers; track page) {
+	              <li class="page-item" [class.active]="page === currentPage">
+	                <button type="button" class="page-link" (click)="goToPage(page)">{{ page }}</button>
+	              </li>
+	            }
+
+	            <li class="page-item" [class.disabled]="currentPage === totalPages">
+	              <button
+	                type="button"
+	                class="page-link"
+	                (click)="goToPage(currentPage + 1)"
+	                [disabled]="currentPage === totalPages"
+	                aria-label="Página siguiente"
+	              >
+	                <span aria-hidden="true">&raquo;</span>
+	              </button>
+	            </li>
+	          </ul>
+	        </nav>
+	      }
+	    }
+	  </div>
+	</section>

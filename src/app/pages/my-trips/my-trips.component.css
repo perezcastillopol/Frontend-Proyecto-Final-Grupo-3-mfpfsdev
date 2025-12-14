@@ -113,6 +113,20 @@ h1,h2,h3{
   margin-top: 6px;
 }
 
+.pagination-wrapper .page-link {
+  color: var(--secondary-color, #0B6E6D);
+}
+
+.pagination-wrapper .page-item.active .page-link {
+  background-color: var(--secondary-color, #0B6E6D);
+  border-color: var(--secondary-color, #0B6E6D);
+  color: #fff;
+}
+
+.pagination-wrapper .page-link:focus {
+  box-shadow: 0 0 0 0.25rem rgba(33, 209, 194, 0.25);
+}
+
 .empty-card {
   background: #fff;
   border-radius: 20px;
