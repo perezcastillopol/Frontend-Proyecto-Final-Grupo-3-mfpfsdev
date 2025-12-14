@@ -15,19 +15,21 @@ import { IModality } from '../../interfaces/modality.interface';
   styleUrl: './explore.component.css'
 })
 export class ExploreComponent implements OnInit {
-  searchParams: any = {};
-  private tripsService = inject(TripsService);
-  private modalityService = inject(ModalityService);
-  private route = inject(ActivatedRoute);
+	  searchParams: any = {};
+	  private tripsService = inject(TripsService);
+	  private modalityService = inject(ModalityService);
+	  private route = inject(ActivatedRoute);
 
-  allTrips: Trip[] = [];
-  filteredTrips: Trip[] = [];
-  modalities: IModality[] = [];
-  private currentFilters: SearchFilters = {
-    query: '',
-    category: '',
-    status: '',
-    startDate: '',
+	  allTrips: Trip[] = [];
+	  filteredTrips: Trip[] = [];
+	  modalities: IModality[] = [];
+	  readonly pageSize = 8;
+	  currentPage = 1;
+	  private currentFilters: SearchFilters = {
+	    query: '',
+	    category: '',
+	    status: '',
+	    startDate: '',
     endDate: '',
   };
 
@@ -66,13 +68,35 @@ export class ExploreComponent implements OnInit {
     this.applyFilters(this.currentFilters);
   }
 
-  onSearch(filters: SearchFilters) {
-    this.currentFilters = filters;
-    this.applyFilters(filters);
-  }
+	  onSearch(filters: SearchFilters) {
+	    this.currentFilters = filters;
+	    this.applyFilters(filters);
+	  }
 
-  private mapExperienceToCategory(experience: string | undefined): string {
-    if (!experience) return '';
+	  get totalPages(): number {
+	    return Math.ceil(this.filteredTrips.length / this.pageSize);
+	  }
+
+	  get pagedTrips(): Trip[] {
+	    const startIndex = (this.currentPage - 1) * this.pageSize;
+	    return this.filteredTrips.slice(startIndex, startIndex + this.pageSize);
+	  }
+
+	  get pageNumbers(): number[] {
+	    return Array.from({ length: this.totalPages }, (_, index) => index + 1);
+	  }
+
+	  goToPage(page: number) {
+	    if (this.totalPages === 0) {
+	      this.currentPage = 1;
+	      return;
+	    }
+
+	    this.currentPage = Math.min(Math.max(page, 1), this.totalPages);
+	  }
+
+	  private mapExperienceToCategory(experience: string | undefined): string {
+	    if (!experience) return '';
 
     const experienceLower = experience.toLowerCase().trim();
 
@@ -84,12 +108,12 @@ export class ExploreComponent implements OnInit {
     return matchingModality ? matchingModality.name : '';
   }
 
-  private applyFilters(filters: SearchFilters) {
-    const query = filters.query?.trim().toLowerCase() || '';
-    const modalityId = filters.category ? this.categoryToModality[filters.category] : undefined;
-    const status = filters.status?.toLowerCase() || '';
-    const startDate = filters.startDate ? new Date(filters.startDate) : null;
-    const endDate = filters.endDate ? new Date(filters.endDate) : null;
+	  private applyFilters(filters: SearchFilters) {
+	    const query = filters.query?.trim().toLowerCase() || '';
+	    const modalityId = filters.category ? this.categoryToModality[filters.category] : undefined;
+	    const status = filters.status?.toLowerCase() || '';
+	    const startDate = filters.startDate ? new Date(filters.startDate) : null;
+	    const endDate = filters.endDate ? new Date(filters.endDate) : null;
 
     this.filteredTrips = this.allTrips.filter(trip => {
       const title = trip.title?.toLowerCase() || '';
@@ -121,7 +145,9 @@ export class ExploreComponent implements OnInit {
         }
       }
 
-      return true;
-    });
-  }
-}
+	      return true;
+	    });
+
+	    this.goToPage(1);
+	  }
+	}
