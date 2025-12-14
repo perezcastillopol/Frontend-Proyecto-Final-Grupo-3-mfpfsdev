@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, signal} from '@angular/core';
 import {HttpServices} from './http.services';
 import {IUser} from '../../interfaces/user.interfaces';
 
@@ -19,10 +19,18 @@ export class AuthService extends HttpServices {
 
   private url = '/auth';
 
+  userId = signal<number>(Number(this.getUserId() || 0) || 0);
+
   async login(credentials: LoginRequest) {
     const response = await this.post<LoginResponse>(`${this.url}/login`, credentials);
     localStorage.setItem('token', response.token);
-    localStorage.setItem('userId', response.user?.id);
+    const userId = Number(response.user?.id || 0) || 0;
+    if (userId) {
+      localStorage.setItem('userId', String(userId));
+    } else {
+      localStorage.removeItem('userId');
+    }
+    this.userId.set(userId);
     return response;
   }
 
@@ -33,6 +41,7 @@ export class AuthService extends HttpServices {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
+    this.userId.set(0);
   }
 
   isLoggedIn(): boolean {

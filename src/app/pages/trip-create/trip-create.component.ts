@@ -1,8 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TripsService } from '../../core/services/trips.services';
 import { ITrip } from '../../interfaces/trip.interface';
+import { ModalityService } from '../../core/services/modality.service';
+import { IModality } from '../../interfaces/modality.interface';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-trip-create',
@@ -11,18 +14,16 @@ import { ITrip } from '../../interfaces/trip.interface';
   templateUrl: './trip-create.component.html',
   styleUrl: './trip-create.component.css'
 })
-export class TripCreateComponent {
+export class TripCreateComponent implements OnInit {
   tripForm: FormGroup;
   tripService = inject(TripsService);
+  private authService = inject(AuthService);
+  private modalityService = inject(ModalityService);
   trip!: ITrip;
   router = inject(Router);
 
-  modalities = [
-    { id: 1, name: 'Aventura' },
-    { id: 2, name: 'Naturaleza' },
-    { id: 3, name: 'Ciudad' },
-    { id: 4, name: 'Playa' }
-  ];
+  modalities: IModality[] = [];
+  private userId: number | null = null;
 
   constructor() {
     this.tripForm = new FormGroup({
@@ -49,6 +50,17 @@ export class TripCreateComponent {
     this.tripForm.get('minParticipants')?.valueChanges.subscribe(() => {
       this.tripForm.get('maxParticipants')?.updateValueAndValidity();
     });
+  }
+
+  async ngOnInit(): Promise<void> {
+    const storedUserId = this.authService.getUserId();
+    this.userId = storedUserId ? Number(storedUserId) : null;
+
+    try {
+      this.modalities = await this.modalityService.getAllModalities();
+    } catch (error) {
+      console.error('Error loading modalities:', error);
+    }
   }
   checkControl(controlName: string, errorName: string):boolean | undefined{
     return this.tripForm.get(controlName)?.hasError(errorName) && this.tripForm.get(controlName)?.touched;
@@ -78,6 +90,12 @@ export class TripCreateComponent {
   };
 
   async onSubmit() {
+    if (!this.userId) {
+      alert('Debes iniciar sesión para crear un viaje.');
+      this.router.navigate(['/login']);
+      return;
+    }
+
     if (!this.tripForm.valid) {
       // Mark all fields as touched to show validation errors
       Object.keys(this.tripForm.controls).forEach(key => {
@@ -103,7 +121,7 @@ export class TripCreateComponent {
       photo_url: (formValue.photoUrl || '').trim() || undefined, // optional image URL
       num_participants: 0,                                    // start with 0 inscritos
       modality_trip_id: Number(formValue.modalityId),       // modalityId → modality_trip_id (as number)
-      creator_id: 1,                                         // Stub - would come from auth
+      creator_id: this.userId,                               // from logged user
       status: 'published'                                     // Status must match ENUM value
     };
 
