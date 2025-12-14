@@ -35,14 +35,14 @@ export class TripInvitations implements OnInit {
 
       if (this.trip.creatorId !== currentUserId) {
         // User is not the owner, redirect to trip detail
-        this.router.navigate(['/trips', this.tripId]);
+        this.router.navigate(['/viaje', this.tripId]);
         return;
       }
 
       await this.loadRequests();
     } catch (error) {
       console.error('Error loading trip:', error);
-      this.router.navigate(['/trips']);
+      this.router.navigate(['/mis-viajes']);
     } finally {
       this.isLoading = false;
     }
@@ -98,10 +98,10 @@ export class TripInvitations implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/trips', this.tripId]);
+    this.router.navigate(['/viaje', this.tripId]);
   }
 
   viewHistory() {
-    this.router.navigate(['/trips', this.tripId, 'invitations', 'history']);
+    this.router.navigate(['/viaje', this.tripId, 'invitations', 'history']);
   }
 }

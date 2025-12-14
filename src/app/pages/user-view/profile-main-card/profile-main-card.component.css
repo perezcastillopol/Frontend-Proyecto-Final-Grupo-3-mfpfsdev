@@ -49,8 +49,8 @@ h1, h2, h3,h4 {
 .rating-text {
   font-size: 1rem;
   margin-top: 0.5rem;
-color: var(--dark-color);
-font-weight: bold;
+  color: var(--dark-color);
+  font-weight: bold;
 }
 
 .star-icon {

@@ -2,6 +2,7 @@ import { Component, effect, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TripsService, Trip } from '../../core/services/trips.services';
 import { TripCardComponent } from '../../shared/trip-card/trip-card.component';
+import { ParticipantsService } from '../../core/services/participants.service';
 
 @Component({
   selector: 'app-my-trips',
@@ -12,6 +13,7 @@ import { TripCardComponent } from '../../shared/trip-card/trip-card.component';
 })
 export class MyTripsComponent {
   private tripsSrv = inject(TripsService);
+  private participantsSrv = inject(ParticipantsService);
 
   createdTrips: Trip[] = [];
   participatingTrips: Trip[] = [];
@@ -36,7 +38,22 @@ export class MyTripsComponent {
 
     const trips = await this.tripsSrv.list();
     this.createdTrips = trips.filter((t) => t.creatorId === userId);
-    this.participatingTrips = trips.filter((t) => t.creatorId !== userId);
+
+    // Filter participating trips: check if user is actually a participant
+    const participatingPromises = trips
+      .filter((t) => t.creatorId !== userId)
+      .map(async (trip) => {
+        try {
+          const result = await this.participantsSrv.isParticipants(trip.tripId, userId);
+          return result.is_participant ? trip : null;
+        } catch (error) {
+          console.error(`Error checking participation for trip ${trip.tripId}:`, error);
+          return null;
+        }
+      });
+
+    const participatingResults = await Promise.all(participatingPromises);
+    this.participatingTrips = participatingResults.filter((t): t is Trip => t !== null);
     this.goToPage(1);
   }
 

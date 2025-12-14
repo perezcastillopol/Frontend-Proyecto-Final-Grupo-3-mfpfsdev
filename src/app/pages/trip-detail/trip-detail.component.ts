@@ -99,7 +99,7 @@ export class TripDetailComponent implements OnInit {
    */
   manageRequests() {
     if (this.isOwner) {
-      this.router.navigate(['/trips', this.tripId, 'invitations']);
+      this.router.navigate(['/viaje', this.tripId, 'invitations']);
     }
   }
 
@@ -107,7 +107,7 @@ export class TripDetailComponent implements OnInit {
    * Navigate to request history page
    */
   viewRequestHistory() {
-    this.router.navigate(['/trips', this.tripId, 'invitations', 'history']);
+    this.router.navigate(['/viaje', this.tripId, 'invitations', 'history']);
   }
 
   /**

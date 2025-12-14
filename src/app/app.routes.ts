@@ -20,8 +20,8 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent, title: 'Entrar' },
   { path: 'crear', component: TripCreateComponent, title: 'Crear viaje' },
   { path: 'viaje/:id', component: TripDetailComponent, title: 'Detalle del viaje' },
-  { path: 'trips/:id/invitations', component: TripInvitations, title: 'Gestionar solicitudes' },
-  { path: 'trips/:id/invitations/history', component: TripInvitationHistory, title: 'Historial de solicitudes' },
+  { path: 'viaje/:id/invitations', component: TripInvitations, title: 'Gestionar solicitudes' },
+  { path: 'viaje/:id/invitations/history', component: TripInvitationHistory, title: 'Historial de solicitudes' },
   { path: 'register', component: UserFormComponent, title: 'Register' },
 
   //Crear ruta para crear registro de usuario

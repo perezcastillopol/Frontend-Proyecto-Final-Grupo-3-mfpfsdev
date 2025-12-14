@@ -33,7 +33,7 @@ export class TripInvitationHistory implements OnInit {
       await this.loadRequests();
     } catch (error) {
       console.error('Error loading trip:', error);
-      this.router.navigate(['/trips']);
+      this.router.navigate(['/mis-viajes']);
     } finally {
       this.isLoading = false;
     }
@@ -92,7 +92,7 @@ export class TripInvitationHistory implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/trips', this.tripId]);
+    this.router.navigate(['/viaje', this.tripId]);
   }
 
   getRequestCount(status: 'all' | 'pending' | 'accepted' | 'rejected'): number {
