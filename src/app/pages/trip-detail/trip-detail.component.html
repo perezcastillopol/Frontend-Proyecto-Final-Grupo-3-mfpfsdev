@@ -7,7 +7,7 @@
       <div class="hero-content position-absolute text-white">
         <div class="d-flex gap-2 mb-2">
           <span class="badge chip chip-category rounded-pill">
-            {{ modalityMap[trip.modality_trip_id] || 'Categoría' }}
+            {{ trip.modality_name || modalityMap[trip.modality_trip_id] || 'Categoría' }}
           </span>
           <span class="badge chip chip-status rounded-pill"
             [class.is-open]="(trip.status || '').toLowerCase() === 'abierto'">

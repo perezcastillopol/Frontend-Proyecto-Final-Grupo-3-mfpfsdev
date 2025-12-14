@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TripsService, Trip } from '../../core/services/trips.services';
 import { TripCardComponent } from '../../shared/trip-card/trip-card.component';
@@ -17,8 +17,20 @@ export class MyTripsComponent {
   participatingTrips: Trip[] = [];
   selectedTab: 'created' | 'participating' = 'created';
 
-  async ngOnInit() {
-    const userId = this.tripsSrv.me();
+  constructor() {
+    effect(() => {
+      const userId = this.tripsSrv.me();
+      void this.loadTrips(userId);
+    });
+  }
+
+  private async loadTrips(userId: number) {
+    if (!userId) {
+      this.createdTrips = [];
+      this.participatingTrips = [];
+      return;
+    }
+
     const trips = await this.tripsSrv.list();
     this.createdTrips = trips.filter((t) => t.creatorId === userId);
     this.participatingTrips = trips.filter((t) => t.creatorId !== userId);

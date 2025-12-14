@@ -1,22 +1,25 @@
-import {Injectable, signal} from '@angular/core';
+import {Injectable, computed, inject} from '@angular/core';
 import {ITrip as TripModel} from '../../interfaces/trip.interface';
 import {HttpServices} from './http.services';
+import { AuthService } from './auth.service';
 
 export type Trip = TripModel & {
   imageUrl?: string;
   currentPeople?: number;
   maxPeople?: number;
+  modality_name?: string;
 };
 
 @Injectable({ providedIn: 'root' })
 
 export class TripsService extends HttpServices {
-  private userId = 1; // stub de usuario actual. Cambiar cuando hagamos conexión con el front. 
-  me = signal<number>(this.userId);
+  private auth = inject(AuthService);
+  me = computed<number>(() => this.auth.userId());
   private url = '/trips';
 
   private mapTrip(api: any): Trip {
     const photoUrl = api.photo_url || api.imageUrl;
+    const modalityName = api.modality_name || api.modalityName;
     return {
       tripId: Number(api.id),
       creatorId: Number(api.creator_id),
@@ -34,6 +37,7 @@ export class TripsService extends HttpServices {
       created_at: api.created_at,
       updated_at: api.updated_at,
       modality_trip_id: Number(api.modality_trip_id),
+      modality_name: modalityName,
       num_participants: api.num_participants,
       photo_url: photoUrl,
       imageUrl: photoUrl || `https://picsum.photos/seed/trip${api.id}/600/400`,
