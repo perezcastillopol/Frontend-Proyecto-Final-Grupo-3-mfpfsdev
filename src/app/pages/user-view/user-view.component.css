@@ -44,20 +44,28 @@ button{
 }
 
 /*  Botón eliminar */
-.delete-user {
-  margin-top: 2rem;
-  margin-right: 0;
+.delete-user-btn {
+  background-color: #dc3545 !important;
+  color: #ffffff !important;
+  border: none !important;
+  min-width: 160px;
+  font-weight: 600;
+  padding: .35rem .9rem;
+  border-radius: 10px;
+  display: inline-block;
+  margin-top: 24px;
 }
 
-.delete-user button {
-  min-width: 150px;
-  background-color: #dc3545;
-  border: none;
-  transition: background-color 0.3s ease;
+.delete-user-btn:hover {
+  background-color: #bb2d3b !important;
+  color: #ffffff !important;
 }
 
-.delete-user button:hover {
-  background-color: #a71d2a;
+.delete-user-btn:focus,
+.delete-user-btn:active {
+  background-color: #dc3545 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
 }
 
 .modal-backdrop {
@@ -83,7 +91,7 @@ button{
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: var(--primary-color); 
+  background: #28a745;
   color: #fff;
   padding: 12px 20px;
   border-radius: 8px;
@@ -98,4 +106,70 @@ button{
   10% { opacity: 1; transform: translateY(0); }
   90% { opacity: 1; }
   100% { opacity: 0; transform: translateY(20px); }
+}
+
+/* Contenedor general para que no quede tan estirado */
+.user-view-container, .profile-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.profile-top {
+  align-items: flex-start;
+}
+
+.profile-top > [class*="col-"] {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Centrado columna izquierda (main profile card) */
+.profile-top .col-lg-4 {
+  align-items: center;
+}
+
+.profile-top app-profile-main-card,
+.profile-top app-profile-about-card,
+.profile-top app-profile-info-card {
+  display: block;
+  width: 100%;
+}
+
+.profile-top app-profile-main-card > *,
+.profile-top app-profile-about-card > *,
+.profile-top app-profile-info-card > * {
+  width: 100%;
+}
+
+/* Look de Figma para las tarjetas */
+.profile-card {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.08);
+  border: 0;
+}
+
+app-profile-main-card,
+app-profile-about-card,
+app-profile-info-card {
+  display: block;
+  width: 100%;
+}
+
+/* Subir tamaño general SOLO en la página Perfil */
+:host {
+  font-size: 20px;
+}
+
+/* Títulos principales dentro de Perfil */
+.profile-banner-title{
+  font-size: 2.2rem;
+}
+
+/* Cards: texto un poco grande */
+.profile-card,
+.profile-card p,
+.profile-card span,
+.profile-card label{
+  font-size: 1.02em;
 }

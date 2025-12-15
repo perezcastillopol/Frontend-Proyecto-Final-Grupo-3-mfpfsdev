@@ -1,57 +1,56 @@
-.profile-card.info-card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  padding: 1.5rem;
+.info-card{
+  border: none;
+  border-radius: 28px;
+  box-shadow: 0 14px 30px rgba(0,0,0,.12);
+  padding: 34px 44px;
 }
 
-.card-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: var(--secondary-color);
-}
-
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-}
-
-@media (max-width: 768px) {
-  .info-grid {
-    grid-template-columns: 1fr; 
-  }
-}
-
-.info-box {
-  background: #f8f9fa;
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+.info-title{
+  font-family: 'Oswald', sans-serif;
+  font-weight: 900;
+  color: #0b5f5b;
+  font-size: 1.35rem;
   display: flex;
-  flex-direction: column;
-  gap: 1.0rem;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
 }
 
-.info-box strong {
-  color: var(--secondary-color);
-  font-weight: 600;
+.field-label{
+  font-weight: 900;
+  color: #0b5f5b;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* input con icono a la izquierda */
+.input-icon{
+  position: relative;
+}
+
+.input-icon i{
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #0b5f5b;
   font-size: 1.1rem;
+  pointer-events: none;
 }
 
-.info-box span {
-  font-size: 0.95rem;
-  color: var(--dark-color);
-  font-weight: 500;
+.input-icon .form-control{
+  height: 44px;
+  border-radius: 10px;
+  padding-left: 44px; 
+  border: 1px solid #ced4da;
+  font-size: 1rem;
+  box-shadow: none;
 }
 
-.info-box .text-muted {
-  color: #6c757d;
-}
-
-input.form-control {
-  max-width: 100%;
+/* esto es para cuando está readonly, que siga viendose limpio */
+.input-icon .form-control:read-only{
+  background: #fff;
 }
 
 .info-left { 

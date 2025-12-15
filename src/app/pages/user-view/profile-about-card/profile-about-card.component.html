@@ -1,55 +1,66 @@
-<div class="profile-card about-card">
-  <h4 class="card-title">Sobre mí</h4>
+<div class="profile-card about-card card">
+  <div class="about-inner">
 
-  @if (isEditing) {
-    <textarea
-      class="form-control"
-      [(ngModel)]="user.bio"
-      rows="4"
-      placeholder="Escribe algo sobre ti..."
-    ></textarea>
-  } @else {
-    @if (user.bio && user.bio.trim().length > 0) {
-      <p class="card-text">{{ user.bio }}</p>
+    <h4 class="card-title">Sobre mí:</h4>
+
+    <!-- Bio -->
+    @if (isEditing) {
+      <textarea
+        class="form-control"
+        [(ngModel)]="user.bio"
+        rows="4"
+        placeholder="Escribe algo sobre ti..."
+      ></textarea>
     } @else {
-      <p class="card-text text-muted">Aún no has escrito nada sobre ti.</p>
-    }
-  }
-
-  <div class="mt-3">
-    <h4 class="card-title">Intereses</h4>
-
-    @if (!isEditing) {
-      @if (user.interests && user.interests.length > 0) {
-        <ul class="interests-list">
-          @for (interest of user.interests; track interest.id) {
-            <li>{{ interest.name }}</li>
-          }
-        </ul>
+      @if (user.bio && user.bio.trim().length > 0) {
+        <p class="card-text">{{ user.bio }}</p>
       } @else {
-        <p class="text-muted">No hay intereses añadidos.</p>
+        <p class="card-text text-muted">Aún no has escrito nada sobre ti.</p>
       }
     }
 
-    @if (isEditing) {
-      <div>
-        <select [(ngModel)]="selectedModality" (change)="onModalityChange()" class="form-select">
-          <option value="">Selecciona una modalidad</option>
-          @for (modality of modalities; track modality.id) {
-            <option [value]="modality.name">{{ modality.name }}</option>
-          }
-        </select>
-      </div>
-      <div class="mt-3">
-        <div class="d-flex flex-wrap gap-3">
-          @for (interest of user.interests; track $index) {
-            <div class="tag-wrapper position-relative">
-              <app-tags [tagText]="interest.name"></app-tags>
-              <button type="button" class="btn-close tag-close" (click)="removeTag($index)"></button>
-            </div>
-          }
+    <!-- Intereses -->
+    <div class="mt-3">
+      <h4 class="card-title">Intereses:</h4>
+
+      @if (!isEditing) {
+        @if (user.interests && user.interests.length > 0) {
+          <div class="chips">
+            @for (interest of user.interests; track interest.id) {
+              <span class="interest-chip">{{ interest.name }}</span>
+            }
+          </div>
+        } @else {
+          <div class="chips">
+            <span class="interest-chip">Etiqueta</span>
+            <span class="interest-chip">Etiqueta</span>
+            <span class="interest-chip">Etiqueta</span>
+          </div>
+        }
+      }
+
+      @if (isEditing) {
+        <div>
+          <select [(ngModel)]="selectedModality" (change)="onModalityChange()" class="form-select">
+            <option value="">Selecciona una modalidad</option>
+            @for (modality of modalities; track modality.id) {
+              <option [value]="modality.name">{{ modality.name }}</option>
+            }
+          </select>
         </div>
-      </div>
-    }
+
+        <div class="mt-3">
+          <div class="d-flex flex-wrap gap-3">
+            @for (interest of user.interests; track $index) {
+              <div class="tag-wrapper position-relative">
+                <app-tags [tagText]="interest.name"></app-tags>
+                <button type="button" class="btn-close tag-close" (click)="removeTag($index)"></button>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
   </div>
 </div>
