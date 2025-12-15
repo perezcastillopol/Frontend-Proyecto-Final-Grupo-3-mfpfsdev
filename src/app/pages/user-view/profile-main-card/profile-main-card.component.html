@@ -4,10 +4,12 @@
       <img [src]="user.photo_url" alt="Foto perfil" />
     </div>
 
-    <label class="edit-photo-btn" [hidden]="!isEditing">
-      Cambiar foto
-      <input type="file" accept="image/*" hidden (change)="actualizarFoto($event)" />
-    </label>
+    <input
+      class="form-control mt-2 text-center"
+      [(ngModel)]="user.photo_url"
+      placeholder="Introduce la URL de tu foto"
+      [hidden]="!isEditing"
+    />
   </div>
 
   <input
