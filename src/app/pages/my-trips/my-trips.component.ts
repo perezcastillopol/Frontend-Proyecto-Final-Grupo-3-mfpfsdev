@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { TripsService, Trip } from '../../core/services/trips.services';
 import { TripCardComponent } from '../../shared/trip-card/trip-card.component';
 import { ParticipantsService } from '../../core/services/participants.service';
+import { TripEnrichmentService } from '../../core/services/trip-enrichment.service';
 
 @Component({
   selector: 'app-my-trips',
@@ -14,6 +15,7 @@ import { ParticipantsService } from '../../core/services/participants.service';
 export class MyTripsComponent {
   private tripsSrv = inject(TripsService);
   private participantsSrv = inject(ParticipantsService);
+  private enrichmentService = inject(TripEnrichmentService);
 
   createdTrips: Trip[] = [];
   participatingTrips: Trip[] = [];
@@ -37,7 +39,7 @@ export class MyTripsComponent {
     }
 
     const trips = await this.tripsSrv.list();
-    this.createdTrips = trips.filter((t) => t.creatorId === userId);
+    const createdTripsBasic = trips.filter((t) => t.creatorId === userId);
 
     // Filter participating trips: check if user is actually a participant
     const participatingPromises = trips
@@ -53,7 +55,11 @@ export class MyTripsComponent {
       });
 
     const participatingResults = await Promise.all(participatingPromises);
-    this.participatingTrips = participatingResults.filter((t): t is Trip => t !== null);
+    const participatingTripsBasic = participatingResults.filter((t): t is Trip => t !== null);
+
+    // Enrich both lists with accurate participant counts
+    this.createdTrips = await this.enrichmentService.enrichTripsWithParticipantCounts(createdTripsBasic);
+    this.participatingTrips = await this.enrichmentService.enrichTripsWithParticipantCounts(participatingTripsBasic);
     this.goToPage(1);
   }
 

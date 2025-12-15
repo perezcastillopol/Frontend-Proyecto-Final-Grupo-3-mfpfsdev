@@ -6,6 +6,7 @@ import { SearchBannerComponent, SearchFilters } from '../../shared/search-banner
 import { Trip, TripsService } from '../../core/services/trips.services';
 import { ModalityService } from '../../core/services/modality.service';
 import { IModality } from '../../interfaces/modality.interface';
+import { TripEnrichmentService } from '../../core/services/trip-enrichment.service';
 
 @Component({
   selector: 'app-explore',
@@ -19,6 +20,7 @@ export class ExploreComponent implements OnInit {
 	  private tripsService = inject(TripsService);
 	  private modalityService = inject(ModalityService);
 	  private route = inject(ActivatedRoute);
+	  private enrichmentService = inject(TripEnrichmentService);
 
 	  allTrips: Trip[] = [];
 	  filteredTrips: Trip[] = [];
@@ -59,12 +61,15 @@ export class ExploreComponent implements OnInit {
 
     // Load trips
     const trips = await this.tripsService.getTrips();
-    this.allTrips = trips.map(trip => ({
+    const tripsWithBasicData = trips.map(trip => ({
       ...trip,
       imageUrl: trip.imageUrl,
       currentPeople: trip.currentPeople ?? 0,
       maxPeople: trip.maxPeople ?? trip.max_participants ?? 0
     }));
+
+    // Enrich trips with accurate participant counts
+    this.allTrips = await this.enrichmentService.enrichTripsWithParticipantCounts(tripsWithBasicData);
     this.applyFilters(this.currentFilters);
   }
 
