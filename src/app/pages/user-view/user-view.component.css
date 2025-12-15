@@ -2,6 +2,11 @@
 h1, h2, h3 {
   font-family: 'Oswald', sans-serif;
 } 
+
+h5 {
+  font-family: 'Oswald', sans-serif;
+  color: var(--secondary-color);
+}
 button{
   font-family: 'Oswald', sans-serif;
   color:white;
@@ -13,14 +18,14 @@ button{
 }
 
 .profile-banner-title {
-  color: var(--dark-color);
+  color: var(--secondary-color);
   font-size: 2rem;
 }
 
 .profile-card {
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px var(--dark-color);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
