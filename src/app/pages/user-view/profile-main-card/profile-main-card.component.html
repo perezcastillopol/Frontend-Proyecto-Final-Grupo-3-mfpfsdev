@@ -10,15 +10,12 @@
   </div>
 
   <!-- Botón cambiar foto -->
-<label class="edit-photo-btn" [hidden]="!isEditing">
-  Cambiar foto
-  <input
-    type="file"
-    accept="image/*"
-    hidden
-    (change)="actualizarFoto($event)"
-  />
-</label>
+<input
+  class="form-control text-center mt-2"
+  [(ngModel)]="user.photo_url"
+  placeholder="Introduce la URL de tu foto"
+  [hidden]="!isEditing"
+/>
 
   <!-- NOMBRE (lectura) -->
   <h3 class="name-text mt-2 mb-0" [hidden]="isEditing">
