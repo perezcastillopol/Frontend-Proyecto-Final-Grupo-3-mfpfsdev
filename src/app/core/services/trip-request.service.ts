@@ -75,4 +75,12 @@ export class TripRequestService extends HttpServices {
         const request = await this.getUserRequestStatus(tripId, userId);
         return request?.status === 'pending' || request?.status === 'accepted';
     }
+
+    /**
+     * Get accepted requests for a trip with full user details
+     * GET /api/trip-requests/:tripId/accepted
+     */
+    async getAcceptedRequests(tripId: number): Promise<ITripRequest[]> {
+        return this.get(`/trip-requests/${tripId}/accepted`);
+    }
 }
