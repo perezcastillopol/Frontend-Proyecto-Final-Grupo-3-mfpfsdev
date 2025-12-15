@@ -1,50 +1,38 @@
-<div class="profile-card main-card card text-center">
+<div class="profile-card main-card">
+  <div class="text-center position-relative">
+    <div class="profile-img mx-auto">
+      <img [src]="user.photo_url" alt="Foto perfil" />
+    </div>
 
-  <!-- AVATAR -->
-  <div class="profile-img mx-auto">
-    <img
-      class="profile-avatar"
-      [src]="user.photo_url || '/images/default-avatar.png'"
-      alt="Foto perfil"
+    <input
+      class="form-control mt-2 text-center"
+      [(ngModel)]="user.photo_url"
+      placeholder="Introduce la URL de tu foto"
+      [hidden]="!isEditing"
     />
   </div>
 
-  <!-- Botón cambiar foto -->
-<input
-  class="form-control text-center mt-2"
-  [(ngModel)]="user.photo_url"
-  placeholder="Introduce la URL de tu foto"
-  [hidden]="!isEditing"
-/>
-
-  <!-- NOMBRE (lectura) -->
-  <h3 class="name-text mt-2 mb-0" [hidden]="isEditing">
-    {{ (user.name || 'Nombre') }} {{ (user.last_name || 'Apellido') }}
-  </h3>
-
-  <!-- USERNAME (lectura) -->
-  <p class="username-text mt-2 mb-0" [hidden]="isEditing">
-    @{{ user.nickname || 'username' }}
-  </p>
-
-  <!-- RATING (lectura) -->
-  <div class="rating-text mt-2" [hidden]="isEditing">
-    {{ user.average_rating || 0 }}
-    <i class="bi bi-star-fill"></i>
-  </div>
-
-  <!-- INPUTS EDICIÓN -->
   <input
-    class="form-control text-center mt-3"
+    class="form-control mt-3 text-center"
     [(ngModel)]="user.name"
     placeholder="Nombre"
     [hidden]="!isEditing"
   />
-
   <input
-    class="form-control text-center mt-2"
+    class="form-control mt-2 text-center"
     [(ngModel)]="user.last_name"
     placeholder="Apellidos"
     [hidden]="!isEditing"
   />
 
+  <h3 class="text-center mt-3 name-text" [hidden]="isEditing">
+    {{ fullName }}
+  </h3>
+
+  <p class="text-center username-text">@{{ user.nickname }}</p>
+
+  <div class="text-center rating-text">
+    {{ user.average_rating }}
+    <i class="bi bi-star-fill"></i>
+  </div>
+</div>

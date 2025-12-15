@@ -1,67 +1,80 @@
-/* Card estilo Figma */
-.about-card{
-  border: none;
-  font-size: 16px;
-  border-radius: 28px;
-  box-shadow: 0 14px 30px rgba(0,0,0,.12);
-  padding: 38px 46px;
-  min-height: 430px;
-}
-
-/* Contenido interno */
-.about-card h4{
-  font-size: 1.3rem;
-  margin-top: 28px;
-  margin-bottom: 12px;
-}
-
-/* Títulos */
-.card-title{
+h1, h2, h3,h4 {
   font-family: 'Oswald', sans-serif;
-  font-weight: 900;
-  color: #0b5f5b;
-  font-size: 1.3rem;
-  margin-bottom: 12px;
+} 
+.profile-card.about-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 1.5rem;
+  height: 100%;
 }
 
-/* Texto */
-.card-text{
-  font-size: 16px;
-  line-height: 1.7;
-  color: #2c3e50;
-  max-width: 320px;
-  margin-top: 6px;
-  margin-bottom: 38px;
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--secondary-color);
 }
 
-.text-muted{
-  font-size: 16px;
-  line-height: 1.7;
-  color: #6c757d !important;
-  max-width: 320px;
-  margin-top: 6px;
+.card-text {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: var(--dark-color);
+
 }
 
-/* Chips */
-.chips{
+.card-text.text-muted {
+  color: #6c757d;
+}
+
+textarea.form-control {
+  resize: none;
+}
+
+.interests-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  
+}
+
+.interests-list li {
+  display: inline-block;
+  background: #f8f9fa;
+  border-radius: 6px;
+  padding: 6px 10px;
+  margin: 0px 8px 8px 0;
+  font-size: 1.0rem;
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.tag-wrapper {
+  display: inline-block;
+  position: relative;
+}
+
+.tag-close {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 50%;
   display: flex;
-  flex-wrap: wrap;
-  gap: 18px; 
-  margin-top: 26px; 
-  max-width: 360px;
-}
-
-.interest-chip{
-  display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 132px;
-  height: 36px;
-  padding: 0 18px;
-  border-radius: 12px;
-  background: #e9ecef;   
-  color: #0b5f5b;
-  font-weight: 800;
-  font-size: 14px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+  color: white;
+  font-size: 18px;
   line-height: 1;
+}
+
+.tag-wrapper:hover .tag-close {
+  opacity: 1;
 }
