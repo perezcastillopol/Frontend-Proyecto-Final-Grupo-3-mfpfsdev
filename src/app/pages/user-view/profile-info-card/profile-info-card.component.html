@@ -1,56 +1,57 @@
 <div class="profile-card info-card">
   <h4 class="card-title">Información personal</h4>
+  <div class="info-grid">
 
-  <!-- Teléfono -->
-  <div class="info-item">
-    <strong>Teléfono:</strong>
-    @if (isEditing) {
-      <input class="form-control" [(ngModel)]="user.phone" placeholder="Introduce tu teléfono">
-    } @else {
-      @if (user.phone && user.phone.trim().length > 0) {
-        <span>{{ user.phone }}</span>
-      } @else {
-        <span class="text-muted">No especificado</span>
-      }
-    }
-  </div>
+    <div class="info-box">
+      <div class="info-left">
+        <i class="bi bi-telephone-fill"></i>
+      </div>
+      <div class="info-right">
+        <strong>Teléfono:</strong>
+        @if (isEditing) {
+          <input class="form-control" [(ngModel)]="user.phone" placeholder="Introduce tu teléfono">
+        } @else {
+          <span>{{ user.phone?.trim() || 'No especificado' }}</span>
+        }
+      </div>
+    </div>
 
-  <!-- Ubicación -->
-  <div class="info-item">
-    <strong>Ubicación:</strong>
-    @if (isEditing) {
-      <input class="form-control" [(ngModel)]="user.location" placeholder="Introduce tu ubicación">
-    } @else {
-      @if (user.location && user.location.trim().length > 0) {
-        <span>{{ user.location }}</span>
-      } @else {
-        <span class="text-muted">No especificada</span>
-      }
-    }
-  </div>
+    <div class="info-box">
+      <div class="info-left">
+        <i class="bi bi-geo-alt-fill"></i>
+      </div>
+      <div class="info-right">
+        <strong>Ubicación:</strong>
+        @if (isEditing) {
+          <input class="form-control" [(ngModel)]="user.location" placeholder="Introduce tu ubicación">
+        } @else {
+          <span>{{ user.location?.trim() || 'No especificada' }}</span>
+        }
+      </div>
+    </div>
 
-  <!-- Fecha de nacimiento -->
-  <div class="info-item">
-    <strong>Fecha de nacimiento:</strong>
-    @if (isEditing) {
-      <input type="date" class="form-control" [(ngModel)]="user.birthDate">
-    } @else {
-      @if (user.birthDate && user.birthDate.trim().length > 0) {
-        <span>{{ user.birthDate | date:'dd/MM/yyyy' }}</span>
-      } @else {
-        <span class="text-muted">No especificada</span>
-      }
-    }
-  </div>
+    <div class="info-box">
+      <div class="info-left">
+        <i class="bi bi-calendar-event-fill"></i>
+      </div>
+      <div class="info-right">
+        <strong>Fecha de nacimiento:</strong>
+        @if (isEditing) {
+          <input type="date" class="form-control" [(ngModel)]="user.birthDate">
+        } @else {
+          <span>{{ user.birthDate ? (user.birthDate | date:'dd/MM/yyyy') : 'No especificada' }}</span>
+        }
+      </div>
+    </div>
 
-  <!-- Nickname -->
-  <div class="info-item">
-    <strong>Nickname:</strong>   
-      @if (user.nickname && user.nickname.trim().length > 0) {
-        <span>{{ user.nickname }}</span>
-      } @else {
-        <span class="text-muted">No especificado</span>
-      }
-    
+    <div class="info-box">
+      <div class="info-left">
+        <i class="bi bi-person-fill"></i>
+      </div>
+      <div class="info-right">
+        <strong>Nickname:</strong>
+        <span>{{ user.nickname?.trim() || 'No especificado' }}</span>
+      </div>
+    </div>
   </div>
 </div>

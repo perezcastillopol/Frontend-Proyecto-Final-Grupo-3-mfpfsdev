@@ -7,6 +7,7 @@ h1, h2, h3,h4 {
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   padding: 1.5rem;
   text-align: center;
+  height: 100%;
 }
 
 .profile-img {
@@ -27,7 +28,7 @@ h1, h2, h3,h4 {
   display: inline-block;
   margin-top: 0.5rem;
   font-size: 0.9rem;
-  color: #007bff;
+  color: var(--secondary-color);
   cursor: pointer;
 }
 
@@ -37,19 +38,21 @@ h1, h2, h3,h4 {
 
 .name-text {
   font-weight: 600;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   margin-top: 0.5rem;
+  color: var(--secondary-color);
 }
 
 .username-text {
-  font-size: 0.95rem;
-  color: #6c757d;
+  font-size: 1.0rem;
+  color: var(--dark-color);
+  font-weight: 600;
 }
 
 .rating-text {
   font-size: 1rem;
   margin-top: 0.5rem;
-  color: var(--dark-color);
+  color: var(--primary-color);
   font-weight: bold;
 }
 
