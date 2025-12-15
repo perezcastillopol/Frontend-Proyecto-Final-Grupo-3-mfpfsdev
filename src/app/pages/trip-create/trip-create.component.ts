@@ -41,7 +41,7 @@ export class TripCreateComponent implements OnInit {
       ]),
       transport: new FormControl('', [Validators.required]),
       photoUrl: new FormControl('', [
-        Validators.pattern(/^(https?:\/\/).+/i),
+        Validators.pattern(/^(https?:\/\/).+/i), Validators.required
       ]),
       itinerary: new FormControl(''),
       modalityId: new FormControl('', [Validators.required])
