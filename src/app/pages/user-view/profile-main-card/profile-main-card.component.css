@@ -73,3 +73,25 @@ h1, h2, h3, h4 {
 .form-control {
   border-radius: 12px;
 }
+
+/* Botón cambiar foto (label) */
+.edit-photo-btn{
+  display: inline-block;
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #e6e6e6;
+  background: #f7f7f7;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+}
+
+.edit-photo-btn input[type="file"]{
+  display: none;
+}
+
+.edit-photo-btn:hover{
+  background: #ececec;
+}

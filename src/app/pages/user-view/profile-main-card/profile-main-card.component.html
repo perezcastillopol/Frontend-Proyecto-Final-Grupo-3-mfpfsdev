@@ -4,40 +4,39 @@
   <div class="profile-img mx-auto">
     <img
       class="profile-avatar"
-      [src]="user.photo_url || '/images/default-avatar.png'"
-      alt=""
-    />
-<div class="profile-card main-card">
-  <div class="text-center position-relative">
-    <div class="profile-img mx-auto">
-      <img [src]="user.photo_url" alt="Foto perfil" />
-    </div>
-
-    <input
-      class="form-control mt-2 text-center"
-      [(ngModel)]="user.photo_url"
-      placeholder="Introduce la URL de tu foto"
-      [hidden]="!isEditing"
+      [src]="user?.photo_url || '/images/default-avatar.png'"
+      alt="Foto perfil"
     />
   </div>
 
+  <!-- Botón cambiar foto -->
+<label class="edit-photo-btn" [hidden]="!isEditing">
+  Cambiar foto
+  <input
+    type="file"
+    accept="image/*"
+    hidden
+    (change)="actualizarFoto($event)"
+  />
+</label>
+
   <!-- NOMBRE (lectura) -->
-<h3 class="name-text mt-2 mb-0" [hidden]="isEditing">
-  {{ (user?.name || 'Nombre') }} {{ (user?.last_name || 'Apellido') }}
-</h3>
+  <h3 class="name-text mt-2 mb-0" [hidden]="isEditing">
+    {{ (user?.name || 'Nombre') }} {{ (user?.last_name || 'Apellido') }}
+  </h3>
 
   <!-- USERNAME (lectura) -->
-<p class="username-text mt-2 mb-0" [hidden]="isEditing">
-  @{{ user?.nickname || 'username' }}
-</p>
+  <p class="username-text mt-2 mb-0" [hidden]="isEditing">
+    @{{ user?.nickname || 'username' }}
+  </p>
 
-   <!-- RATING -->
-<div class="rating-text mt-2">
-  {{ user?.average_rating || 0 }}
-  <i class="bi bi-star-fill"></i>
-</div>
+  <!-- RATING (lectura) -->
+  <div class="rating-text mt-2" [hidden]="isEditing">
+    {{ user.average_rating || 0 }}
+    <i class="bi bi-star-fill"></i>
+  </div>
 
-  <!-- Inputs edición -->
+  <!-- INPUTS EDICIÓN -->
   <input
     class="form-control text-center mt-3"
     [(ngModel)]="user.name"
@@ -52,20 +51,3 @@
     [hidden]="!isEditing"
   />
 
-  <!-- Botón cambiar foto -->
-  <label class="edit-photo-btn btn btn-sm btn-light mt-3" [hidden]="!isEditing">
-    Cambiar foto
-    <input type="file" accept="image/*" hidden (change)="actualizarFoto($event)" />
-  </label>
-
-  <h3 class="text-center mt-3 name-text" [hidden]="isEditing">
-    {{ fullName }}
-  </h3>
-
-  <p class="text-center username-text">@{{ user.nickname }}</p>
-
-  <div class="text-center rating-text">
-    {{ user.average_rating }}
-    <i class="bi bi-star-fill"></i>
-  </div>
-</div>
