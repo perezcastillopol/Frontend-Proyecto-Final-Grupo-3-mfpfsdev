@@ -129,6 +129,9 @@
             } @else {
             <!-- Visitor View: Request to Join -->
             <h3 class="card-title h5 mb-3">Solicitar unirme</h3>
+            @if (participants.length >= trip.max_participants) {
+              <h4 class="card-title h5 mb-3"> ¡Viaje completo! </h4>
+            }
 
             @if (userRequest) {
             <!-- User has already requested -->
@@ -157,7 +160,7 @@
             <button class="btn btn-secondary w-100 rounded-3" type="button" disabled>
               {{ getRequestButtonText() }}
             </button>
-            } @else {
+            } @else if (participants.length < trip.max_participants) {
             <!-- User can request to join -->
             <p class="card-text text-body mb-3 lh-base">
               Tu solicitud será revisada por el organizador para validar que encaja con el grupo.
@@ -186,15 +189,15 @@
             <div class="d-flex align-items-center justify-content-between mb-3">
               <h4 class="mb-0 h6">Participantes ({{ participants.length }})</h4>
             </div>
-            
+
             @if (participants.length === 0) {
               <p class="card-text text-body mb-0 lh-base">No hay participantes todavía.</p>
             } @else {
               <div class="d-flex flex-column gap-2">
                 @for (participant of participants; track participant.id) {
                   <a [routerLink]="['/users', participant.id]" class="d-flex align-items-center gap-2 p-2 rounded bg-light text-decoration-none text-dark">
-                    <img 
-                      [src]="participant.photo_url || 'https://ui-avatars.com/api/?name=' + participant.name + '&background=21D1C2&color=fff&size=40'" 
+                    <img
+                      [src]="participant.photo_url || 'https://ui-avatars.com/api/?name=' + participant.name + '&background=21D1C2&color=fff&size=40'"
                       alt="{{ participant.name }}"
                       class="rounded-circle"
                       style="width: 40px; height: 40px; object-fit: cover;">
@@ -225,7 +228,7 @@
           <div class="col-12 col-lg-5">
             <app-review-form #reviewForm [tripId]="trip.tripId" [participants]="participants" [currentUserId]="currentUserId" (created)="onReviewCreated()"></app-review-form>
           </div>
-          
+
           <div class="col-12 col-lg-7">
             <app-review-list #reviewList [tripId]="trip.tripId"></app-review-list>
           </div>
@@ -241,7 +244,7 @@
     @if (isParticipant) {
       <div class="card border-0 shadow-sm mt-3">
         <div class="card-body p-4">
-          <div class="d-flex align-items-center gap-3 mb-3">         
+          <div class="d-flex align-items-center gap-3 mb-3">
             <div>
               <h3 class="card-title h5 mb-1">Foro del viaje</h3>
             </div>
@@ -249,6 +252,12 @@
           <app-forum [tripId]="trip.tripId"></app-forum>
         </div>
       </div>
+    }
+
+    @if (currentUserId === trip.creatorId) {
+      <button class="btn btn-secondary w-20 rounded-3 py-2 my-2 align-content-end" type="button" (click)="eliminarViaje()">
+        Eliminar viaje
+      </button>
     }
   </div>
 </section>

@@ -71,4 +71,8 @@ export class TripsService extends HttpServices {
     const trip = await this.post(this.url, tripData);
     return this.mapTrip(trip);
   }
+
+  async deleteTrip(tripId: number): Promise<void> {
+    return this.delete(`${this.url}/${tripId}`);
+  }
 }

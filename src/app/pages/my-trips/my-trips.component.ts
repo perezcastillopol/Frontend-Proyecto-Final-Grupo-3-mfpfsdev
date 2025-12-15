@@ -43,7 +43,6 @@ export class MyTripsComponent {
 
     // Filter participating trips: check if user is actually a participant
     const participatingPromises = trips
-      .filter((t) => t.creatorId !== userId)
       .map(async (trip) => {
         try {
           const result = await this.participantsSrv.isParticipants(trip.tripId, userId);

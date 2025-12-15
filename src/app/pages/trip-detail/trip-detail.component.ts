@@ -243,4 +243,9 @@ export class TripDetailComponent implements OnInit, OnDestroy {
     if (!this.currentUserId) return false;
     return this.participants.some(participant => participant.id === this.currentUserId);
   }
+
+  async eliminarViaje() {
+    await this.tripsService.deleteTrip(this.tripId);
+    await this.router.navigate(['/mis-viajes']);
+  }
 }
