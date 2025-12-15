@@ -1,1 +1,99 @@
-<p>my-trips works!</p>
+<section class="my-trips-page">
+  <div class="page-wrapper">
+    <div class="header-row">
+      <div class="heading">
+        <h1>Mis viajes</h1>
+        <p class="subtitle">Gestiona tus viajes creados y aquellos en los que participas</p>
+      </div>
+
+      <a class="create-btn" routerLink="/crear">
+        <i class="bi bi-plus-lg"></i>
+        Crear viaje
+      </a>
+    </div>
+
+    <div class="tabs-card">
+      <button
+        type="button"
+        class="tab-btn"
+        [class.active]="selectedTab === 'created'"
+        (click)="switchTab('created')"
+      >
+        <i class="bi bi-airplane"></i>
+        <span>Creados por mí</span>
+        <span class="counter">{{ createdTrips.length }}</span>
+      </button>
+
+      <button
+        type="button"
+        class="tab-btn"
+        [class.active]="selectedTab === 'participating'"
+        (click)="switchTab('participating')"
+      >
+        <i class="bi bi-people"></i>
+        <span>Participando</span>
+        <span class="counter">{{ participatingTrips.length }}</span>
+      </button>
+    </div>
+
+    @if (tripsToShow.length === 0) {
+      <div class="empty-card">
+        <div class="empty-icon">
+          <i class="bi bi-airplane"></i>
+        </div>
+        <h3>{{ emptyTitle }}</h3>
+        <p>{{ emptySubtitle }}</p>
+        <a class="empty-btn" [routerLink]="ctaLink">
+          @if (selectedTab === 'created') {
+            <i class="bi bi-plus-lg"></i>
+          } @else {
+            <i class="bi bi-compass"></i>
+          }
+          {{ ctaLabel }}
+        </a>
+      </div>
+	    } @else {
+	      <div class="grid">
+	        @for (t of pagedTripsToShow; track t.tripId) {
+	          <app-trip-card [trip]="t" />
+	        }
+	      </div>
+
+	      @if (totalPages > 1) {
+	        <nav class="pagination-wrapper d-flex justify-content-center mt-4" aria-label="Paginación de mis viajes">
+	          <ul class="pagination mb-0">
+	            <li class="page-item" [class.disabled]="currentPage === 1">
+	              <button
+	                type="button"
+	                class="page-link"
+	                (click)="goToPage(currentPage - 1)"
+	                [disabled]="currentPage === 1"
+	                aria-label="Página anterior"
+	              >
+	                <span aria-hidden="true">&laquo;</span>
+	              </button>
+	            </li>
+
+	            @for (page of pageNumbers; track page) {
+	              <li class="page-item" [class.active]="page === currentPage">
+	                <button type="button" class="page-link" (click)="goToPage(page)">{{ page }}</button>
+	              </li>
+	            }
+
+	            <li class="page-item" [class.disabled]="currentPage === totalPages">
+	              <button
+	                type="button"
+	                class="page-link"
+	                (click)="goToPage(currentPage + 1)"
+	                [disabled]="currentPage === totalPages"
+	                aria-label="Página siguiente"
+	              >
+	                <span aria-hidden="true">&raquo;</span>
+	              </button>
+	            </li>
+	          </ul>
+	        </nav>
+	      }
+	    }
+	  </div>
+	</section>

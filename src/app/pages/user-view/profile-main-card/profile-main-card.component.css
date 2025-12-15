@@ -1,0 +1,83 @@
+h1, h2, h3,h4 {
+  font-family: 'Oswald', sans-serif;
+} 
+.profile-card.main-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 1.5rem;
+  text-align: center;
+  height: 100%;
+}
+
+.profile-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.profile-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.edit-photo-btn {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--secondary-color);
+  cursor: pointer;
+}
+
+.edit-photo-btn:hover {
+  text-decoration: underline;
+}
+
+.name-text {
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  color: var(--secondary-color);
+}
+
+.username-text {
+  font-size: 1.0rem;
+  color: var(--dark-color);
+  font-weight: 600;
+}
+
+.rating-text {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.star-icon {
+  margin-left: 4px;
+}
+
+/* Botón cambiar foto (label) */
+.edit-photo-btn{
+  display: inline-block;
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #e6e6e6;
+  background: #f7f7f7;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+}
+
+.edit-photo-btn input[type="file"]{
+  display: none;
+}
+
+.edit-photo-btn:hover{
+  background: #ececec;
+}

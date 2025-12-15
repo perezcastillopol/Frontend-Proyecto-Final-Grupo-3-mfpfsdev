@@ -1,0 +1,40 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="review-form">
+  <div class="mb-3">
+    <label class="form-label">Usuario a valorar</label>
+    <select class="form-control" formControlName="reviewee_id" [disabled]="!participants.length">
+      <option [ngValue]="null" selected disabled>Selecciona participante</option>
+      @for (p of participantsFiltered; track p.id) {
+        <option [ngValue]="p.id">{{ p.name }}</option>
+      }
+    </select>
+    @if (!participantsFiltered.length) {
+      <div class="form-text text-muted small mt-1">No hay participantes aceptados disponibles.</div>
+    }
+    @if (form.controls['reviewee_id'].invalid && form.controls['reviewee_id'].touched) {
+      <div class="error small mt-1">Selecciona un participante</div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Puntuación (1-5)</label>
+    <input class="form-control rating-input" formControlName="rating" type="number" min="1" max="5" />
+    @if (form.controls['rating'].invalid && form.controls['rating'].touched) {
+      <div class="error small mt-1">Valor entre 1 y 5</div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Comentario (opcional)</label>
+    <textarea class="form-control" formControlName="comment" rows="4" placeholder="¿Cómo fue tu experiencia?"></textarea>
+  </div>
+
+  <div class="d-grid">
+    <button class="btn review-submit text-white" type="submit" [disabled]="form.invalid || submitting || !participants.length">
+      Enviar valoración
+    </button>
+  </div>
+
+  @if (error) {
+    <div class="error mt-2 small">{{ error }}</div>
+  }
+</form>

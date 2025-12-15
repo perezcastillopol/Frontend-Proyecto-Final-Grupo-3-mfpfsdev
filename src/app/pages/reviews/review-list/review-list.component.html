@@ -1,0 +1,20 @@
+@if (tripId) {
+  <section class="review-list">
+    <div class="d-flex align-items-center gap-2 mb-3">
+      <i class="bi bi-chat-square-quote text-secondary"></i>
+      <h3 class="h6 mb-0 text-muted">Valoraciones ({{ reviews.length || 0 }})</h3>
+    </div>
+
+    @if (loading) {
+      <div class="text-muted small">Cargando valoraciones...</div>
+    }
+    @if (!loading && reviews.length === 0) {
+      <div class="empty text-muted">Aún no hay valoraciones.</div>
+    }
+    @for (r of reviews; track r.id) {
+      <div class="review-row">
+        <app-review-item [review]="r"></app-review-item>
+      </div>
+    }
+  </section>
+}

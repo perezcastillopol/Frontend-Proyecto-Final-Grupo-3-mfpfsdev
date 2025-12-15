@@ -1,0 +1,90 @@
+<div class="forum-container">
+  <div class="d-flex justify-content-end mb-3">
+    <button class="btn profile-btn-primary text-white" (click)="toggleNewTopicForm()">
+      {{ showNewTopicForm ? 'Cancelar' : 'Escribir nuevo mensaje' }}
+    </button>
+  </div>
+
+  @if (showNewTopicForm) {
+    <div class="card mb-3 border-primary">
+      <div class="card-body">             
+        <div class="mb-3">
+          <label class="form-label">Escribe aquí tu mensaje</label>
+          <textarea 
+            class="form-control" 
+            [(ngModel)]="newTopicContent" 
+            placeholder="Describe tu consulta o tema a discutir..."
+            rows="4"></textarea>
+        </div>
+        <button 
+          class="btn btn-success" 
+          (click)="createMessage()"
+          [disabled]="!newTopicContent.trim()">
+        Publicar
+        </button>
+      </div>
+    </div>
+  }
+
+  <div class="topics-list">
+    @if (topics.length === 0) {
+      <div class="alert alert-info">
+        No hay mensajes todavía
+      </div>
+    }
+    
+    @for (topic of topics; track topic.id) {
+      <div class="card mb-3 topic-card">
+        <div class="card-body">
+          <div class="mb-3">           
+            <div class="topic-meta text-muted small">
+              <span>@{{ topic.user_nickname }}</span>
+              <span class="ms-2">{{ topic.created_at | date:'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+          </div>
+
+          <div class="topic-content p-3 bg-light rounded">
+            <p class="mb-0">{{ topic.content }}</p>
+          </div>
+
+          @if (topic.replies && topic.replies.length > 0) {
+            <div class="replies-section mt-3 ms-3">           
+              @for (reply of topic.replies; track reply.id) {
+                <div class="reply-item mb-2 p-3 border-start border-3 bg-light">
+                  <div class="d-flex justify-content-between align-items-start mb-2">
+                    <strong class="text-primary">@ {{ reply.user_nickname }}</strong>
+                    <small class="text-muted">
+                      {{ reply.created_at | date:'dd/MM/yyyy HH:mm' }}
+                    </small>
+                  </div>
+                  <p class="mb-0">{{ reply.content }}</p>
+                </div>
+              }
+            </div>
+          }
+
+          <div class="reply-input mt-3">
+            <label class="form-label small text-muted">Escribe tu respuesta</label>
+            <div class="d-flex gap-2">
+              <textarea 
+                class="form-control" 
+                [(ngModel)]="topic.replyText" 
+                placeholder="Añade tu respuesta..."
+                rows="2"
+              ></textarea>
+              <button 
+                class="btn profile-btn-primary text-white" 
+                (click)="addReply(topic)"
+                [disabled]="!topic.replyText"
+                style="white-space: nowrap;"
+              >
+                <i class="bi bi-send-fill"></i>
+                <span class="ms-2">Enviar mensaje</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</div>

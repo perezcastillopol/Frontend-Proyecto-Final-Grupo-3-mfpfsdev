@@ -1,0 +1,101 @@
+
+h1, h2, h3 {
+  font-family: 'Oswald', sans-serif;
+} 
+
+h5 {
+  font-family: 'Oswald', sans-serif;
+  color: var(--secondary-color);
+}
+button{
+  font-family: 'Oswald', sans-serif;
+  color:white;
+}
+.profile-banner {
+  position: relative;
+  padding-left: 10px;
+  z-index: 5;
+}
+
+.profile-banner-title {
+  color: var(--secondary-color);
+  font-size: 2rem;
+}
+
+.profile-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--dark-color);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.banner-buttons {
+  position: relative;
+  z-index: 10;
+}
+
+.banner-edit-btn {
+  position: relative !important;
+  z-index: 20 !important;
+}
+
+/*  Botón eliminar */
+.delete-user {
+  margin-top: 2rem;
+  margin-right: 0;
+}
+
+.delete-user button {
+  min-width: 150px;
+  background-color: #dc3545;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.delete-user button:hover {
+  background-color: #a71d2a;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-box {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+}
+
+.popup-alert {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--primary-color); 
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.2);
+  font-size: 0.95rem;
+  z-index: 200;
+  animation: fadeInOut 3s ease forwards;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(20px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(20px); }
+}

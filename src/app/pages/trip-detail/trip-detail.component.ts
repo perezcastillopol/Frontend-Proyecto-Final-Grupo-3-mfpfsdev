@@ -1,25 +1,251 @@
-import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AsyncPipe, DatePipe, CurrencyPipe } from '@angular/common';
+import {Component, inject, OnInit, OnDestroy, ViewChild} from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DatePipe, CurrencyPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { TripsService, Trip } from '../../core/services/trips.services';
-import { map } from 'rxjs/operators';
+import {ReviewListComponent} from '../reviews/review-list/review-list.component';
+import {ReviewFormComponent} from '../reviews/review-form/review-form.component';
+import { TripRequestService } from '../../core/services/trip-request.service';
+import { ITripRequest } from '../../interfaces/trip-request.interface';
+import {TripParticipant} from '../../interfaces/trip-participant.interface';
+import {ParticipantsService} from '../../core/services/participants.service';
+import { ForumComponent } from '../../shared/forum/forum.component';
+import { Subscription } from 'rxjs';
+import { UserService } from '../../core/services/user.services';
 
 @Component({
   selector: 'app-trip-detail',
   standalone: true,
-  imports: [AsyncPipe, DatePipe, CurrencyPipe],
-  template: `
-    @if (trip$ | async; as trip) {
-      <h2>{{ trip.title }}</h2>
-      <p>{{ trip.location }} · {{ trip.startDate | date }}</p>
-      <p>Precio aprox: {{ trip.price | currency:'EUR' }}</p>
-    } @else {
-      <p>Viaje no encontrado.</p>
-    }
-  `
+  imports: [DatePipe, CurrencyPipe, ReviewFormComponent, ReviewListComponent, FormsModule, ForumComponent, RouterLink],
+  templateUrl: './trip-detail.component.html',
+  styleUrl: './trip-detail.component.css'
 })
-export class TripDetailComponent {
+export class TripDetailComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
-  private trips = inject(TripsService);
-  trip$ = this.trips.getById(this.route.snapshot.paramMap.get('id') || '').pipe(map(t => t));
+  private router = inject(Router);
+  private tripsService = inject(TripsService);
+  private requestService  = inject(TripRequestService);
+  private tripId = Number(this.route.snapshot.paramMap.get('id'));
+  private participantService = inject(ParticipantsService);
+  private userService = inject(UserService);
+  private navigationSubscription?: Subscription;
+
+  trip: Trip | null = null;
+  isOwner = false;
+  userRequest: ITripRequest | null = null;
+  isRequestingToJoin = false;
+  requestNote = '';
+  currentUserId: number | null = null;
+  participants: TripParticipant[] = [];
+  isRequestingInvitation = false;
+  invitationNote = '';
+  isParticipant = false;
+
+
+  @ViewChild('reviewList') reviewList!: ReviewListComponent;
+  @ViewChild('reviewForm') reviewForm!: ReviewFormComponent;
+
+  async ngOnInit() {
+    await this.loadTripData();
+
+    // Subscribe to query params to detect when we need to refresh after navigation
+    let isFirstEmission = true;
+    this.navigationSubscription = this.route.queryParams.subscribe(async (params) => {
+      if (isFirstEmission) {
+        isFirstEmission = false;
+        return;
+      }
+
+      if (params['refresh']) {
+        console.log('Refresh param detected, reloading participants...');
+        // Reload participants when refresh query param is present
+        await this.loadParticipants();
+
+        // Also refresh the trip data to get updated participant count
+        await this.refreshTripData();
+      }
+    });
+  }
+
+  private async refreshTripData() {
+    try {
+      const apiTrip = await this.tripsService.getTripById(this.tripId);
+      if (this.trip) {
+        // Update only the dynamic fields
+        this.trip.currentPeople = apiTrip.currentPeople ?? this.trip.currentPeople;
+      }
+    } catch (error) {
+      console.error('Error refreshing trip data:', error);
+    }
+  }
+
+  ngOnDestroy() {
+    // Clean up subscription to prevent memory leaks
+    this.navigationSubscription?.unsubscribe();
+  }
+
+  private async loadTripData() {
+    try {
+      const apiTrip = await this.tripsService.getTripById(this.tripId);
+      this.trip = {
+        ...apiTrip,
+        imageUrl: apiTrip.imageUrl || `https://picsum.photos/seed/trip${apiTrip.tripId}/1200/600`,
+        currentPeople: apiTrip.currentPeople ?? 0,
+        maxPeople: apiTrip.maxPeople ?? apiTrip.max_participants ?? 10
+      };
+
+      // Check if current user is the owner
+      const currentUserId = this.tripsService.me();
+      this.currentUserId = currentUserId;
+      this.isOwner = this.trip.creatorId === currentUserId;
+
+      // Load accepted participants to show in review form
+      await this.loadParticipants();
+
+      // Check if user has already requested invitation
+      if (!this.isOwner) {
+        this.userRequest = await this.requestService.getUserRequestStatus(this.tripId, currentUserId);
+      }
+
+      // Check if user is participant
+      const participantResponse = await this.participantService.isParticipants(this.tripId, currentUserId);
+      this.isParticipant = participantResponse.is_participant;
+    } catch (error) {
+      this.trip = null;
+    }
+  }
+
+  modalityMap: Record<number, string> = {
+    1: 'Aventura',
+    2: 'Naturaleza',
+    3: 'Ciudad',
+    4: 'Playa',
+  };
+
+  defaultImage = 'https://picsum.photos/seed/trip-detail/1200/600';
+
+  backgroundImage(trip: Trip | null): string {
+    const image = (trip as any)?.imageUrl || this.defaultImage;
+    return `linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.45) 60%), url('${image}')`;
+  }
+
+  async onReviewCreated() {
+    try {
+      if (this.reviewList) await this.reviewList.refresh();
+    } catch (err) {
+      console.error('Error refrescando lista de reviews', err);
+    }
+  }
+
+  /**
+   * Navigate to manage requests page (owner only)
+   */
+  manageRequests() {
+    if (this.isOwner) {
+      this.router.navigate(['/viaje', this.tripId, 'invitations']);
+    }
+  }
+
+  /**
+   * Navigate to request history page
+   */
+  viewRequestHistory() {
+    this.router.navigate(['/viaje', this.tripId, 'invitations', 'history']);
+  }
+
+  /**
+   * Request to join the trip
+   */
+  async requestToJoin() {
+    if (this.isRequestingToJoin || this.userRequest) return;
+
+    this.isRequestingToJoin = true;
+    try {
+      this.userRequest = await this.requestService.createRequest(
+        this.tripId,
+        this.requestNote || undefined
+      );
+      alert('Request to join sent successfully!');
+      this.requestNote = '';
+    } catch (error) {
+      console.error('Error requesting to join:', error);
+      alert('Failed to send request. Please try again.');
+    } finally {
+      this.isRequestingToJoin = false;
+    }
+  }
+
+  /**
+   * Get button text based on request status
+   */
+  getRequestButtonText(): string {
+    if (!this.userRequest) return 'Request to Join';
+
+    switch (this.userRequest.status) {
+      case 'pending':
+        return 'Request Pending';
+      case 'accepted':
+        return 'Request Accepted';
+      case 'rejected':
+        return 'Request Rejected';
+      default:
+        return 'Request to Join';
+    }
+  }
+
+  /**
+   * Check if user can request to join
+   */
+  canRequestToJoin(): boolean {
+    return !this.isOwner && !this.userRequest;
+  }
+
+  private async loadParticipants() {
+    try {
+      console.log('Loading participants for trip:', this.tripId);
+
+      // Get accepted requests with full user details from the new endpoint
+      const acceptedRequests = await this.requestService.getAcceptedRequests(this.tripId);
+      console.log('Accepted requests loaded from API:', acceptedRequests);
+
+      // Convert accepted requests to participants format
+      const participantsFromRequests: TripParticipant[] = acceptedRequests.map(request => ({
+        id: request.user_id,
+        name: request.user_name || 'Unknown User',
+        photo_url: request.user_photo_url || null
+      }));
+
+      // If the creator is not in the participants list, add them manually
+      if (this.trip && !participantsFromRequests.some(p => p.id === this.trip!.creatorId)) {
+        try {
+          const creatorInfo = await this.userService.getUserById(this.trip.creatorId);
+          const creatorParticipant: TripParticipant = {
+            id: typeof creatorInfo.id === 'number' ? creatorInfo.id : Number(creatorInfo.id),
+            name: creatorInfo.name,
+            photo_url: creatorInfo.photo_url
+          };
+          this.participants = [creatorParticipant, ...participantsFromRequests];
+          console.log('Added creator to participants. Total:', this.participants);
+        } catch (error) {
+          console.error('Error fetching creator info:', error);
+          this.participants = participantsFromRequests;
+        }
+      } else {
+        this.participants = participantsFromRequests;
+        console.log('Final participants list:', this.participants);
+      }
+    } catch (error) {
+      console.error('Error loading participants', error);
+      this.participants = [];
+    }
+  }
+  canReview(): boolean {
+    if (!this.currentUserId) return false;
+    return this.participants.some(participant => participant.id === this.currentUserId);
+  }
+
+  async eliminarViaje() {
+    await this.tripsService.deleteTrip(this.tripId);
+    await this.router.navigate(['/mis-viajes']);
+  }
 }

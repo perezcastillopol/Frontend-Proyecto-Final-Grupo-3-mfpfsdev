@@ -1,25 +1,52 @@
-import { Component, Input } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { DatePipe, CurrencyPipe } from '@angular/common';
-import { Trip } from '../../core/services/trips.services';
+import { Component, Input, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { ITrip } from '../../interfaces/trip.interface';
+import { DatePipe } from '@angular/common';
+
+type TripCardTrip = Partial<ITrip> & {
+  imageUrl?: string;
+  country?: string;
+  destination?: string;
+  currentPeople?: number;
+  maxPeople?: number;
+  price?: number;
+  startDate?: string;
+  endDate?: string;
+  costPerPerson?: number;
+};
 
 @Component({
   selector: 'app-trip-card',
   standalone: true,
-  imports: [RouterLink, DatePipe, CurrencyPipe],
-  template: `
-    <article class="card">
-      <h3>{{ trip.title }}</h3>
-      <p>{{ trip.location }} · {{ trip.startDate | date }}</p>
-      <p>~ {{ trip.price | currency:'EUR':'symbol':'1.0-0' }}</p>
-      <a [routerLink]="['/viaje', trip.id]">Ver detalle</a>
-    </article>
-  `,
-  styles: [`
-    .card{border:1px solid #eee;border-radius:12px;padding:12px}
-    .card h3{margin:0 0 4px}
-  `]
+  templateUrl: './trip-card.component.html',
+  styleUrl: './trip-card.component.css',
+  imports: [DatePipe]
 })
 export class TripCardComponent {
-  @Input({ required: true }) trip!: Trip;
+  private router = inject(Router);
+
+  @Input() trip: TripCardTrip | null = null;
+
+  @Input() imageUrl: string = '';
+  @Input() title: string = '';
+  @Input() location: string = '';
+  @Input() country: string = '';
+  @Input() currentPeople: number = 0;
+  @Input() max_participants: number = 0;
+  @Input() start_date: string = '';
+  @Input() startDate: string = '';
+  @Input() end_date: string = '';
+  @Input() cost_per_person: number = 0;
+
+  get detailLink(): string[] | null {
+    const id = this.trip?.tripId ?? (this.trip as any)?.id;
+    return id ? ['/viaje', id] : null;
+  }
+
+  goDetail() {
+    const link = this.detailLink;
+    if (link) {
+      this.router.navigate(link);
+    }
+  }
 }

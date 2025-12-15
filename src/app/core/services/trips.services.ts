@@ -1,29 +1,78 @@
-import { Injectable, signal } from '@angular/core';
-import { of } from 'rxjs';
+import {Injectable, computed, inject} from '@angular/core';
+import {ITrip as TripModel} from '../../interfaces/trip.interface';
+import {HttpServices} from './http.services';
+import { AuthService } from './auth.service';
 
-export interface Trip {
-  id: string;
-  title: string;
-  location: string;
-  startDate: string;
-  creatorId: string;
-  price: number;
-}
+export type Trip = TripModel & {
+  imageUrl?: string;
+  currentPeople?: number;
+  maxPeople?: number;
+  modality_name?: string;
+};
 
 @Injectable({ providedIn: 'root' })
-export class TripsService {
-  private userId = 'u123';                 // stub de usuario actual
-  me = signal(this.userId);
 
-  private trips: Trip[] = [
-    { id: '1', title: 'Pirineos en 4 días', location: 'Huesca', startDate: '2025-12-10', creatorId: 'u123', price: 250 },
-    { id: '2', title: 'Escapada a Lisboa', location: 'Lisboa', startDate: '2025-11-25', creatorId: 'u777', price: 180 },
-    { id: '3', title: 'Costa Brava', location: 'Girona', startDate: '2026-03-15', creatorId: 'u123', price: 120 },
-  ];
+export class TripsService extends HttpServices {
+  private auth = inject(AuthService);
+  me = computed<number>(() => this.auth.userId());
+  private url = '/trips';
 
-  list() { return of(this.trips); }
+  private mapTrip(api: any): Trip {
+    const photoUrl = api.photo_url || api.imageUrl;
+    const modalityName = api.modality_name || api.modalityName;
+    return {
+      tripId: Number(api.id),
+      creatorId: Number(api.creator_id),
+      title: api.title,
+      description: api.description,
+      start_date: api.start_date,
+      end_date: api.end_date,
+      cost_per_person: api.cost_per_person,
+      min_participants: api.min_participants,
+      max_participants: api.max_participants,
+      location: api.location,
+      transport: api.transport,
+      itinerary: api.itinerary,
+      status: api.status,
+      created_at: api.created_at,
+      updated_at: api.updated_at,
+      modality_trip_id: Number(api.modality_trip_id),
+      modality_name: modalityName,
+      num_participants: api.num_participants,
+      photo_url: photoUrl,
+      imageUrl: photoUrl || `https://picsum.photos/seed/trip${api.id}/600/400`,
+      currentPeople: api.current_people ?? api.num_participants ?? 0,
+      maxPeople: api.maxPeople ?? api.max_participants ?? 0,
+    };
+  }
 
-  myTrips() { return of(this.trips.filter(t => t.creatorId === this.userId)); }
+  async getTrips(): Promise<Trip[]> {
+    const list = await this.get<Trip[]>(this.url);
+  return list.map((t) => this.mapTrip(t));
+  }
 
-  getById(id: string) { return of(this.trips.find(t => t.id === id) || null); }
+  async list(): Promise<Trip[]> {
+    const list = await this.get<Trip[]>(this.url);
+  return list.map((t) => this.mapTrip(t));
+  }
+
+  async myTrips(): Promise<Trip[]> {
+    const userId = this.me();
+    const trips = await this.list();
+    return trips.filter((t) => t.creatorId === userId);
+  }
+
+  async getTripById(id: number): Promise<Trip> {
+    const trip = await this.get(`${this.url}/${id}`);
+    return this.mapTrip(trip);
+  }
+
+  async createTrip(tripData: Partial<TripModel>): Promise<Trip> {
+    const trip = await this.post(this.url, tripData);
+    return this.mapTrip(trip);
+  }
+
+  async deleteTrip(tripId: number): Promise<void> {
+    return this.delete(`${this.url}/${tripId}`);
+  }
 }

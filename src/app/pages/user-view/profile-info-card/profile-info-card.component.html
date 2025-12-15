@@ -1,0 +1,57 @@
+<div class="profile-card info-card">
+  <h4 class="card-title">Información personal</h4>
+  <div class="info-grid">
+
+    <div class="info-box">
+      <div class="info-left">
+        <i class="bi bi-telephone-fill"></i>
+      </div>
+      <div class="info-right">
+        <strong>Teléfono:</strong>
+        @if (isEditing) {
+          <input class="form-control" [(ngModel)]="user.phone" placeholder="Introduce tu teléfono">
+        } @else {
+          <span>{{ user.phone?.trim() || 'No especificado' }}</span>
+        }
+      </div>
+    </div>
+
+    <div class="info-box">
+      <div class="info-left">
+        <i class="bi bi-geo-alt-fill"></i>
+      </div>
+      <div class="info-right">
+        <strong>Ubicación:</strong>
+        @if (isEditing) {
+          <input class="form-control" [(ngModel)]="user.location" placeholder="Introduce tu ubicación">
+        } @else {
+          <span>{{ user.location?.trim() || 'No especificada' }}</span>
+        }
+      </div>
+    </div>
+
+    <div class="info-box">
+      <div class="info-left">
+        <i class="bi bi-calendar-event-fill"></i>
+      </div>
+      <div class="info-right">
+        <strong>Fecha de nacimiento:</strong>
+        @if (isEditing) {
+          <input type="date" class="form-control" [(ngModel)]="user.birthDate">
+        } @else {
+          <span>{{ user.birthDate ? (user.birthDate | date:'dd/MM/yyyy') : 'No especificada' }}</span>
+        }
+      </div>
+    </div>
+
+    <div class="info-box">
+      <div class="info-left">
+        <i class="bi bi-person-fill"></i>
+      </div>
+      <div class="info-right">
+        <strong>Nickname:</strong>
+        <span>{{ user.nickname?.trim() || 'No especificado' }}</span>
+      </div>
+    </div>
+  </div>
+</div>

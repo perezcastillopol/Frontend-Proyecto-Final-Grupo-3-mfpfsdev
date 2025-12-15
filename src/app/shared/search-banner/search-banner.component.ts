@@ -1,20 +1,54 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { IModality } from '../../interfaces/modality.interface';
+
+export interface SearchFilters {
+  query: string;
+  category: string;
+  status: string;
+  startDate: string;
+  endDate: string;
+}
 
 @Component({
   selector: 'app-search-banner',
   standalone: true,
-  template: `
-    <section class="banner">
-      <input placeholder="Origen">
-      <input placeholder="Destino">
-      <input type="date">
-      <button (click)="search.emit()">Buscar</button>
-    </section>
-  `,
-  styles: [`
-    .banner{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;padding:12px;background:#f7f7f7;border-radius:12px;margin:12px 0}
-  `]
+  imports: [ReactiveFormsModule],
+  templateUrl: './search-banner.component.html',
+  styleUrls: ['./search-banner.component.css'],
 })
 export class SearchBannerComponent {
-  @Output() search = new EventEmitter<void>();
+  @Input() modalities: IModality[] = [];
+  @Output() search = new EventEmitter<SearchFilters>();
+
+  get categories(): string[] {
+    return ['Categorías', ...this.modalities.map(m => m.name)];
+  }
+
+  statusOptions = ['Estado', 'Abierto', 'Cerrado', 'Próximamente'];
+
+  searchForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.searchForm = this.fb.group({
+      query: [''],
+      category: [this.categories[0]],
+      status: [this.statusOptions[0]],
+      startDate: [''],
+      endDate: [''],
+    });
+  }
+
+  onSubmit(): void {
+    if (this.searchForm.valid) {
+      const { query, category, status, startDate, endDate } = this.searchForm.value;
+      this.search.emit({
+        query: (query || '').trim(),
+        category: category === this.categories[0] ? '' : category,
+        status: status === this.statusOptions[0] ? '' : status,
+        startDate: startDate || '',
+        endDate: endDate || '',
+      });
+    }
+  }
 }

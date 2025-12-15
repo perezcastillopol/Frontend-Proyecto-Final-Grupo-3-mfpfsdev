@@ -1,0 +1,99 @@
+<div class="container py-4">
+    @if (isLoading) {
+    <div class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+    </div>
+    } @else {
+    <!-- Header -->
+    <div class="mb-4">
+        <button class="btn btn-link text-decoration-none p-0 mb-2" (click)="goBack()">
+            <i class="bi bi-arrow-left me-2"></i>
+            Volver al viaje
+        </button>
+        <h1 class="h3 mb-1">Historial de solicitudes</h1>
+        @if (trip) {
+        <p class="text-muted mb-0">{{ trip.title }}</p>
+        }
+    </div>
+
+    <!-- Filter Tabs -->
+    <ul class="nav nav-pills mb-4">
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="selectedFilter === 'all'" (click)="setFilter('all')">
+                Todas ({{ getRequestCount('all') }})
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="selectedFilter === 'pending'" (click)="setFilter('pending')">
+                Pendientes ({{ getRequestCount('pending') }})
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="selectedFilter === 'accepted'" (click)="setFilter('accepted')">
+                Aceptadas ({{ getRequestCount('accepted') }})
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" [class.active]="selectedFilter === 'rejected'" (click)="setFilter('rejected')">
+                Rechazadas ({{ getRequestCount('rejected') }})
+            </button>
+        </li>
+    </ul>
+
+    <!-- Requests List -->
+    @if (filteredRequests.length === 0) {
+    <div class="alert alert-info">
+        <i class="bi bi-info-circle me-2"></i>
+        No hay solicitudes para mostrar.
+    </div>
+    } @else {
+    <div class="row g-3">
+        @for (request of filteredRequests; track request.id) {
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h5 class="card-title mb-1">
+                                Usuario #{{ request.user_id }}
+                            </h5>
+                            <div class="small text-muted">
+                                <div>
+                                    <i class="bi bi-clock me-1"></i>
+                                    Solicitado: {{ request.requested_at | date:'dd/MM/yyyy HH:mm' }}
+                                </div>
+                                @if (request.responded_at) {
+                                <div>
+                                    <i class="bi bi-check2 me-1"></i>
+                                    Respondido: {{ request.responded_at | date:'dd/MM/yyyy HH:mm' }}
+                                </div>
+                                }
+                                @if (request.responder_id) {
+                                <div>
+                                    <i class="bi bi-person me-1"></i>
+                                    Por: Usuario #{{ request.responder_id }}
+                                </div>
+                                }
+                            </div>
+                        </div>
+                        <span class="badge" [ngClass]="getStatusBadgeClass(request.status)">
+                            {{ getStatusText(request.status) }}
+                        </span>
+                    </div>
+
+                    @if (request.note) {
+                    <div>
+                        <strong class="d-block mb-1">Mensaje:</strong>
+                        <p class="card-text text-muted mb-0">{{ request.note }}</p>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+    }
+    }
+</div>
