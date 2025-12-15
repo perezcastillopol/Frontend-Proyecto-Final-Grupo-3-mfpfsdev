@@ -98,7 +98,9 @@ export class TripInvitations implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/viaje', this.tripId]);
+    this.router.navigate(['/viaje', this.tripId], {
+      queryParams: { refresh: Date.now() }
+    });
   }
 
   viewHistory() {

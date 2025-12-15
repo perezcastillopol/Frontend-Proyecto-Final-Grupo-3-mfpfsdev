@@ -92,7 +92,9 @@ export class TripInvitationHistory implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/viaje', this.tripId]);
+    this.router.navigate(['/viaje', this.tripId], {
+      queryParams: { refresh: Date.now() }
+    });
   }
 
   getRequestCount(status: 'all' | 'pending' | 'accepted' | 'rejected'): number {

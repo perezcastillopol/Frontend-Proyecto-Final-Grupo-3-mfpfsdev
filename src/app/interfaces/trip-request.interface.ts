@@ -7,6 +7,10 @@ export interface ITripRequest {
     requested_at: string;
     responded_at: string | null;
     responder_id: number | null;
+    // Additional fields from /accepted endpoint
+    user_name?: string;
+    user_email?: string;
+    user_photo_url?: string | null;
 }
 
 export interface ICreateTripRequestRequest {
