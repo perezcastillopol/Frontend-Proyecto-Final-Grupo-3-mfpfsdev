@@ -42,8 +42,8 @@ export class UserViewComponent {
   isEditing = false;
   isLoaded = false;
   isOwnProfile = true;
-  showDeleteConfirm = false; // modal de confirmación
-  showDeletePopup = false;   // popup de aviso
+  showDeleteConfirm = false; 
+  showDeletePopup = false;  
 
   constructor(
     private userService: UserService,
@@ -65,25 +65,6 @@ export class UserViewComponent {
       } else if (this.authService.isLoggedIn()) {
         const profile = await this.userService.getMyProfile();
         this.user = { ...profile };
-        this.isOwnProfile = true;
-      } else {
-        // Usuario demo
-        this.user = {
-          id: 'demo-1',
-          name: 'Demo',
-          last_name: 'TripBud',
-          email: 'demo@tripbud.com',
-          photo_url:
-            'https://media.istockphoto.com/id/1200677760/es/foto/retrato-de-apuesto-joven-sonriente-con-los-brazos-cruzados.jpg?s=612x612&w=0&k=20&c=RhKR8pxX3y_YVe5CjrRnTcNFEGDryD2FVOcUT_w3m4w=',
-          bio: 'Este es un perfil de prueba para visualizar la página de usuario.',
-          //interests: [{ id: 1 }, { id: 2 }, { id: 3 }],
-          phone: '000-000-000',
-          birthDate: '1990-01-01',
-          location: 'Málaga, España',
-          nickname: 'Mochilero',
-          average_rating: 4.5,
-          created_at: '2020-01-01'
-        };
         this.isOwnProfile = true;
       }
     } catch (error) {
@@ -130,10 +111,8 @@ export class UserViewComponent {
       await this.userService.deleteMyProfile();
       this.showDeleteConfirm = false;
 
-      // ✅ Mostrar popup de aviso
       this.showDeletePopup = true;
 
-      // Ocultar popup tras 3 segundos y redirigir
       setTimeout(() => {
         this.showDeletePopup = false;
         this.router.navigate(['/login']);

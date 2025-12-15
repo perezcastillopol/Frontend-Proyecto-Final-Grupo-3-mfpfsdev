@@ -10,7 +10,6 @@
     </label>
   </div>
 
-  <!-- Nombre editable -->
   <input
     class="form-control mt-3 text-center"
     [(ngModel)]="user.name"
@@ -24,7 +23,6 @@
     [hidden]="!isEditing"
   />
 
-  <!-- Nombre lectura -->
   <h3 class="text-center mt-3 name-text" [hidden]="isEditing">
     {{ fullName }}
   </h3>

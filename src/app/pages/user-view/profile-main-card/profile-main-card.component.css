@@ -38,13 +38,13 @@ h1, h2, h3,h4 {
 
 .name-text {
   font-weight: 600;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   margin-top: 0.5rem;
   color: var(--secondary-color);
 }
 
 .username-text {
-  font-size: 0.95rem;
+  font-size: 1.0rem;
   color: var(--dark-color);
   font-weight: 600;
 }

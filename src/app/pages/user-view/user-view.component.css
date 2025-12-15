@@ -1,4 +1,4 @@
-/*  Estilos originales */
+
 h1, h2, h3 {
   font-family: 'Oswald', sans-serif;
 } 
@@ -41,7 +41,7 @@ button{
 /*  Botón eliminar */
 .delete-user {
   margin-top: 2rem;
-  margin-right: 0; /* se alinea con text-end */
+  margin-right: 0;
 }
 
 .delete-user button {
@@ -55,7 +55,6 @@ button{
   background-color: #a71d2a;
 }
 
-/*  Modal estilos */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -75,12 +74,11 @@ button{
   box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
 }
 
-/*  Popup estilos */
 .popup-alert {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: #28a745; /* verde éxito */
+  background: var(--primary-color); 
   color: #fff;
   padding: 12px 20px;
   border-radius: 8px;

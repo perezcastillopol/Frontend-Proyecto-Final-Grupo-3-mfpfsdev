@@ -10,7 +10,7 @@ h1, h2, h3,h4 {
 }
 
 .card-title {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 1rem;
   color: var(--secondary-color);
