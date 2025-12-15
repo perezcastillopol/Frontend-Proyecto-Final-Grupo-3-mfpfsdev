@@ -4,7 +4,7 @@
   <div class="profile-img mx-auto">
     <img
       class="profile-avatar"
-      [src]="user?.photo_url || '/images/default-avatar.png'"
+      [src]="user.photo_url || '/images/default-avatar.png'"
       alt="Foto perfil"
     />
   </div>
@@ -22,12 +22,12 @@
 
   <!-- NOMBRE (lectura) -->
   <h3 class="name-text mt-2 mb-0" [hidden]="isEditing">
-    {{ (user?.name || 'Nombre') }} {{ (user?.last_name || 'Apellido') }}
+    {{ (user.name || 'Nombre') }} {{ (user.last_name || 'Apellido') }}
   </h3>
 
   <!-- USERNAME (lectura) -->
   <p class="username-text mt-2 mb-0" [hidden]="isEditing">
-    @{{ user?.nickname || 'username' }}
+    @{{ user.nickname || 'username' }}
   </p>
 
   <!-- RATING (lectura) -->
